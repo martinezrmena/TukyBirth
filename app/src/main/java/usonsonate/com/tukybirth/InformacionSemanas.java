@@ -32,6 +32,7 @@ public class InformacionSemanas extends AppCompatActivity {
         fadeIn.setInterpolator(new DecelerateInterpolator());
         //OBTENEMOS LA VENTANA ANTERIOR Y ESTABLECEMOS LA TRASICION EN SU LLEGADA
         getWindow().setEnterTransition(fadeIn);
+        getWindow().setAllowEnterTransitionOverlap(false);
 
         //para cerrar utilizamos finishAfterTransition();
 

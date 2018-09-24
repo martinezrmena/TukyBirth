@@ -28,6 +28,7 @@ public class Fragmento01 extends Fragment {
         Procesar = view.findViewById(R.id.btnactivitycalendar);
         Procesar.setOnClickListener(new View.OnClickListener()
         {
+            @SuppressWarnings("unchecked")
             @Override
             public void onClick(View v)
             {
