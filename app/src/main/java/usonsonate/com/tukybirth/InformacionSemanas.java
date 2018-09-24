@@ -9,8 +9,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.transition.Fade;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.DecelerateInterpolator;
 
 import usonsonate.com.tukybirth.Semanas.*;
 
@@ -23,6 +25,16 @@ public class InformacionSemanas extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //CREAMOS LA TRANSICION
+        Fade fadeIn = new Fade(Fade.IN);
+        fadeIn.setDuration(MainActivity.DURATION_TRANSITION);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
+        //OBTENEMOS LA VENTANA ANTERIOR Y ESTABLECEMOS LA TRASICION EN SU LLEGADA
+        getWindow().setEnterTransition(fadeIn);
+
+        //para cerrar utilizamos finishAfterTransition();
+
         setContentView(R.layout.activity_informacion_semanas);
 
         setTitle("INFORMACIÓN POR SEMANA");
