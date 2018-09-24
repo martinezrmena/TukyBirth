@@ -69,7 +69,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             public void onClick(View v) {
 
                 Toast.makeText(context, "OnClick Called at position " + position, Toast.LENGTH_SHORT).show();
-                addItem(currentPosition, infoData);
+                //addItem(currentPosition, infoData);
             }
         });
 

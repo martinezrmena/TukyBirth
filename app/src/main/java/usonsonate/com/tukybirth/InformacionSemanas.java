@@ -31,7 +31,7 @@ public class InformacionSemanas extends AppCompatActivity {
 
         //Inicializar variables
         datos = getResources().getStringArray(R.array.semanas_array);
-        recyclerView = (RecyclerView) findViewById(R.id.recycleView);
+        recyclerView = findViewById(R.id.recycleView);
         adapter = new CustomAdapter(this, Data.getData(datos));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Vertical Orientation By Default
