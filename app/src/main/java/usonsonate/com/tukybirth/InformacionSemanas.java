@@ -24,9 +24,13 @@ public class InformacionSemanas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informacion_semanas);
-        datos = getResources().getStringArray(R.array.semanas_array);
-        setTitle("INFORMACIÓN POR SEMANA");
 
+        setTitle("INFORMACIÓN POR SEMANA");
+        //Para activar y asignar que necesitaremos un botón para regresar a la activity anterior
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Inicializar variables
+        datos = getResources().getStringArray(R.array.semanas_array);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView);
         adapter = new CustomAdapter(this, Data.getData(datos));
         recyclerView.setAdapter(adapter);

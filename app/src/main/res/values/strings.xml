@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Tuky Birth</string>
+    <string name="Subtitle">Añadir Amigo</string>
+    <string name="Information">Todo lo que debes saber sobre el proceso del embarazo.</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -9,7 +11,8 @@
     <string name="add_button">Añadir</string>
     <string name="update_button">Actualizar</string>
     <string name="delete_button">borrar</string>
-    <string name="fab">Añadir Amigo</string>
+    <string name="fab">Añadir Nota</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
