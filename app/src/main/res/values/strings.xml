@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Tuky Birth</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_button">Añadir</string>
+    <string name="update_button">Actualizar</string>
+    <string name="delete_button">borrar</string>
+    <string name="fab">Añadir Amigo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="importante">IMPORT</string>
+
+    <string-array name="semanas_array">
+        <item>SEMANA 1</item>
+        <item>SEMANA 2</item>
+        <item>SEMANA 3</item>
+        <item>SEMANA 4</item>
+        <item>SEMANA 5</item>
+        <item>SEMANA 6</item>
+        <item>SEMANA 7</item>
+        <item>SEMANA 8</item>
+        <item>SEMANA 9</item>
+        <item>SEMANA 10</item>
+        <item>SEMANA 11</item>
+        <item>SEMANA 12</item>
+        <item>SEMANA 13</item>
+        <item>SEMANA 14</item>
+        <item>SEMANA 15</item>
+        <item>SEMANA 16</item>
+        <item>SEMANA 17</item>
+        <item>SEMANA 18</item>
+        <item>SEMANA 19</item>
+        <item>SEMANA 20</item>
+        <item>SEMANA 21</item>
+        <item>SEMANA 22</item>
+        <item>SEMANA 23</item>
+        <item>SEMANA 24</item>
+        <item>SEMANA 25</item>
+        <item>SEMANA 26</item>
+        <item>SEMANA 27</item>
+        <item>SEMANA 28</item>
+        <item>SEMANA 29</item>
+        <item>SEMANA 30</item>
+        <item>SEMANA 31</item>
+        <item>SEMANA 32</item>
+        <item>SEMANA 33</item>
+        <item>SEMANA 34</item>
+        <item>SEMANA 35</item>
+        <item>SEMANA 36</item>
+        <item>SEMANA 37</item>
+        <item>SEMANA 38</item>
+        <item>SEMANA 39</item>
+        <item>SEMANA 40</item>
+    </string-array>
+</resources>
