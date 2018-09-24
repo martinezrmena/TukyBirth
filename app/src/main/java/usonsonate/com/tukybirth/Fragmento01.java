@@ -37,6 +37,7 @@ public class Fragmento01 extends Fragment {
                 transition.setInterpolator(new DecelerateInterpolator());
                 getActivity().getWindow().setExitTransition(transition);
                 Context context = view.getContext();
+
                 Intent detail = new Intent(context.getApplicationContext(), InformacionSemanas.class);
                 context.startActivity(detail,
                         ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity()).toBundle());
