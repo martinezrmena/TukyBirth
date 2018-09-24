@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class Fragmento01 extends Fragment {
-    private Button Procesar;
+    private CardView Procesar;
     private View view;
 
     @Override
@@ -24,7 +25,7 @@ public class Fragmento01 extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_fragmento01, container, false);
 
-        Procesar = view.findViewById(R.id.btnactivity);
+        Procesar = view.findViewById(R.id.btnactivitycalendar);
         Procesar.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -33,7 +34,6 @@ public class Fragmento01 extends Fragment {
                 Context context = view.getContext();
                 Intent detail = new Intent(context.getApplicationContext(), InformacionSemanas.class);
                 context.startActivity(detail);
-                //Toast.makeText(context, "FUNCIONA SIN HACER NADA" , Toast.LENGTH_SHORT).show();
             }
         });
 

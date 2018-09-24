@@ -19,7 +19,6 @@ public class InformacionSemanas extends AppCompatActivity {
     RecyclerView recyclerView;
     String [] datos;
     CustomAdapter adapter;
-    ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +26,6 @@ public class InformacionSemanas extends AppCompatActivity {
         setContentView(R.layout.activity_informacion_semanas);
         datos = getResources().getStringArray(R.array.semanas_array);
         setTitle("INFORMACIÓN POR SEMANA");
-        actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#370A54")));
 
         recyclerView = (RecyclerView) findViewById(R.id.recycleView);
         adapter = new CustomAdapter(this, Data.getData(datos));

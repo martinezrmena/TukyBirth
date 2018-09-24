@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#370A54</color>
+    <color name="colorPrimaryDark">#863A93</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white" type="color">#ffff</color>
     <color name="blue" type="color">#2196f3</color>
@@ -15,6 +15,13 @@
     <color name="teal" type="color">#009688</color>
     <color name="pink" type="color">#e91e63</color>
     <color name="dark_purple" type="color">#370A54</color>
+    <color name="lightgray">#ededed</color>
+    <color name="dark_gray">#9F9E9E</color>
+    <color name="backgroundcolor">#fcfcfc</color>
+    <color name="deeppurple">#7c4dff</color>
+    <color name="materialyellow">#ffb300</color>
+    <color name="materialgreen">#00bfa5</color>
+    <color name="pinkaccent">#ff4081</color>
 
     <integer-array name="initial_colors">
         <item>@color/blue</item>
