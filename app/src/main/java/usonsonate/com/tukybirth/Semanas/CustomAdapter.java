@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -111,7 +112,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             @Override
             public boolean onLongClick(View v) {
 
-                Toast.makeText(context, "Item removido: " + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Semana " + (position + 1) + " removida.", Toast.LENGTH_SHORT).show();
 
                 removeItem(infoData);
 
@@ -133,7 +134,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         TextView textview;
         ImageView imageView;
-        CardView cardView;
+        LinearLayout cardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);

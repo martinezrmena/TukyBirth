@@ -26,11 +26,16 @@ public class InformacionSemanas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //CREAMOS LA TRANSICION
+        //CREAMOS LA TRANSICION DE ENTRADA
         Fade fadeIn = new Fade(Fade.IN);
         fadeIn.setDuration(MainActivity.DURATION_TRANSITION);
         fadeIn.setInterpolator(new DecelerateInterpolator());
+        //CREAMOS LA TRANSICION DE SALIDA
+        Fade fadeOut = new Fade(Fade.OUT);
+        fadeIn.setDuration(MainActivity.DURATION_TRANSITION);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
         //OBTENEMOS LA VENTANA ANTERIOR Y ESTABLECEMOS LA TRASICION EN SU LLEGADA
+        getWindow().setExitTransition(fadeOut);
         getWindow().setEnterTransition(fadeIn);
         getWindow().setAllowEnterTransitionOverlap(false);
 
