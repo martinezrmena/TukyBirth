@@ -15,12 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 
+import usonsonate.com.tukybirth.EncounterHistoryActivity;
 import usonsonate.com.tukybirth.InformacionSemanas;
 import usonsonate.com.tukybirth.MainActivity;
 import usonsonate.com.tukybirth.R;
 
 public class Fragmento01 extends Fragment {
-    private CardView Procesar;
+    private CardView Calendario, History;
     private View view;
     private Toolbar toolbar;
     Transition transition;
@@ -40,8 +41,9 @@ public class Fragmento01 extends Fragment {
         getActivity().getWindow().setReenterTransition(fadeIn);
         getActivity().getWindow().setAllowEnterTransitionOverlap(false);
 
-        Procesar = view.findViewById(R.id.btnactivitycalendar);
-        Procesar.setOnClickListener(new View.OnClickListener()
+        Calendario = view.findViewById(R.id.btnactivitycalendar);
+        History = view.findViewById(R.id.btnactivityHistory);
+        Calendario.setOnClickListener(new View.OnClickListener()
         {
             @SuppressWarnings("unchecked")
             @Override
@@ -54,6 +56,24 @@ public class Fragmento01 extends Fragment {
                 Context context = view.getContext();
 
                 Intent detail = new Intent(context.getApplicationContext(), InformacionSemanas.class);
+                context.startActivity(detail,
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
+
+        History.setOnClickListener(new View.OnClickListener()
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public void onClick(View v)
+            {
+                transition = new Fade(Fade.OUT);
+                transition.setDuration(MainActivity.DURATION_TRANSITION);
+                transition.setInterpolator(new DecelerateInterpolator());
+                getActivity().getWindow().setExitTransition(transition);
+                Context context = view.getContext();
+
+                Intent detail = new Intent(context.getApplicationContext(), EncounterHistoryActivity.class);
                 context.startActivity(detail,
                         ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
