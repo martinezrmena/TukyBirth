@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Transition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +53,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder myViewHolder, final int position) {
 
         myViewHolder.textview.setText(data.get(position).title);
+        myViewHolder.cardView.setBackground(data.get(position).color);
         myViewHolder.imageView.setImageResource(data.get(position).imageId);
 
         if(position > previousPosition){ // We are scrolling DOWN
@@ -79,12 +82,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 //Toast.makeText(context, "OnClick Called at position " + position, Toast.LENGTH_SHORT).show();
 
                 TextView txtclose, txbnumero;
+                ImageView imagenPopUp;
                 Button btnFollow;
+                //inicializamos las variables
                 myDialog.setContentView(R.layout.custompopup);
                 txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
                 txbnumero = myDialog.findViewById(R.id.txtNumeroSelected);
+                imagenPopUp = myDialog.findViewById(R.id.ImagePopup);
+
+                //establecemos los valores
                 txbnumero.setText(String.valueOf(position +1));
-                btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+                btnFollow = myDialog.findViewById(R.id.btnfollow);
+                imagenPopUp.setImageResource(infoData.imageId);
                 txtclose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -102,7 +111,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             @Override
             public boolean onLongClick(View v) {
 
-                Toast.makeText(context, "OnLongClick Called at position " + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Item removido: " + position, Toast.LENGTH_SHORT).show();
 
                 removeItem(infoData);
 
@@ -124,12 +133,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         TextView textview;
         ImageView imageView;
+        CardView cardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            textview = (TextView) itemView.findViewById(R.id.txv_row);
-            imageView = (ImageView) itemView.findViewById(R.id.img_row);
+            textview = itemView.findViewById(R.id.txv_row);
+            imageView = itemView.findViewById(R.id.img_row);
+            cardView = itemView.findViewById(R.id.MainCard);
 
         }
     }

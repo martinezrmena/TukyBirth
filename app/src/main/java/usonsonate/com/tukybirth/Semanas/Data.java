@@ -1,5 +1,8 @@
 package usonsonate.com.tukybirth.Semanas;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+
 import java.util.ArrayList;
 
 import usonsonate.com.tukybirth.R;
@@ -47,6 +50,13 @@ public class Data {
             Information current = new Information();
             current.title = Semanas[i];
             current.imageId = images[i];
+            if (i <= 11){
+                current.color = new ColorDrawable(Color.parseColor("#767099"));
+            }else if(i > 11 && i < 25){
+                current.color = new ColorDrawable(Color.parseColor("#009688"));
+            }else{
+                current.color = new ColorDrawable(Color.parseColor("#1b5e20"));
+            }
 
             data.add(current);
         }
