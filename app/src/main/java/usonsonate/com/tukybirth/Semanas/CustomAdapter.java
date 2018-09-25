@@ -1,11 +1,15 @@
 package usonsonate.com.tukybirth.Semanas;
 
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +27,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     private LayoutInflater inflater;
 
     private int previousPosition = 0;
+
+    Dialog myDialog;
 
     public CustomAdapter(Context context, ArrayList<Information> data) {
 
@@ -62,13 +68,32 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
 
         final int currentPosition = position;
+        myDialog = new Dialog(context);
         final Information infoData = data.get(position);
+
 
         myViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context, "OnClick Called at position " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "OnClick Called at position " + position, Toast.LENGTH_SHORT).show();
+
+                TextView txtclose, txbnumero;
+                Button btnFollow;
+                myDialog.setContentView(R.layout.custompopup);
+                txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+                txbnumero = myDialog.findViewById(R.id.txtNumeroSelected);
+                txbnumero.setText(String.valueOf(position +1));
+                btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+                txtclose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                myDialog.show();
+
                 //addItem(currentPosition, infoData);
             }
         });
