@@ -19,30 +19,34 @@ public class SlideAdapter extends PagerAdapter {
     // list of images
     public int[] lst_images = {
 
-            R.drawable.image_1,
-            R.drawable.image_2,
-            R.drawable.image_3,
+            R.drawable.ovulo_rodeado_circle,
+            R.drawable.aparato_genital_circle,
+            R.drawable.ovulo_listo_circle,
+            R.drawable.espermatozoide_circle,
             R.drawable.image_4
     };
     // list of titles
     public String[] lst_title = {
-            "COSMONAUT",
-            "SATELITE",
-            "GALAXY",
+            "EL ÓVULO RODEADO.",
+            "APARATO GENITAL FEMENINO.",
+            "EL ÓVULO LISTO.",
+            "ESPERMATOZOIDE.",
             "ROCKET"
     }   ;
     // list of descriptions
     public String[] lst_description = {
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,",
+            "Un espermatozoide penetra el óvulo, pierde su cola, su núcleo localizado en la cabeza aumenta su volumen para luego fusionarse con el núcleo del óvulo.",
+            "Los dos ovarios y las dos trompas desembocan en el útero. Abajo, la abertura del útero (el cuello) se encuentra en el fondo de la vagina.",
+            "El óvulo listo para la fecundación. En el centro, el núcleo rodeado del citoplasma. Alrededor, la zona pelúcida circundada por algunas células del folículo.",
+            "Un espermatozoide con su cabeza que contiene el núcleo y su cola que le permite desplazarse, mide de 10 a sesenta micras de longitud.",
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
     };
     // list of background colors
     public int[]  lst_backgroundcolor = {
-            Color.rgb(55,55,55),
-            Color.rgb(239,85,85),
-            Color.rgb(110,49,89),
+            Color.parseColor("#011627"),
+            Color.parseColor("#335C67"),
+            Color.parseColor("#540B0E"),
+            Color.parseColor("#1D8A99"),
             Color.rgb(1,188,212)
     };
 
