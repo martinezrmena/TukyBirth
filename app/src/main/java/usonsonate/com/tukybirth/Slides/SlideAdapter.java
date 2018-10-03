@@ -1,20 +1,25 @@
 package usonsonate.com.tukybirth.Slides;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import usonsonate.com.tukybirth.R;
 
 public class SlideAdapter extends PagerAdapter {
     Context context;
     LayoutInflater inflater;
+    Dialog myDialog;
 
     // list of images
     public int[] lst_images = {
@@ -23,7 +28,7 @@ public class SlideAdapter extends PagerAdapter {
             R.drawable.aparato_genital_circle,
             R.drawable.ovulo_listo_circle,
             R.drawable.espermatozoide_circle,
-            R.drawable.image_4
+            R.drawable.liberacion_ovulo_circle
     };
     // list of titles
     public String[] lst_title = {
@@ -31,7 +36,7 @@ public class SlideAdapter extends PagerAdapter {
             "APARATO GENITAL FEMENINO.",
             "EL ÓVULO LISTO.",
             "ESPERMATOZOIDE.",
-            "ROCKET"
+            "LIBERACIÓN DEL OVULO"
     }   ;
     // list of descriptions
     public String[] lst_description = {
@@ -39,7 +44,7 @@ public class SlideAdapter extends PagerAdapter {
             "Los dos ovarios y las dos trompas desembocan en el útero. Abajo, la abertura del útero (el cuello) se encuentra en el fondo de la vagina.",
             "El óvulo listo para la fecundación. En el centro, el núcleo rodeado del citoplasma. Alrededor, la zona pelúcida circundada por algunas células del folículo.",
             "Un espermatozoide con su cabeza que contiene el núcleo y su cola que le permite desplazarse, mide de 10 a sesenta micras de longitud.",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+            "Sobre el ovario, el folículo de Grasf listo para romperse. En el folículo, el óvulo, mientras que cerca del ovario las franjas del pabellón de la trompa preparadas para 'atrapar' al óvulo."
     };
     // list of background colors
     public int[]  lst_backgroundcolor = {
@@ -47,7 +52,7 @@ public class SlideAdapter extends PagerAdapter {
             Color.parseColor("#335C67"),
             Color.parseColor("#540B0E"),
             Color.parseColor("#1D8A99"),
-            Color.rgb(1,188,212)
+            Color.parseColor("#9EA57C")
     };
 
 
@@ -66,7 +71,7 @@ public class SlideAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
         inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.slide,container,false);
         LinearLayout layoutslide = (LinearLayout) view.findViewById(R.id.slidelinearlayout);
@@ -78,6 +83,36 @@ public class SlideAdapter extends PagerAdapter {
         txttitle.setText(lst_title[position]);
         description.setText(lst_description[position]);
         container.addView(view);
+        myDialog = new Dialog(context);
+
+        imgslide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                TextView txtclose, txbnumero;
+                ImageView imagenPopUp;
+                Button btnFollow;
+                //inicializamos las variables
+                myDialog.setContentView(R.layout.custompopup);
+                txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+                txbnumero = myDialog.findViewById(R.id.txtNumeroSelected);
+                imagenPopUp = myDialog.findViewById(R.id.ImagePopup);
+
+                //establecemos los valores
+                txbnumero.setText(String.valueOf(position +1));
+                btnFollow = myDialog.findViewById(R.id.btnfollow);
+                imagenPopUp.setImageResource(lst_images[position]);
+                txtclose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                myDialog.show();
+            }
+        });
+
         return view;
     }
 
