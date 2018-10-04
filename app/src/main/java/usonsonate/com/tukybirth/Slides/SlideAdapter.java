@@ -24,11 +24,12 @@ public class SlideAdapter extends PagerAdapter {
     // list of images
     public int[] lst_images = {
 
-            R.drawable.ovulo_rodeado_circle,
+            R.drawable.ovulo_rodeado_circle_black,
             R.drawable.aparato_genital_circle,
             R.drawable.ovulo_listo_circle,
             R.drawable.espermatozoide_circle,
-            R.drawable.liberacion_ovulo_circle
+            R.drawable.ovulo_liberacion_cicle,
+            R.drawable.egg_travel_circle
     };
     // list of titles
     public String[] lst_title = {
@@ -36,7 +37,8 @@ public class SlideAdapter extends PagerAdapter {
             "APARATO GENITAL FEMENINO.",
             "EL ÓVULO LISTO.",
             "ESPERMATOZOIDE.",
-            "LIBERACIÓN DEL OVULO"
+            "LIBERACIÓN DEL ÓVULO.",
+            "EL VIAJE DEL HUEVO."
     }   ;
     // list of descriptions
     public String[] lst_description = {
@@ -44,15 +46,17 @@ public class SlideAdapter extends PagerAdapter {
             "Los dos ovarios y las dos trompas desembocan en el útero. Abajo, la abertura del útero (el cuello) se encuentra en el fondo de la vagina.",
             "El óvulo listo para la fecundación. En el centro, el núcleo rodeado del citoplasma. Alrededor, la zona pelúcida circundada por algunas células del folículo.",
             "Un espermatozoide con su cabeza que contiene el núcleo y su cola que le permite desplazarse, mide de 10 a sesenta micras de longitud.",
-            "Sobre el ovario, el folículo de Grasf listo para romperse. En el folículo, el óvulo, mientras que cerca del ovario las franjas del pabellón de la trompa preparadas para 'atrapar' al óvulo."
+            "Sobre el ovario, el folículo de Grasf listo para romperse. En el folículo, el óvulo, mientras que cerca del ovario las franjas del pabellón de la trompa preparadas para 'atrapar' al óvulo.",
+            "Luego de que el óvulo es liberado y se encuentra rodeado por las celulas folinculares será fecundado por un espermatozoide. Comienza la división hasta llegar a 16 células. Por  último el huevo se implanta en la mucosa uterina o nidación."
     };
     // list of background colors
     public int[]  lst_backgroundcolor = {
-            Color.parseColor("#011627"),
+            Color.parseColor("#2D3142"),
             Color.parseColor("#335C67"),
             Color.parseColor("#540B0E"),
             Color.parseColor("#1D8A99"),
-            Color.parseColor("#9EA57C")
+            Color.parseColor("#9EA57C"),
+            Color.parseColor("#274690")
     };
 
 
