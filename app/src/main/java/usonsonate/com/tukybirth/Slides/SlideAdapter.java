@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.chrisbanes.photoview.PhotoView;
+
 import usonsonate.com.tukybirth.R;
 
 public class SlideAdapter extends PagerAdapter {
@@ -29,7 +31,8 @@ public class SlideAdapter extends PagerAdapter {
             R.drawable.ovulo_listo_circle,
             R.drawable.espermatozoide_circle,
             R.drawable.ovulo_liberacion_cicle,
-            R.drawable.egg_travel_circle
+            R.drawable.egg_travel_circle,
+            R.drawable.ic_implantacion
     };
     // list of titles
     public String[] lst_title = {
@@ -38,7 +41,8 @@ public class SlideAdapter extends PagerAdapter {
             "EL ÓVULO LISTO.",
             "ESPERMATOZOIDE.",
             "LIBERACIÓN DEL ÓVULO.",
-            "EL VIAJE DEL HUEVO."
+            "EL VIAJE DEL HUEVO.",
+            "DEL HUEVO AL NIÑO."
     }   ;
     // list of descriptions
     public String[] lst_description = {
@@ -47,7 +51,8 @@ public class SlideAdapter extends PagerAdapter {
             "El óvulo listo para la fecundación. En el centro, el núcleo rodeado del citoplasma. Alrededor, la zona pelúcida circundada por algunas células del folículo.",
             "Un espermatozoide con su cabeza que contiene el núcleo y su cola que le permite desplazarse, mide de 10 a sesenta micras de longitud.",
             "Sobre el ovario, el folículo de Grasf listo para romperse. En el folículo, el óvulo, mientras que cerca del ovario las franjas del pabellón de la trompa preparadas para 'atrapar' al óvulo.",
-            "Luego de que el óvulo es liberado y se encuentra rodeado por las celulas folinculares será fecundado por un espermatozoide. Comienza la división hasta llegar a 16 células. Por  último el huevo se implanta en la mucosa uterina o nidación."
+            "Luego de que el óvulo es liberado y se encuentra rodeado por las celulas folinculares será fecundado por un espermatozoide. Comienza la división hasta llegar a 16 células. Por  último el huevo se implanta en la mucosa uterina o nidación.",
+            "El huevo se ha implantado. La mucosa uterina se convierte en la mucosa uterina (decidua). El átero de triángular, pasa a ser redondeado durante el embarazo."
     };
     // list of background colors
     public int[]  lst_backgroundcolor = {
@@ -56,7 +61,8 @@ public class SlideAdapter extends PagerAdapter {
             Color.parseColor("#540B0E"),
             Color.parseColor("#1D8A99"),
             Color.parseColor("#9EA57C"),
-            Color.parseColor("#274690")
+            Color.parseColor("#274690"),
+            Color.parseColor("#B21025")
     };
 
 
@@ -94,16 +100,14 @@ public class SlideAdapter extends PagerAdapter {
             public void onClick(View view) {
 
                 TextView txtclose, txbnumero;
-                ImageView imagenPopUp;
+                PhotoView imagenPopUp;
                 Button btnFollow;
                 //inicializamos las variables
-                myDialog.setContentView(R.layout.custompopup);
+                myDialog.setContentView(R.layout.custom_image_popup);
                 txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-                txbnumero = myDialog.findViewById(R.id.txtNumeroSelected);
-                imagenPopUp = myDialog.findViewById(R.id.ImagePopup);
+                imagenPopUp = (PhotoView) myDialog.findViewById(R.id.ImagePopup);
 
                 //establecemos los valores
-                txbnumero.setText(String.valueOf(position +1));
                 btnFollow = myDialog.findViewById(R.id.btnfollow);
                 imagenPopUp.setImageResource(lst_images[position]);
                 txtclose.setOnClickListener(new View.OnClickListener() {
