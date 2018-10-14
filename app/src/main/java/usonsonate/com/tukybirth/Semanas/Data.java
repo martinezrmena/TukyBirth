@@ -15,9 +15,9 @@ public class Data {
 
         int[] images = {
                 R.drawable.semana_1,
-                R.drawable.ani_cat_two,
-                R.drawable.ani_cat_three,
-                R.drawable.ani_cat_four,
+                R.drawable.semana_2,
+                R.drawable.semana_3,
+                R.drawable.semana_4,
                 R.drawable.ani_cat_five,
                 R.drawable.ani_cat_six,
                 R.drawable.ani_cat_seven,
@@ -33,9 +33,9 @@ public class Data {
                 R.drawable.ani_deer_three,
                 R.drawable.ani_deer_four,
 
-                R.drawable.bird_parrot_one,
-                R.drawable.bird_parrot_two,
-                R.drawable.bird_parrot_three,
+                R.drawable.semana_17,
+                R.drawable.semana_18,
+                R.drawable.semana_19,
                 R.drawable.bird_parrot_four,
                 R.drawable.bird_parrot_five,
                 R.drawable.bird_parrot_six,

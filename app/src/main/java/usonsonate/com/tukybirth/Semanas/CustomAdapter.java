@@ -143,6 +143,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             textview = itemView.findViewById(R.id.txv_row);
             imageView = itemView.findViewById(R.id.img_row);
             cardView = itemView.findViewById(R.id.MainCard);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         }
     }
