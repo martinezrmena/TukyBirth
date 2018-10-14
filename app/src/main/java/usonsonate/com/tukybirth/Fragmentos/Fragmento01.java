@@ -1,8 +1,12 @@
 package usonsonate.com.tukybirth.Fragmentos;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -14,17 +18,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Toast;
 
 import usonsonate.com.tukybirth.EncounterHistoryActivity;
 import usonsonate.com.tukybirth.InformacionSemanas;
 import usonsonate.com.tukybirth.MainActivity;
 import usonsonate.com.tukybirth.R;
+import usonsonate.com.tukybirth.Threads.CarouselBanner;
 
 public class Fragmento01 extends Fragment {
     private CardView Calendario, History;
     private View view;
     private Toolbar toolbar;
     Transition transition;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    CarouselBanner hilo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +49,8 @@ public class Fragmento01 extends Fragment {
         getActivity().getWindow().setReenterTransition(fadeIn);
         getActivity().getWindow().setAllowEnterTransitionOverlap(false);
 
+        //INICIALIZAMOS LAS VARIABLES
+        collapsingToolbarLayout = view.findViewById(R.id.collapsingtoolbar);
         Calendario = view.findViewById(R.id.btnactivitycalendar);
         History = view.findViewById(R.id.btnactivityHistory);
         Calendario.setOnClickListener(new View.OnClickListener()
@@ -79,8 +89,33 @@ public class Fragmento01 extends Fragment {
             }
         });
 
+
+
         return view;
     }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
 
+        if (hilo == null){
+            hilo = new CarouselBanner(getContext(), collapsingToolbarLayout);
+
+        }
+
+        hilo.execute();
+
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if(hilo.getStatus() == AsyncTask.Status.RUNNING){
+            hilo.cancel(true);
+            hilo = null;
+        }
+        Toast.makeText(getContext(), "se detuvo", Toast.LENGTH_SHORT).show();
+    }
 }
