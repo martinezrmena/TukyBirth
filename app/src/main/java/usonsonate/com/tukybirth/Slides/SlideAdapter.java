@@ -101,14 +101,12 @@ public class SlideAdapter extends PagerAdapter {
 
                 TextView txtclose, txbnumero;
                 PhotoView imagenPopUp;
-                Button btnFollow;
                 //inicializamos las variables
                 myDialog.setContentView(R.layout.custom_image_popup);
-                txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-                imagenPopUp = (PhotoView) myDialog.findViewById(R.id.ImagePopup);
+                txtclose = myDialog.findViewById(R.id.txtclose);
+                imagenPopUp = myDialog.findViewById(R.id.ImagePopup);
 
                 //establecemos los valores
-                btnFollow = myDialog.findViewById(R.id.btnfollow);
                 imagenPopUp.setImageResource(lst_images[position]);
                 txtclose.setOnClickListener(new View.OnClickListener() {
                     @Override

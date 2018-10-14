@@ -9,7 +9,7 @@ import usonsonate.com.tukybirth.R;
 
 public class Data {
 
-    public static ArrayList<Information> getData(String [] datos) {
+    public static ArrayList<Information> getData(String [] datos, String detils []) {
 
         ArrayList<Information> data = new ArrayList<>();
 
@@ -57,6 +57,8 @@ public class Data {
             }else{
                 current.color = new ColorDrawable(Color.parseColor("#1b5e20"));
             }
+
+            current.Details = detils[i];
 
             data.add(current);
         }

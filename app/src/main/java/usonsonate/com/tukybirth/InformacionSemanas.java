@@ -14,12 +14,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
 
+import java.sql.Date;
+
 import usonsonate.com.tukybirth.Semanas.*;
 
 public class InformacionSemanas extends AppCompatActivity {
 
     RecyclerView recyclerView;
     String [] datos;
+    String [] details;
     CustomAdapter adapter;
 
     @Override
@@ -49,8 +52,9 @@ public class InformacionSemanas extends AppCompatActivity {
 
         //Inicializar variables
         datos = getResources().getStringArray(R.array.semanas_array);
+        details = getResources().getStringArray(R.array.details_semana);
         recyclerView = findViewById(R.id.recycleView);
-        adapter = new CustomAdapter(this, Data.getData(datos));
+        adapter = new CustomAdapter(this, Data.getData(datos, details));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Vertical Orientation By Default
 

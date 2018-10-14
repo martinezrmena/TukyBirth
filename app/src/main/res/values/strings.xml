@@ -60,4 +60,49 @@
         <item>SEMANA 39</item>
         <item>SEMANA 40</item>
     </string-array>
+
+    <string-array name="details_semana">
+        <item>En la primer semana de embarazo es muy pronto para confirmar un embarazo, puesto que hace apenas dos o tres semanas del último periodo, recordando que el embarazo se cuenta desde la última semana del ciclo menstrual. En esta semana es probable que ninguno de los sintomas propios del embarazo se manifiesten. La concepción no llegará hasta dos semanas despues cuando empiece el desarrollo embrionario. Es recomendable una agendar una cita medica y tener vacunas contra la varicela y la rubéola.</item>
+        <item>SEMANA 2</item>
+        <item>SEMANA 3</item>
+        <item>SEMANA 4</item>
+        <item>SEMANA 5</item>
+        <item>SEMANA 6</item>
+        <item>SEMANA 7</item>
+        <item>SEMANA 8</item>
+        <item>SEMANA 9</item>
+        <item>SEMANA 10</item>
+        <item>SEMANA 11</item>
+        <item>SEMANA 12</item>
+        <item>SEMANA 13</item>
+        <item>SEMANA 14</item>
+        <item>SEMANA 15</item>
+        <item>SEMANA 16</item>
+        <item>SEMANA 17</item>
+        <item>SEMANA 18</item>
+        <item>SEMANA 19</item>
+        <item>SEMANA 20</item>
+        <item>SEMANA 21</item>
+        <item>SEMANA 22</item>
+        <item>SEMANA 23</item>
+        <item>SEMANA 24</item>
+        <item>SEMANA 25</item>
+        <item>SEMANA 26</item>
+        <item>SEMANA 27</item>
+        <item>SEMANA 28</item>
+        <item>SEMANA 29</item>
+        <item>SEMANA 30</item>
+        <item>SEMANA 31</item>
+        <item>SEMANA 32</item>
+        <item>SEMANA 33</item>
+        <item>SEMANA 34</item>
+        <item>SEMANA 35</item>
+        <item>SEMANA 36</item>
+        <item>SEMANA 37</item>
+        <item>SEMANA 38</item>
+        <item>SEMANA 39</item>
+        <item>SEMANA 40</item>
+    </string-array>
+
+
 </resources>

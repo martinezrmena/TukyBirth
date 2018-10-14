@@ -82,19 +82,20 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
                 //Toast.makeText(context, "OnClick Called at position " + position, Toast.LENGTH_SHORT).show();
 
-                TextView txtclose, txbnumero;
+                TextView txtclose, txbnumero, txbInformacion;
                 ImageView imagenPopUp;
-                Button btnFollow;
                 //inicializamos las variables
                 myDialog.setContentView(R.layout.custompopup);
                 txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
                 txbnumero = myDialog.findViewById(R.id.txtNumeroSelected);
+                txbInformacion = myDialog.findViewById(R.id.txtinformacion);
                 imagenPopUp = myDialog.findViewById(R.id.ImagePopup);
+                imagenPopUp.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                //establecemos los valores
+                //establecemos los valores del pop up
                 txbnumero.setText(String.valueOf(position +1));
-                btnFollow = myDialog.findViewById(R.id.btnfollow);
                 imagenPopUp.setImageResource(infoData.imageId);
+                txbInformacion.setText(infoData.Details);
                 txtclose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
