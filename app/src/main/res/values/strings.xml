@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Tuky Birth</string>
     <string name="Subtitle">Añadir Amigo</string>
+    <string name="mapname">Locación</string>
+    <string name="markerdetaillatlng">(%1$2f, %2$2f)</string>
     <string name="Information">Todo lo que debes saber sobre el proceso del embarazo.</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -103,6 +105,7 @@
         <item>SEMANA 39</item>
         <item>SEMANA 40</item>
     </string-array>
+    <string name="title_activity_main_maps">Map</string>
 
 
 </resources>
