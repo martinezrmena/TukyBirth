@@ -29,6 +29,8 @@
     <color name="materialpurple">#705F64</color>
     <color name="materialdarkblue">#00171F</color>
     <color name="materialblue">#003459</color>
+    <color name="materialdarkgreen">#204E4A</color>
+    <color name="materialdarkred">#A00E21</color>
 
     <integer-array name="initial_colors">
         <item>@color/blue</item>

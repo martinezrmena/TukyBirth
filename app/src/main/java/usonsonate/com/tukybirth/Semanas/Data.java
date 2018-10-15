@@ -18,19 +18,19 @@ public class Data {
                 R.drawable.semana_2,
                 R.drawable.semana_3,
                 R.drawable.semana_4,
-                R.drawable.ani_cat_five,
-                R.drawable.ani_cat_six,
-                R.drawable.ani_cat_seven,
+                R.drawable.semana_5,
+                R.drawable.semana_6,
+                R.drawable.semana_7,
 
-                R.drawable.ani_dog_one,
-                R.drawable.ani_dog_two,
-                R.drawable.ani_dog_three,
-                R.drawable.ani_dog_four,
-                R.drawable.ani_dog_five,
+                R.drawable.semana_8,
+                R.drawable.semana_9,
+                R.drawable.semana_10,
+                R.drawable.semana_11,
+                R.drawable.semana_12,
 
-                R.drawable.ani_deer_one,
-                R.drawable.ani_deer_two,
-                R.drawable.ani_deer_three,
+                R.drawable.semana_13,
+                R.drawable.semana_14,
+                R.drawable.semana_15,
                 R.drawable.ani_deer_four,
 
                 R.drawable.semana_17,
@@ -51,11 +51,11 @@ public class Data {
             current.title = Semanas[i];
             current.imageId = images[i];
             if (i <= 11){
-                current.color = new ColorDrawable(Color.parseColor("#767099"));
+                current.color = new ColorDrawable(Color.parseColor("#00171F"));
             }else if(i > 11 && i < 25){
-                current.color = new ColorDrawable(Color.parseColor("#009688"));
+                current.color = new ColorDrawable(Color.parseColor("#204E4A"));
             }else{
-                current.color = new ColorDrawable(Color.parseColor("#1b5e20"));
+                current.color = new ColorDrawable(Color.parseColor("#A00E21"));
             }
 
             current.Details = detils[i];

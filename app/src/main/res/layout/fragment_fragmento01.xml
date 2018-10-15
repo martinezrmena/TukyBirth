@@ -21,22 +21,24 @@
                 android:id="@+id/collapsingtoolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/semana_1"
+                android:background="@color/darkBlue"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginEnd="64dp"
                 app:expandedTitleMarginStart="48dp"
                 app:layout_scrollFlags="exitUntilCollapsed|scroll"
                 app:title="@string/app_name">
-
-
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbarid"
+                <RelativeLayout
+                    android:id="@+id/activity_main"
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:titleTextColor="@color/white" />
+                    android:layout_height="match_parent"
+                    >
+
+                    <android.support.v4.view.ViewPager
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/viewPager"
+                        />
+                </RelativeLayout>
 
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>

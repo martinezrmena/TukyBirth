@@ -1,30 +1,30 @@
 package usonsonate.com.tukybirth.Fragmentos;
 
-import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import usonsonate.com.tukybirth.EncounterHistoryActivity;
 import usonsonate.com.tukybirth.InformacionSemanas;
 import usonsonate.com.tukybirth.MainActivity;
 import usonsonate.com.tukybirth.R;
-import usonsonate.com.tukybirth.Threads.CarouselBanner;
+import usonsonate.com.tukybirth.Threads.ViewPagerCaurosel;
 
 public class Fragmento01 extends Fragment {
     private CardView Calendario, History;
@@ -32,7 +32,9 @@ public class Fragmento01 extends Fragment {
     private Toolbar toolbar;
     Transition transition;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    CarouselBanner hilo;
+    ViewPager viewPager;
+    Timer timer;
+    ViewPagerCaurosel viewPagerCaurosel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,31 +93,48 @@ public class Fragmento01 extends Fragment {
 
 
 
+        //ESTABLECEMOS EL CAROUSEL PARA SU MOVIMIENTO AUTOMATICO
+        viewPager = view.findViewById(R.id.viewPager);
+
+        viewPagerCaurosel = new ViewPagerCaurosel(getContext());
+
+        viewPager.setAdapter(viewPagerCaurosel);
+
         return view;
+    }
+
+
+    public class MyTimerTask extends TimerTask {
+        @Override
+        public void run(){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Integer value = viewPager.getCurrentItem();
+
+                    if (value == 23){
+                        value = 0;
+                    }else {
+                        value++;
+                    }
+
+                    viewPager.setCurrentItem(value);
+
+                }
+            });
+        }
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-
-        if (hilo == null){
-            hilo = new CarouselBanner(getContext(), collapsingToolbarLayout);
-
-        }
-
-        hilo.execute();
-
-
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new MyTimerTask(), 2000,4000);
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-
-        if(hilo.getStatus() == AsyncTask.Status.RUNNING){
-            hilo.cancel(true);
-            hilo = null;
-        }
-        Toast.makeText(getContext(), "se detuvo", Toast.LENGTH_SHORT).show();
+    public void onPause() {
+        super.onPause();
+        timer.cancel();
     }
 }
