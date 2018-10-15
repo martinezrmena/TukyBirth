@@ -44,11 +44,5 @@
             android:id="@+id/img_row"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"/>
-
-
-
-
     </LinearLayout>
-
-
 </android.support.v7.widget.CardView>
