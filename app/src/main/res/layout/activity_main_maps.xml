@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <EditText
         android:id="@+id/location_search"
-        android:layout_width="290dp"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_height="45dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -15,12 +17,16 @@
 
     <Button
         android:id="@+id/search_address"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:layout_toEndOf="@+id/location_search"
         android:onClick="onClick"
-        android:text="Search" />
+        android:background="@drawable/buttonstyle"
+        android:drawableLeft="@drawable/search_global"
+        android:textColor="@color/white"
+        android:text="Buscar" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -31,43 +37,60 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/hospitals_nearby"
+        android:layout_below="@+id/search_address"
         tools:context=".MainMapsActivity" />
 
-    <Button
-        android:id="@+id/hospitals_nearby"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/location_search"
-        android:onClick="onClick"
-        android:text="Hospitals" />
 
-    <Button
-        android:id="@+id/schools_nearby"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/MainButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/location_search"
-        android:layout_toEndOf="@+id/hospitals_nearby"
-        android:onClick="onClick"
-        android:text="Schools" />
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        app:fab_addButtonColorNormal="@color/colorPrimary"
+        app:fab_addButtonColorPressed="@color/colorPrimaryDark"
+        app:fab_addButtonPlusIconColor="#ffff"
+        app:fab_labelStyle="@style/menu_labels_style"
+        >
 
-    <Button
-        android:id="@+id/restaurants_nearby"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/location_search"
-        android:layout_toEndOf="@+id/schools_nearby"
-        android:onClick="onClick"
-        android:text="Restautants" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/hospitals_nearby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/hospital"
+            app:fab_colorNormal="@color/materialdarkblue"
+            app:fab_colorPressed="@color/materialblue"
+            app:fab_size="mini"
+            android:onClick="onClick"
+            app:fab_title="Hospitales"
+            />
 
-    <Button
-        android:id="@+id/B_to"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/restaurants_nearby"
-        android:layout_toEndOf="@+id/restaurants_nearby"
-        android:onClick="onClick"
-        android:text="To" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/schools_nearby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            app:fab_colorNormal="@color/materialgold"
+            app:fab_colorPressed="@color/materialyellow"
+            app:fab_icon="@drawable/school"
+            app:fab_size="mini"
+            app:layout_constraintBottom_toTopOf="@+id/MainButton"
+            app:fab_title="Escuelas"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/restaurants_nearby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/materialdarkgreen"
+            app:fab_colorPressed="@color/materialgreen"
+            app:fab_icon="@drawable/food"
+            android:onClick="onClick"
+            app:fab_size="mini"
+            app:layout_constraintBottom_toTopOf="@+id/MainButton"
+            app:fab_title="Restaurantes"/>
+
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </RelativeLayout>
