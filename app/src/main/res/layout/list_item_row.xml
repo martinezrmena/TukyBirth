@@ -42,7 +42,7 @@
             android:src="@drawable/ani_cat_five"
             android:layout_gravity="center"
             android:id="@+id/img_row"
-            android:clickable="true"
+            android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"/>
 
 
