@@ -13,6 +13,7 @@
     <string name="add_button">Añadir</string>
     <string name="update_button">Actualizar</string>
     <string name="delete_button">borrar</string>
+    <string name="search_placeholder">Lugar a buscar</string>
     <string name="fab">Añadir Nota</string>
 
 

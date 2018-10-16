@@ -2,6 +2,7 @@ package usonsonate.com.tukybirth;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -32,6 +33,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.hitomi.cmlibrary.CircleMenu;
+import com.hitomi.cmlibrary.OnMenuSelectedListener;
 
 import java.io.IOException;
 import java.util.List;
@@ -40,7 +43,7 @@ import java.util.Locale;
 import usonsonate.com.tukybirth.Maps.GetNearbyPlaces;
 
 public class MainMapsActivity extends AppCompatActivity implements
-        GoogleMap.OnMarkerDragListener,OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener,GoogleMap.OnMarkerDragListener,OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener  {
@@ -53,11 +56,15 @@ public class MainMapsActivity extends AppCompatActivity implements
     private static final int Request_User_Location_Code = 99;
     private double latitide, longitude;
     private int ProximityRadius = 10000;
+    CircleMenu circleMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_maps);
+
+        //Aplicando formato a los botones circulares
+        circleMenu = findViewById(R.id.circle_menu);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
@@ -71,104 +78,126 @@ public class MainMapsActivity extends AppCompatActivity implements
         mapFragment.getMapAsync(this);
 
         setTitle(R.string.mapname);
+
+
+        circleMenu.setMainMenu(Color.parseColor("#370A54"), R.drawable.add, R.drawable.cross)
+                .addSubMenu(Color.parseColor("#00171F"), R.drawable.hospital)
+                .addSubMenu(Color.parseColor("#ffffff"), R.drawable.map_hibrid)
+                .addSubMenu(Color.parseColor("#f44336"), R.drawable.map_normal)
+                .addSubMenu(Color.parseColor("#7c4dff"), R.drawable.terrain)
+                .addSubMenu(Color.parseColor("#B1740F"), R.drawable.satellite)
+                .setOnMenuSelectedListener(new OnMenuSelectedListener() {
+
+                    @Override
+                    public void onMenuSelected(int index) {
+                        OpcionSeleccionada(index);
+                    }
+
+                });
+
+
     }
 
+    public void OpcionSeleccionada(int i){
 
-
-    public void onClick(View v)
-    {
-        String hospital = "hospital", school = "school", restaurant = "restaurant";
+        String hospital = "hospital";
         Object transferData[] = new Object[2];
         GetNearbyPlaces getNearbyPlaces = new GetNearbyPlaces();
 
+        switch (i){
+            case 0:
+                if(isOnlineNet()){
+                    mMap.clear();
+                    String url = getUrl(latitide, longitude, hospital);
+                    transferData[0] = mMap;
+                    transferData[1] = url;
 
-        switch (v.getId())
-        {
-            case R.id.search_address:
-                EditText addressField = findViewById(R.id.location_search);
-                String address = addressField.getText().toString();
-
-                List<Address> addressList = null;
-                MarkerOptions userMarkerOptions = new MarkerOptions();
-
-                if (!TextUtils.isEmpty(address))
-                {
-                    Geocoder geocoder = new Geocoder(this);
-
-                    try
-                    {
-                        addressList = geocoder.getFromLocationName(address, 6);
-
-                        if (addressList != null)
-                        {
-                            for (int i=0; i<addressList.size(); i++)
-                            {
-                                Address userAddress = addressList.get(i);
-                                LatLng latLng = new LatLng(userAddress.getLatitude(), userAddress.getLongitude());
-
-                                userMarkerOptions.position(latLng);
-                                userMarkerOptions.title(address);
-                                userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                                mMap.addMarker(userMarkerOptions);
-                                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                                mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
-                            }
-                        }
-                        else
-                        {
-                            Toast.makeText(this, "Location not found...", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-                else
-                {
-                    Toast.makeText(this, "please write any location name...", Toast.LENGTH_SHORT).show();
+                    getNearbyPlaces.execute(transferData);
+                    Toast.makeText(this, "Buscando hospitales cercanos...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Mostrando hospitales cercanos...", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
 
-            case R.id.hospitals_nearby:
-                mMap.clear();
-                String url = getUrl(latitide, longitude, hospital);
-                transferData[0] = mMap;
-                transferData[1] = url;
-
-                getNearbyPlaces.execute(transferData);
-                Toast.makeText(this, "Searching for Nearby Hospitals...", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "Showing Nearby Hospitals...", Toast.LENGTH_SHORT).show();
+            case 1:
+                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                Toast.makeText(this, "Selecciono el estilo de mapa hibrido.", Toast.LENGTH_SHORT).show();
                 break;
 
 
-            case R.id.schools_nearby:
-                mMap.clear();
-                url = getUrl(latitide, longitude, school);
-                transferData[0] = mMap;
-                transferData[1] = url;
+            case 2:
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                Toast.makeText(this, "Selecciono el estilo de mapa normal.", Toast.LENGTH_SHORT).show();
+                break;
 
-                getNearbyPlaces.execute(transferData);
-                Toast.makeText(this, "Searching for Nearby Schools...", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "Showing Nearby Schools...", Toast.LENGTH_SHORT).show();
+            case 3:
+                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                Toast.makeText(this, "Selecciono el estilo de mapa terrestre.", Toast.LENGTH_SHORT).show();
                 break;
 
 
-            case R.id.restaurants_nearby:
-                mMap.clear();
-                url = getUrl(latitide, longitude, restaurant);
-                transferData[0] = mMap;
-                transferData[1] = url;
-
-                getNearbyPlaces.execute(transferData);
-                Toast.makeText(this, "Searching for Nearby Restaurants...", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "Showing Nearby Restaurants...", Toast.LENGTH_SHORT).show();
+            case 4:
+                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                Toast.makeText(this, "Selecciono el estilo de mapa satelital.", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.search_address:
+                if (isOnlineNet()){
 
+                    EditText addressField = findViewById(R.id.location_search);
+                    String address = addressField.getText().toString();
+                    addressField.setText("");
+
+                    List<Address> addressList = null;
+                    MarkerOptions userMarkerOptions = new MarkerOptions();
+
+                    if (!TextUtils.isEmpty(address))
+                    {
+                        Geocoder geocoder = new Geocoder(this);
+
+                        try
+                        {
+                            addressList = geocoder.getFromLocationName(address, 6);
+
+                            if (addressList != null)
+                            {
+                                for (int i=0; i<addressList.size(); i++)
+                                {
+                                    Address userAddress = addressList.get(i);
+                                    LatLng latLng = new LatLng(userAddress.getLatitude(), userAddress.getLongitude());
+
+                                    userMarkerOptions.position(latLng);
+                                    userMarkerOptions.title(address);
+                                    userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                                    mMap.addMarker(userMarkerOptions);
+                                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                                    mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+                                }
+                            }
+                            else
+                            {
+                                Toast.makeText(this, "Locación no encontrada...", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(this, "Por favor escribe el nombre de una locación...", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+        }
+    }
 
     private String getUrl(double latitide, double longitude, String nearbyPlace)
     {
@@ -196,7 +225,12 @@ public class MainMapsActivity extends AppCompatActivity implements
             mMap.setMyLocationEnabled(true);
         }
 
+
+        //Evento para arrastrar las señalizaciones
         googleMap.setOnMarkerDragListener(this);
+
+        //Evento para pulsar las señalizaciones
+        googleMap.setOnMarkerClickListener(this);
 
     }
 
@@ -219,8 +253,6 @@ public class MainMapsActivity extends AppCompatActivity implements
             return true;
         }
     }
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
@@ -258,7 +290,6 @@ public class MainMapsActivity extends AppCompatActivity implements
         googleApiClient.connect();
     }
 
-
     @Override
     public void onLocationChanged(Location location)
     {
@@ -290,7 +321,6 @@ public class MainMapsActivity extends AppCompatActivity implements
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
         }
     }
-
 
     @Override
     public void onConnected(@Nullable Bundle bundle)
@@ -341,4 +371,35 @@ public class MainMapsActivity extends AppCompatActivity implements
     public void onMarkerDragEnd(Marker marker) {
         setTitle(R.string.mapname);
     }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        marker.showInfoWindow();
+        String newTitle = String.format(Locale.getDefault(),
+                getString(R.string.markerdetaillatlng),
+                marker.getPosition().longitude,
+                marker.getPosition().latitude
+        );
+        Toast.makeText(this, newTitle, Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    public Boolean isOnlineNet() {
+
+        try {
+            Process p = java.lang.Runtime.getRuntime().exec("ping -c 1 www.google.es");
+
+            int val = p.waitFor();
+            boolean reachable = (val == 0);
+            return reachable;
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        Toast.makeText(this, "Revise su conexión a internet.", Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
 }

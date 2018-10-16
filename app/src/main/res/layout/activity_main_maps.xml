@@ -4,29 +4,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditText
-        android:id="@+id/location_search"
-        android:layout_width="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/MainSearchContainer"
+        android:gravity="center_horizontal"
+        android:background="@color/colorPrimary"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:weightSum="1.0">
+        <EditText
+            android:id="@+id/location_search"
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:layout_height="45dp"
+            android:ems="10"
+            android:textColorHint="@color/dark_gray"
+            android:inputType="textPersonName"
+            android:hint="@string/search_placeholder"
+            android:layout_weight="0.7"/>
 
-    <Button
-        android:id="@+id/search_address"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_toEndOf="@+id/location_search"
-        android:onClick="onClick"
-        android:background="@drawable/buttonstyle"
-        android:drawableLeft="@drawable/search_global"
-        android:textColor="@color/white"
-        android:text="Buscar" />
+        <Button
+            android:id="@+id/search_address"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:onClick="onClick"
+            android:background="@drawable/buttonstyle"
+            android:drawableLeft="@drawable/search_global"
+            android:textColor="@color/white"
+            android:text="Buscar"
+            android:layout_weight="0.3"/>
+
+    </LinearLayout>
+
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -37,60 +48,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/search_address"
+        android:layout_below="@+id/MainSearchContainer"
         tools:context=".MainMapsActivity" />
 
-
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/MainButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+    <com.hitomi.cmlibrary.CircleMenu
+        android:id="@+id/circle_menu"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        app:fab_addButtonColorNormal="@color/colorPrimary"
-        app:fab_addButtonColorPressed="@color/colorPrimaryDark"
-        app:fab_addButtonPlusIconColor="#ffff"
-        app:fab_labelStyle="@style/menu_labels_style"
-        >
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/hospitals_nearby"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_icon="@drawable/hospital"
-            app:fab_colorNormal="@color/materialdarkblue"
-            app:fab_colorPressed="@color/materialblue"
-            app:fab_size="mini"
-            android:onClick="onClick"
-            app:fab_title="Hospitales"
-            />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/schools_nearby"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            app:fab_colorNormal="@color/materialgold"
-            app:fab_colorPressed="@color/materialyellow"
-            app:fab_icon="@drawable/school"
-            app:fab_size="mini"
-            app:layout_constraintBottom_toTopOf="@+id/MainButton"
-            app:fab_title="Escuelas"/>
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/restaurants_nearby"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/materialdarkgreen"
-            app:fab_colorPressed="@color/materialgreen"
-            app:fab_icon="@drawable/food"
-            android:onClick="onClick"
-            app:fab_size="mini"
-            app:layout_constraintBottom_toTopOf="@+id/MainButton"
-            app:fab_title="Restaurantes"/>
-
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>
