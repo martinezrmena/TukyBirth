@@ -10,19 +10,19 @@
             android:title="Información de embarazo" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:icon="@drawable/utilities"
+            android:title="Utilidades" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Slideshow" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Gallery" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Comunicación">
         <menu>
             <item
                 android:id="@+id/nav_share"
