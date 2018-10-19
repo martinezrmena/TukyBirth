@@ -1,11 +1,13 @@
 package usonsonate.com.tukybirth;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -33,13 +35,25 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import usonsonate.com.tukybirth.Maps.DirectionsParser;
 import usonsonate.com.tukybirth.Maps.GetNearbyPlaces;
 
 public class MainMapsActivity extends AppCompatActivity implements
@@ -48,6 +62,7 @@ public class MainMapsActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener  {
 
+    //region Variables Globales
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
@@ -57,6 +72,10 @@ public class MainMapsActivity extends AppCompatActivity implements
     private double latitide, longitude;
     private int ProximityRadius = 10000;
     CircleMenu circleMenu;
+    private static final int LOCATION_REQUEST = 500;
+    ArrayList<LatLng> listPoints;
+    public static int HOSPITALS_NERBY = 1997;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +97,8 @@ public class MainMapsActivity extends AppCompatActivity implements
         mapFragment.getMapAsync(this);
 
         setTitle(R.string.mapname);
+
+        listPoints = new ArrayList<>();
 
 
         circleMenu.setMainMenu(Color.parseColor("#370A54"), R.drawable.add, R.drawable.cross)
@@ -199,6 +220,7 @@ public class MainMapsActivity extends AppCompatActivity implements
         }
     }
 
+    //URL CON API KEY PLACES
     private String getUrl(double latitide, double longitude, String nearbyPlace)
     {
         StringBuilder googleURL = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
@@ -206,17 +228,17 @@ public class MainMapsActivity extends AppCompatActivity implements
         googleURL.append("&radius=" + ProximityRadius);
         googleURL.append("&type=" + nearbyPlace);
         googleURL.append("&sensor=true");
-        googleURL.append("&key=" + "AIzaSyDFVQTj5gvRK9iBgsSJi5EWwb_8EZgm5Ng");
+        googleURL.append("&key=" + "AIzaSyBrAhl_uvyHIR46EqNuYEZ-R5q0-WE9mtI");
 
         Log.d("GoogleMapsActivity", "url = " + googleURL.toString());
 
         return googleURL.toString();
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.getUiSettings().setZoomControlsEnabled(true);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
         {
@@ -231,6 +253,44 @@ public class MainMapsActivity extends AppCompatActivity implements
 
         //Evento para pulsar las señalizaciones
         googleMap.setOnMarkerClickListener(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                //Reset marker when already 2
+                if (listPoints.size() == 2) {
+                    listPoints.clear();
+                    mMap.clear();
+                }
+                //Save first point select
+                listPoints.add(latLng);
+                //Create marker
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+
+                if (listPoints.size() == 1) {
+                    //Add first marker to the map
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                } else {
+                    //Add second marker to the map
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                }
+                mMap.addMarker(markerOptions);
+
+                if (listPoints.size() == 2) {
+                    //Create the URL to get request from first marker to second marker
+                    String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
+                    TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
+                    taskRequestDirections.execute(url);
+                }
+            }
+        });
+
 
     }
 
@@ -273,9 +333,17 @@ public class MainMapsActivity extends AppCompatActivity implements
                 }
                 else
                 {
-                    Toast.makeText(this, "Permission Denied...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permiso denegado...", Toast.LENGTH_SHORT).show();
                 }
                 return;
+        }
+
+        switch (requestCode){
+            case LOCATION_REQUEST:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mMap.setMyLocationEnabled(true);
+                }
+                break;
         }
     }
 
@@ -348,8 +416,8 @@ public class MainMapsActivity extends AppCompatActivity implements
 
     }
 
-
     //EVENTOS PARA EL ARRASTRE DE LA LOCACIÓN ACTUAL
+    //region Marker Events
     @Override
     public void onMarkerDragStart(Marker marker) {
 
@@ -383,6 +451,7 @@ public class MainMapsActivity extends AppCompatActivity implements
         Toast.makeText(this, newTitle, Toast.LENGTH_SHORT).show();
         return true;
     }
+    //endregion
 
     public Boolean isOnlineNet() {
 
@@ -402,4 +471,145 @@ public class MainMapsActivity extends AppCompatActivity implements
         return false;
     }
 
+    //URL CON API KEY DIRECTION SERVER
+    //region GoogleDrive
+    private String getRequestUrl(LatLng origin, LatLng dest) {
+        //Value of origin
+        String str_org = "origin=" + origin.latitude +","+origin.longitude;
+        //Value of destination
+        String str_dest = "destination=" + dest.latitude+","+dest.longitude;
+        //Set value enable the sensor
+        String sensor = "sensor=false";
+        //Mode for find direction
+        String mode = "mode=driving";
+        //Build the full param
+        String param = str_org +"&" + str_dest + "&" +sensor+"&" +mode;
+        //Output format
+        String output = "json";
+        //Create url to request
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param + "&key=" + "AIzaSyC5tyL8-9aJ92Y6MhWOH6NwKN7Ty1SDnE4";
+
+        Log.d("URL", url);
+        return url;
+    }
+
+    private String requestDirection(String reqUrl) throws IOException {
+        String responseString = "";
+        InputStream inputStream = null;
+        HttpURLConnection httpURLConnection = null;
+        try{
+            URL url = new URL(reqUrl);
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.connect();
+
+            //Get the response result
+            inputStream = httpURLConnection.getInputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            StringBuffer stringBuffer = new StringBuffer();
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuffer.append(line);
+            }
+
+            responseString = stringBuffer.toString();
+            bufferedReader.close();
+            inputStreamReader.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            httpURLConnection.disconnect();
+        }
+        return responseString;
+    }
+
+    public class TaskRequestDirections extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String responseString = "";
+            try {
+                responseString = requestDirection(strings[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return  responseString;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //Parse json here
+            TaskParser taskParser = new TaskParser();
+            taskParser.execute(s);
+        }
+    }
+
+    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>> > {
+
+        @Override
+        protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
+            JSONObject jsonObject = null;
+            List<List<HashMap<String, String>>> routes = null;
+            try {
+                jsonObject = new JSONObject(strings[0]);
+                DirectionsParser directionsParser = new DirectionsParser();
+                routes = directionsParser.parse(jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return routes;
+        }
+
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
+            //Get list route and display it into the map
+
+            ArrayList points = null;
+
+            PolylineOptions polylineOptions = null;
+
+            for (List<HashMap<String, String>> path : lists) {
+                points = new ArrayList();
+                polylineOptions = new PolylineOptions();
+
+                for (HashMap<String, String> point : path) {
+                    double lat = Double.parseDouble(point.get("lat"));
+                    double lon = Double.parseDouble(point.get("lon"));
+
+                    points.add(new LatLng(lat,lon));
+                }
+
+                polylineOptions.addAll(points);
+                polylineOptions.width(15);
+                polylineOptions.color(Color.BLUE);
+                polylineOptions.geodesic(true);
+            }
+
+            if (polylineOptions!=null) {
+                mMap.addPolyline(polylineOptions);
+            } else {
+                Toast.makeText(getApplicationContext(), "Dirección no encontrada", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+    //endregion
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == HOSPITALS_NERBY) {
+            //Mostramos por defecto los hospitales más cercanos
+            OpcionSeleccionada(0);
+            Log.d("HOSPITALES", "FUNCIONA");
+        }
+    }
 }
+
