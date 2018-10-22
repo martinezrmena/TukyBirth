@@ -54,7 +54,7 @@ public class Data {
             current.title = Semanas[i];
             current.imageId = images[i];
             if (i <= 11){
-                current.color = new ColorDrawable(Color.parseColor("#00171F"));
+                current.color = new ColorDrawable(Color.parseColor("#022D51"));
             }else if(i > 11 && i < 25){
                 current.color = new ColorDrawable(Color.parseColor("#1b5e20"));
             }else{

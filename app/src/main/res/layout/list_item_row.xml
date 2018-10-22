@@ -13,36 +13,54 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="5dp"
         android:id="@+id/MainCard"
         android:layout_gravity="center"
         >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txv_row"
-            android:textColor="@color/white"
-            android:text="Hello How Are you"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"/>
-
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="10dp"
-            android:background="@color/lightgray" />
+            android:layout_height="wrap_content"
+            android:elevation="3dp"
+            android:background="@drawable/myrect"
+            android:orientation="vertical"
+            android:layout_margin="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txv_row"
+                android:textColor="@color/white"
+                android:text="Hello How Are you"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"/>
 
-        <ImageView
-            android:layout_margin="7dp"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="@color/lightgray" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ani_cat_five"
             android:layout_gravity="center"
-            android:id="@+id/img_row"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"/>
+            android:gravity="center"
+            android:elevation="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/img_row"
+                android:layout_width="match_parent"
+                android:elevation="10dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ani_cat_five"
+                android:focusable="true"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 </android.support.v7.widget.CardView>

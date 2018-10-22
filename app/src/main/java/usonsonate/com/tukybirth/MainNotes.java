@@ -48,15 +48,24 @@ public class MainNotes extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
             MyEventDay myEventDay = data.getParcelableExtra(RESULT);
-            mCalendarView.setDate(myEventDay.getCalendar());
-            mEventDays.add(myEventDay);
-            mCalendarView.setEvents(mEventDays);
+            addNoteinCalendar(myEventDay);
         }
     }
+
+    private void addNoteinCalendar(MyEventDay myEventDay ){
+        //Formato que debe poseer la nota al enviarse para agregar al calendario
+        //MyEventDay(Calendar day, int imageResource, String note)
+
+        mCalendarView.setDate(myEventDay.getCalendar());
+        mEventDays.add(myEventDay);
+        mCalendarView.setEvents(mEventDays);
+    }
+
     private void addNote() {
         Intent intent = new Intent(this, AddNoteActivity.class);
         startActivityForResult(intent, ADD_NOTE);
     }
+
     private void previewNote(EventDay eventDay) {
         Intent intent = new Intent(this, NotePreviewActivity.class);
         if(eventDay instanceof MyEventDay){

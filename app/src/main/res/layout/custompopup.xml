@@ -36,46 +36,71 @@
             android:layout_width="200dp"
             android:layout_height="150dp"
             android:elevation="@dimen/activity_horizontal_margin"
+            android:padding="3dp"
+            android:background="@drawable/myrect"
             android:src="@drawable/ani_cat_five"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp"
-            android:gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SEMANA "
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:layout_gravity="center_horizontal"
-                />
-            <TextView
-                android:id="@+id/txtNumeroSelected"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Montreal,Canada"
-                android:textColor="@color/white"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"/>
-        </LinearLayout>
+            android:layout_marginBottom="5dp"/>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:elevation="5dp"
             android:layout_margin="3dp">
-            <TextView
-                android:id="@+id/txtinformacion"
-                android:text="hola"
-                android:textColor="@color/white"
-                android:elevation="@dimen/fab_margin"
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:background="@drawable/customtextviewrounded"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="2dp"/>
+                android:orientation="vertical"
+                android:background="@drawable/myrect"
+                android:elevation="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SEMANA "
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center_horizontal"
+                        />
+                    <TextView
+                        android:id="@+id/txtNumeroSelected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Montreal,Canada"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"/>
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lightgray" />
+
+                <TextView
+                    android:layout_margin="3dp"
+                    android:id="@+id/txtinformacion"
+                    android:text="hola"
+                    android:textColor="@color/white"
+                    android:elevation="@dimen/fab_margin"
+                    android:padding="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="2dp"/>
+
+            </LinearLayout>
+
+
 
         </ScrollView>
     </LinearLayout>

@@ -90,7 +90,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 txbnumero = myDialog.findViewById(R.id.txtNumeroSelected);
                 txbInformacion = myDialog.findViewById(R.id.txtinformacion);
                 imagenPopUp = myDialog.findViewById(R.id.ImagePopup);
-                imagenPopUp.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imagenPopUp.setScaleType(ImageView.ScaleType.FIT_XY);
 
                 //establecemos los valores del pop up
                 txbnumero.setText(String.valueOf(position +1));

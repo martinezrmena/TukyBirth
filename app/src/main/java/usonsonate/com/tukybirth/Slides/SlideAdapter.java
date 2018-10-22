@@ -52,7 +52,7 @@ public class SlideAdapter extends PagerAdapter {
             "Un espermatozoide con su cabeza que contiene el núcleo y su cola que le permite desplazarse, mide de 10 a sesenta micras de longitud.",
             "Sobre el ovario, el folículo de Grasf listo para romperse. En el folículo, el óvulo, mientras que cerca del ovario las franjas del pabellón de la trompa preparadas para 'atrapar' al óvulo.",
             "Luego de que el óvulo es liberado y se encuentra rodeado por las celulas folinculares será fecundado por un espermatozoide. Comienza la división hasta llegar a 16 células. Por  último el huevo se implanta en la mucosa uterina o nidación.",
-            "El huevo se ha implantado. La mucosa uterina se convierte en la mucosa uterina (decidua). El átero de triángular, pasa a ser redondeado durante el embarazo."
+            "Esta nueva y única célula es el principio de un ser humano y para lograrlo ella o él se implantará en el revestimiento uterino creciendo y madurando por los próximos 9 meses hasta el nacimiento. "
     };
     // list of background colors
     public int[]  lst_backgroundcolor = {
@@ -61,8 +61,8 @@ public class SlideAdapter extends PagerAdapter {
             Color.parseColor("#540B0E"),
             Color.parseColor("#1D8A99"),
             Color.parseColor("#9EA57C"),
-            Color.parseColor("#274690"),
-            Color.parseColor("#B21025")
+            Color.parseColor("#B21025"),
+            Color.parseColor("#274690")
     };
 
 

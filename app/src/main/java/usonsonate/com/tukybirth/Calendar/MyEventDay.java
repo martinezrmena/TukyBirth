@@ -19,6 +19,7 @@ public class MyEventDay extends EventDay implements Parcelable{
     public String getNote() {
         return mNote;
     }
+
     private MyEventDay(Parcel in) {
         super((Calendar) in.readSerializable(), in.readInt());
         mNote = in.readString();
