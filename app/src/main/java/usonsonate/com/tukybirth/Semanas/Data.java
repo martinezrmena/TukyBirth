@@ -43,7 +43,17 @@ public class Data {
                 R.drawable.week_27,
                 R.drawable.week_28,
                 R.drawable.week_29,
-                R.drawable.week_30
+                R.drawable.week_30,
+                R.drawable.week_31,
+                R.drawable.week_32,
+                R.drawable.week_33,
+                R.drawable.week_34,
+                R.drawable.week_35,
+                R.drawable.week_36,
+                R.drawable.week_37,
+                R.drawable.week_38,
+                R.drawable.week_39,
+                R.drawable.week_39,
         };
 
         String[] Semanas = datos;
