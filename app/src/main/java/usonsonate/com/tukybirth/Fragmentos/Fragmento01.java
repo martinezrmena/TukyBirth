@@ -112,7 +112,7 @@ public class Fragmento01 extends Fragment {
                 public void run() {
                     Integer value = viewPager.getCurrentItem();
 
-                    if (value == 23){
+                    if (value == 39){
                         value = 0;
                     }else {
                         value++;
