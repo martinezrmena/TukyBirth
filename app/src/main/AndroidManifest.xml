@@ -52,7 +52,9 @@
             android:label="@string/title_activity_main_maps" />
         <activity android:name=".MainNotes" />
         <activity android:name=".AddNoteActivity" />
-        <activity android:name=".NotePreviewActivity"></activity>
+        <activity android:name=".NotePreviewActivity" />
+        <activity android:name=".ListaNotasDia" />
+        <activity android:name=".ModificarNota"></activity>
     </application>
 
 </manifest>

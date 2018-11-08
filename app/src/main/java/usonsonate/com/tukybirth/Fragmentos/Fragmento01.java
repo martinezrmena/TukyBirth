@@ -30,11 +30,11 @@ public class Fragmento01 extends Fragment {
     private CardView Calendario, History;
     private View view;
     private Toolbar toolbar;
-    Transition transition;
-    CollapsingToolbarLayout collapsingToolbarLayout;
-    ViewPager viewPager;
-    Timer timer;
-    ViewPagerCaurosel viewPagerCaurosel;
+    private Transition transition;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private ViewPager viewPager;
+    private Timer timer;
+    private ViewPagerCaurosel viewPagerCaurosel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
