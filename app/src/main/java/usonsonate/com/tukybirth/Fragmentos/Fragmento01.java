@@ -2,9 +2,12 @@ package usonsonate.com.tukybirth.Fragmentos;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -12,6 +15,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Transition;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +39,7 @@ public class Fragmento01 extends Fragment {
     private ViewPager viewPager;
     private Timer timer;
     private ViewPagerCaurosel viewPagerCaurosel;
+    private AppBarLayout appbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +58,14 @@ public class Fragmento01 extends Fragment {
 
         //INICIALIZAMOS LAS VARIABLES
         collapsingToolbarLayout = view.findViewById(R.id.collapsingtoolbar);
+        appbar = view.findViewById(R.id.appbar);
+
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            //Se cumple que sea Landscape entonces llamo a mis controles
+            appbar.setExpanded(false);
+        }
+
+
         Calendario = view.findViewById(R.id.btnactivitycalendar);
         History = view.findViewById(R.id.btnactivityHistory);
         Calendario.setOnClickListener(new View.OnClickListener()

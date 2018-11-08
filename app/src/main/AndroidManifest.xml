@@ -50,11 +50,16 @@
         <activity
             android:name=".MainMapsActivity"
             android:label="@string/title_activity_main_maps" />
-        <activity android:name=".MainNotes" />
-        <activity android:name=".AddNoteActivity" />
-        <activity android:name=".NotePreviewActivity" />
-        <activity android:name=".ListaNotasDia" />
-        <activity android:name=".ModificarNota"></activity>
+        <activity android:name=".MainNotes"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AddNoteActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NotePreviewActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ListaNotasDia"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ModificarNota"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
