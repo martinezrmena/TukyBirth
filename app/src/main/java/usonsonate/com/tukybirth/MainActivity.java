@@ -119,7 +119,8 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.contenedor, new Fragmento04()).commit();
 
         } else if (id == R.id.nav_share) {
-
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_send) {
             Intent intent = new Intent(getApplicationContext(), MainMapsActivity.class);

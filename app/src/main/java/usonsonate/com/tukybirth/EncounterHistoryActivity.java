@@ -18,10 +18,6 @@ public class EncounterHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encounter_history);
 
-        setTitle("Historia de un encuentro");
-        //Para activar y asignar que necesitaremos un botón para regresar a la activity anterior
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         //CREAMOS LA TRANSICION DE ENTRADA
         Fade fadeIn = new Fade(Fade.IN);
         fadeIn.setDuration(MainActivity.DURATION_TRANSITION);

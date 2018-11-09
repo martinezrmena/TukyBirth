@@ -34,7 +34,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EncounterHistoryActivity"
-            android:parentActivityName=".MainActivity" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -50,17 +50,26 @@
         <activity
             android:name=".MainMapsActivity"
             android:label="@string/title_activity_main_maps" />
-        <activity android:name=".MainNotes"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AddNoteActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".NotePreviewActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ListaNotasDia"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ModificarNota"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".Principal_Ayuda"/>
+        <activity
+            android:name=".MainNotes"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddNoteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NotePreviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaNotasDia"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ModificarNota"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Login"
+            android:theme="@style/CustomActionBar"></activity>
+
+        <activity
+            android:name=".Principal_Ayuda"/>
     </application>
 
 </manifest>
