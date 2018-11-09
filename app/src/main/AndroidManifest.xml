@@ -60,6 +60,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ModificarNota"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".Principal_Ayuda"/>
     </application>
 
 </manifest>

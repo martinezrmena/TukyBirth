@@ -33,6 +33,11 @@
     <color name="materialdarkgreen">#204E4A</color>
     <color name="materialdarkred">#A00E21</color>
 
+    /////////////////////////////////////////////////
+    <color name="letra">#ffffff</color>
+    <color name="fondo">#92f987de</color>
+    <color name="fragPrincipal">#7d0b0b0b</color>
+
     <integer-array name="initial_colors">
         <item>@color/blue</item>
         <item>@color/purple</item>

@@ -23,6 +23,7 @@ import usonsonate.com.tukybirth.Fragmentos.Fragmento01;
 import usonsonate.com.tukybirth.Fragmentos.Fragmento02;
 import usonsonate.com.tukybirth.Fragmentos.Fragmento03;
 import usonsonate.com.tukybirth.Fragmentos.Fragmento04;
+import usonsonate.com.tukybirth.Fragmentos.FragmentoPrincipal;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +39,10 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("TUKY BIRTH");
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.contenedor, new FragmentoPrincipal()).commit();
+
 
         //transicion inversa a //
         //CREAMOS LA TRANSICION
