@@ -1,6 +1,8 @@
 package usonsonate.com.tukybirth;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     public static final long DURATION_TRANSITION = 1000;
     public static int HOSPITALS_NERBY = 1997;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,18 +45,12 @@ public class MainActivity extends AppCompatActivity
         fadeIn.setDuration(MainActivity.DURATION_TRANSITION);
         fadeIn.setInterpolator(new DecelerateInterpolator());
         //ESTABLECEMOS LA TRANSICION DE REGRESO
-        getWindow().setReenterTransition(fadeIn);
-        getWindow().setAllowEnterTransitionOverlap(false);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainMapsActivity.class);
-                setResult(HOSPITALS_NERBY, intent);
-                startActivity(intent);
-            }
-        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setReenterTransition(fadeIn);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setAllowEnterTransitionOverlap(false);
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

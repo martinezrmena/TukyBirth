@@ -13,7 +13,6 @@ import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,7 +23,6 @@ import java.util.List;
 import usonsonate.com.tukybirth.Calendar.MyEventDay;
 import usonsonate.com.tukybirth.SQLite.DB;
 import usonsonate.com.tukybirth.SQLite.Notas;
-
 
 public class MainNotes extends AppCompatActivity {
 
@@ -74,11 +72,7 @@ public class MainNotes extends AppCompatActivity {
         db = new DB(MainNotes.this);
 
         //Consultamos las notas del mes del calendario con el mes que iniciara
-        try {
-            ConsultarNotasMes(mCalendarView.getCurrentPageDate().getTime());
-        } catch (OutOfDateRangeException e) {
-            e.printStackTrace();
-        }
+        ConsultarNotasMes(mCalendarView.getCurrentPageDate().getTime());
 
 
         //Evento para el boton flotante
@@ -102,22 +96,14 @@ public class MainNotes extends AppCompatActivity {
         mCalendarView.setOnForwardPageChangeListener(new OnCalendarPageChangeListener() {
             @Override
             public void onChange() {
-                try {
-                    ConsultarNotasMes(mCalendarView.getCurrentPageDate().getTime());
-                } catch (OutOfDateRangeException e) {
-                    e.printStackTrace();
-                }
+                ConsultarNotasMes(mCalendarView.getCurrentPageDate().getTime());
             }
         });
 
         mCalendarView.setOnPreviousPageChangeListener(new OnCalendarPageChangeListener() {
             @Override
             public void onChange() {
-                try {
-                    ConsultarNotasMes(mCalendarView.getCurrentPageDate().getTime());
-                } catch (OutOfDateRangeException e) {
-                    e.printStackTrace();
-                }
+                ConsultarNotasMes(mCalendarView.getCurrentPageDate().getTime());
             }
         });
 
@@ -149,7 +135,7 @@ public class MainNotes extends AppCompatActivity {
 
     }
 
-    private void ConsultarNotasMes(Date currentdate) throws OutOfDateRangeException {
+    private void ConsultarNotasMes(Date currentdate){
 
         lstNotas = null;
 
@@ -253,9 +239,8 @@ public class MainNotes extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
             MyEventDay myEventDay = data.getParcelableExtra(RESULT);
-
-            //Agregamos la nota en el calendario
             try {
+                //Agregamos la nota en el calendario
                 addNoteinCalendar(myEventDay);
             } catch (OutOfDateRangeException e) {
                 e.printStackTrace();
@@ -266,15 +251,14 @@ public class MainNotes extends AppCompatActivity {
 
         if(requestCode == LIST_NOTES){
             mEventDays.clear();
+            try {
+                mCalendarView.setDate(mCalendarView.getCurrentPageDate().getTime());
+            } catch (OutOfDateRangeException e) {
+                e.printStackTrace();
+            }
         }
 
-        try {
-            ConsultarNotasMes(mCalendarView.getCurrentPageDate().getTime());
-        } catch (OutOfDateRangeException e) {
-            e.printStackTrace();
-        }
-
-
+        ConsultarNotasMes(mCalendarView.getCurrentPageDate().getTime());
     }
 
     private void addNoteinCalendar(MyEventDay myEventDay ) throws OutOfDateRangeException {

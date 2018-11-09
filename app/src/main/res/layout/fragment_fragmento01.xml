@@ -15,7 +15,8 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="300dp">
+            android:layout_height="300dp"
+            android:background="@color/colorPrimary">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsingtoolbar"
@@ -27,17 +28,16 @@
                 app:expandedTitleMarginStart="48dp"
                 app:layout_scrollFlags="exitUntilCollapsed|scroll"
                 app:title="@string/app_name">
+
                 <RelativeLayout
                     android:id="@+id/activity_main"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
 
                     <android.support.v4.view.ViewPager
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:id="@+id/viewPager"
-                        />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                 </RelativeLayout>
 
             </android.support.design.widget.CollapsingToolbarLayout>
@@ -174,8 +174,8 @@
                             <ImageView
                                 android:layout_width="64dp"
                                 android:layout_height="64dp"
-                                android:padding="10dp"
                                 android:background="@drawable/buttonstyle"
+                                android:padding="10dp"
                                 android:src="@drawable/ic_calendar" />
 
                             <TextView

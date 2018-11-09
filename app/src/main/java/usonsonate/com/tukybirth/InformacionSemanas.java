@@ -2,6 +2,7 @@ package usonsonate.com.tukybirth;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,9 +39,15 @@ public class InformacionSemanas extends AppCompatActivity {
         fadeIn.setDuration(MainActivity.DURATION_TRANSITION);
         fadeIn.setInterpolator(new DecelerateInterpolator());
         //OBTENEMOS LA VENTANA ANTERIOR Y ESTABLECEMOS LA TRASICION EN SU LLEGADA
-        getWindow().setExitTransition(fadeOut);
-        getWindow().setEnterTransition(fadeIn);
-        getWindow().setAllowEnterTransitionOverlap(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(fadeOut);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(fadeIn);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setAllowEnterTransitionOverlap(false);
+        }
 
         //para cerrar utilizamos finishAfterTransition();
 

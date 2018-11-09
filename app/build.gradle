@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "usonsonate.com.tukybirth"
-        minSdkVersion 23
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -28,35 +28,23 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0-alpha1'
     implementation 'com.android.support:recyclerview-v7:28.0.0-alpha1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-
     //Implementacion para el zoom a las imagenes
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
-
     implementation 'com.android.support:support-v4:28.0.0-alpha1'
-
     //Implementaciones para googlemaps
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
-
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     //Implementacion para los floating action menu y button
     implementation 'com.getbase:floatingactionbutton:1.10.1'
-
     //Implementacion para el splashscreen
     implementation 'gr.pantrif:easy-android-splash-screen:0.0.1'
-
     //Implementacion para descargar datos de internet
     implementation 'com.squareup.picasso:picasso:2.5.2'
-
     //Implementacion para aplicar un menu desplegable (FloatingActionButon) de forma circular
     implementation 'com.github.Hitomis:CircleMenu:v1.1.0'
-
     //Implementacion para un calendar que permita agregar iconos sobre sus dias
     implementation 'com.applandeo:material-calendar-view:1.4.0'
-
-
 }

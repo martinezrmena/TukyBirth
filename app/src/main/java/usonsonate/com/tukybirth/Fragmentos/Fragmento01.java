@@ -3,6 +3,7 @@ package usonsonate.com.tukybirth.Fragmentos;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -53,8 +54,12 @@ public class Fragmento01 extends Fragment {
         fadeIn.setDuration(MainActivity.DURATION_TRANSITION);
         fadeIn.setInterpolator(new DecelerateInterpolator());
         //ESTABLECEMOS LA TRANSICION DE REGRESO
-        getActivity().getWindow().setReenterTransition(fadeIn);
-        getActivity().getWindow().setAllowEnterTransitionOverlap(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getActivity().getWindow().setReenterTransition(fadeIn);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getActivity().getWindow().setAllowEnterTransitionOverlap(false);
+        }
 
         //INICIALIZAMOS LAS VARIABLES
         collapsingToolbarLayout = view.findViewById(R.id.collapsingtoolbar);
@@ -77,7 +82,9 @@ public class Fragmento01 extends Fragment {
                 transition = new Fade(Fade.OUT);
                 transition.setDuration(MainActivity.DURATION_TRANSITION);
                 transition.setInterpolator(new DecelerateInterpolator());
-                getActivity().getWindow().setExitTransition(transition);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getActivity().getWindow().setExitTransition(transition);
+                }
                 Context context = view.getContext();
 
                 Intent detail = new Intent(context.getApplicationContext(), InformacionSemanas.class);
@@ -95,7 +102,9 @@ public class Fragmento01 extends Fragment {
                 transition = new Fade(Fade.OUT);
                 transition.setDuration(MainActivity.DURATION_TRANSITION);
                 transition.setInterpolator(new DecelerateInterpolator());
-                getActivity().getWindow().setExitTransition(transition);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getActivity().getWindow().setExitTransition(transition);
+                }
                 Context context = view.getContext();
 
                 Intent detail = new Intent(context.getApplicationContext(), EncounterHistoryActivity.class);
