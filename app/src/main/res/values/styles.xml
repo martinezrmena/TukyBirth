@@ -39,5 +39,17 @@
     </style>
 
 
+    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="ExpandedAppBar" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/materialDarkOrange</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:thickness">5dp</item>
+    </style>
 
 </resources>

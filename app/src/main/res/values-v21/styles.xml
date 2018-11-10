@@ -5,4 +5,12 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="ExpandedAppBar" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:thickness">5dp</item>
+        <item name="android:elevation">10dp</item>
+    </style>
 </resources>

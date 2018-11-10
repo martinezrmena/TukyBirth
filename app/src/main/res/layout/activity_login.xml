@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".Login">
+    tools:context=".Login"
+    >
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -15,7 +15,7 @@
         android:background="@color/colorPrimary">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsingtoolbar"
+            android:id="@+id/collapsedToolBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/pregnant"
@@ -23,15 +23,15 @@
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="exitUntilCollapsed|scroll"
-            app:title="@string/app_name">
+            >
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/Idtoolbar"
                 app:layout_collapseMode="pin"
                 android:layout_width="match_parent"
-                android:theme="@style/AppTheme"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"/>
+                app:titleTextColor="@color/white"
+                app:title="Inicio de sesión"
+                android:layout_height="?attr/actionBarSize"/>
 
             <RelativeLayout
                 android:id="@+id/activity_main"
@@ -60,28 +60,39 @@
             android:background="@color/backgroundcolor"
             android:orientation="vertical"
             android:gravity="center"
+            android:paddingTop="30dp"
+            android:layout_gravity="fill"
             android:padding="10dp">
 
-            <TextView
+            <EditText
                 android:id="@+id/txbNombre"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_perm_identity_black_24dp"
+                android:drawablePadding="10dp"
                 android:hint="@string/login_name"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txbPassword"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+                android:drawablePadding="10dp"
+                android:inputType="textPassword"
+                android:hint="@string/login_password"
+                android:textStyle="bold"
                 />
 
-            <TextView
-                android:id="@+id/txbApellido"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btnLogIn"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/login_apellido"
-                />
-
-            <TextView
-                android:id="@+id/txb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/login_name"
-                />
+                android:layout_marginTop="40dp"
+                android:text="Registrarse"
+                android:textColor="@color/white"
+                android:drawableRight="@drawable/ic_send_black_24dp"
+                android:background="@drawable/buttonpressedstyle"/>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

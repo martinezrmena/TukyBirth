@@ -17,6 +17,7 @@
     <string name="fab">Añadir Nota</string>
     <string name="login_name">Escribe tu nombre</string>
     <string name="login_apellido">Escribe tu apellido</string>
+    <string name="login_password">Contraseña</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
