@@ -1,39 +1,30 @@
-package usonsonate.com.tukybirth.Fragmentos;
+package usonsonate.com.tukybirth;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Transition;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import usonsonate.com.tukybirth.EncounterHistoryActivity;
-import usonsonate.com.tukybirth.InformacionSemanas;
-import usonsonate.com.tukybirth.MainActivity;
-import usonsonate.com.tukybirth.R;
 import usonsonate.com.tukybirth.Threads.ViewPagerCaurosel;
 
-public class Fragmento01 extends Fragment {
+public class InformacionEmbarazo extends AppCompatActivity {
+
     private CardView Calendario, History;
-    private View view;
     private Toolbar toolbar;
     private Transition transition;
     private CollapsingToolbarLayout collapsingToolbarLayout;
@@ -43,10 +34,13 @@ public class Fragmento01 extends Fragment {
     private AppBarLayout appbar;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_fragmento01, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_informacion_embarazo);
+
+        setTitle("INFORMACIÓN");
+        //Para activar y asignar que necesitaremos un botón para regresar a la activity anterior
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //transicion inversa a //
         //CREAMOS LA TRANSICION
@@ -55,15 +49,15 @@ public class Fragmento01 extends Fragment {
         fadeIn.setInterpolator(new DecelerateInterpolator());
         //ESTABLECEMOS LA TRANSICION DE REGRESO
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getActivity().getWindow().setReenterTransition(fadeIn);
+            getWindow().setReenterTransition(fadeIn);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getActivity().getWindow().setAllowEnterTransitionOverlap(false);
+            getWindow().setAllowEnterTransitionOverlap(false);
         }
 
         //INICIALIZAMOS LAS VARIABLES
-        collapsingToolbarLayout = view.findViewById(R.id.collapsingtoolbar);
-        appbar = view.findViewById(R.id.appbar);
+        collapsingToolbarLayout = findViewById(R.id.collapsingtoolbar);
+        appbar = findViewById(R.id.appbar);
 
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             //Se cumple que sea Landscape entonces llamo a mis controles
@@ -71,8 +65,8 @@ public class Fragmento01 extends Fragment {
         }
 
 
-        Calendario = view.findViewById(R.id.btnactivitycalendar);
-        History = view.findViewById(R.id.btnactivityHistory);
+        Calendario = findViewById(R.id.btnactivitycalendar);
+        History = findViewById(R.id.btnactivityHistory);
         Calendario.setOnClickListener(new View.OnClickListener()
         {
             @SuppressWarnings("unchecked")
@@ -83,13 +77,13 @@ public class Fragmento01 extends Fragment {
                 transition.setDuration(MainActivity.DURATION_TRANSITION);
                 transition.setInterpolator(new DecelerateInterpolator());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    getActivity().getWindow().setExitTransition(transition);
+                    getWindow().setExitTransition(transition);
                 }
-                Context context = view.getContext();
+                Context context = InformacionEmbarazo.this;
 
-                Intent detail = new Intent(context.getApplicationContext(), InformacionSemanas.class);
+                Intent detail = new Intent(InformacionEmbarazo.this, InformacionSemanas.class);
                 context.startActivity(detail,
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity()).toBundle());
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(InformacionEmbarazo.this).toBundle());
             }
         });
 
@@ -103,33 +97,35 @@ public class Fragmento01 extends Fragment {
                 transition.setDuration(MainActivity.DURATION_TRANSITION);
                 transition.setInterpolator(new DecelerateInterpolator());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    getActivity().getWindow().setExitTransition(transition);
+                    getWindow().setExitTransition(transition);
                 }
-                Context context = view.getContext();
+                Context context = InformacionEmbarazo.this;
 
                 Intent detail = new Intent(context.getApplicationContext(), EncounterHistoryActivity.class);
                 context.startActivity(detail,
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity()).toBundle());
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(InformacionEmbarazo.this).toBundle());
             }
         });
 
 
 
         //ESTABLECEMOS EL CAROUSEL PARA SU MOVIMIENTO AUTOMATICO
-        viewPager = view.findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
 
-        viewPagerCaurosel = new ViewPagerCaurosel(getContext());
+        viewPagerCaurosel = new ViewPagerCaurosel(InformacionEmbarazo.this);
 
         viewPager.setAdapter(viewPagerCaurosel);
 
-        return view;
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new InformacionEmbarazo.MyTimerTask(), 2000,4000);
+
     }
 
 
     public class MyTimerTask extends TimerTask {
         @Override
         public void run(){
-            getActivity().runOnUiThread(new Runnable() {
+            runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     Integer value = viewPager.getCurrentItem();
@@ -148,15 +144,10 @@ public class Fragmento01 extends Fragment {
     }
 
     @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
         timer = new Timer();
-        timer.scheduleAtFixedRate(new MyTimerTask(), 2000,4000);
+        timer.scheduleAtFixedRate(new InformacionEmbarazo.MyTimerTask(), 2000,4000);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        timer.cancel();
-    }
 }

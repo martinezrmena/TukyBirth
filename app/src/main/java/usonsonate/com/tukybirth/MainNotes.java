@@ -275,12 +275,4 @@ public class MainNotes extends AppCompatActivity {
         startActivityForResult(intent, ADD_NOTE);
     }
 
-    private void previewNote(EventDay eventDay) {
-
-        Intent intent = new Intent(this, NotePreviewActivity.class);
-        if(eventDay instanceof MyEventDay){
-            intent.putExtra(EVENT, (MyEventDay) eventDay);
-        }
-        startActivity(intent);
-    }
 }

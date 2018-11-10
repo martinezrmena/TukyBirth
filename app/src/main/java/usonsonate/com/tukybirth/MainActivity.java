@@ -4,11 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.transition.Fade;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
 
-import usonsonate.com.tukybirth.Fragmentos.Fragmento01;
 import usonsonate.com.tukybirth.Fragmentos.Fragmento02;
 import usonsonate.com.tukybirth.Fragmentos.Fragmento03;
 import usonsonate.com.tukybirth.Fragmentos.Fragmento04;
@@ -107,8 +103,8 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
-            fragmentManager.beginTransaction().replace(R.id.contenedor, new Fragmento01()).commit();
+            Intent intent = new Intent(getApplicationContext(), InformacionEmbarazo.class);
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
             fragmentManager.beginTransaction().replace(R.id.contenedor, new Fragmento02()).commit();
 
