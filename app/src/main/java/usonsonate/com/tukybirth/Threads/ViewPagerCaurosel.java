@@ -15,7 +15,7 @@ public class ViewPagerCaurosel extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    int[] images = {
+    public int[] images = {
             R.drawable.semana_1,
             R.drawable.semana_2,
             R.drawable.semana_3,
@@ -55,7 +55,7 @@ public class ViewPagerCaurosel extends PagerAdapter {
             R.drawable.week_37,
             R.drawable.week_38,
             R.drawable.week_39,
-            R.drawable.week_39,
+            R.drawable.week_39
     };
 
     public ViewPagerCaurosel(Context context) {

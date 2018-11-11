@@ -130,24 +130,20 @@ public class InformacionEmbarazo extends AppCompatActivity {
                 public void run() {
                     Integer value = viewPager.getCurrentItem();
 
-                    if (value == 39){
+                    if (value == (viewPagerCaurosel.getCount() - 1)){
                         value = 0;
                     }else {
                         value++;
                     }
 
-                    viewPager.setCurrentItem(value);
+                    if(value >= 0 && value<= (viewPagerCaurosel.getCount() - 1)){
+                        viewPager.setCurrentItem(value);
+                    }
+
 
                 }
             });
         }
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new InformacionEmbarazo.MyTimerTask(), 2000,4000);
     }
 
 }
