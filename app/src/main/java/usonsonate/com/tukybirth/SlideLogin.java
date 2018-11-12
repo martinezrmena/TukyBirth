@@ -1,6 +1,7 @@
 package usonsonate.com.tukybirth;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -66,8 +67,6 @@ public class SlideLogin extends AppCompatActivity {
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mSlideViewPager.setCurrentItem(mCurrentPage + 1);
-
                 if(btnSiguiente.getText().equals("Terminar")){
                     String periodo_duracion = String.valueOf(slideAdapter.getPERIODO_DURACION());
                     String duracion_pms = String.valueOf(slideAdapter.getDURACION_PMS());
@@ -90,6 +89,10 @@ public class SlideLogin extends AppCompatActivity {
 
                                 db.guardar_O_ActualizarPersonas(persona);
                                 Toast.makeText(SlideLogin.this, "El usuario fue insertado exitosamente", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SlideLogin.this, CalendarLogin.class);
+                                intent.putExtra("PERSONA", persona);
+                                startActivity(intent);
+                                finish();
 
 
                             }
@@ -109,6 +112,8 @@ public class SlideLogin extends AppCompatActivity {
 
 
                 }
+
+                mSlideViewPager.setCurrentItem(mCurrentPage + 1);
             }
         });
 

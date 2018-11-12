@@ -71,10 +71,7 @@ public class Login extends AppCompatActivity {
                         intent.putExtra("USERNAME", txbNombre.getText().toString());
                         intent.putExtra("PASSWORD", txbPassword.getText().toString());
                         startActivity(intent);
-                        txbPassword.setText("");
-                        txbNombre.setText("");
-
-
+                        finish();
                     }
                 }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
@@ -96,9 +93,7 @@ public class Login extends AppCompatActivity {
                     Intent intent = new Intent(Login.this, CalendarLogin.class);
                     intent.putExtra("PERSONA", lstPersonas.get(0));
                     startActivity(intent);
-
-                    txbPassword.setText("");
-                    txbNombre.setText("");
+                    finish();
 
                 }else{
 
