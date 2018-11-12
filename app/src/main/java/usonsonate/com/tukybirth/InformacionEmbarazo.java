@@ -16,6 +16,7 @@ import android.transition.Fade;
 import android.transition.Transition;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,7 +25,7 @@ import usonsonate.com.tukybirth.Threads.ViewPagerCaurosel;
 
 public class InformacionEmbarazo extends AppCompatActivity {
 
-    private CardView Calendario, History;
+    private CardView Calendario, History,ejercicios,comidas;
     private Toolbar toolbar;
     private Transition transition;
     private CollapsingToolbarLayout collapsingToolbarLayout;
@@ -67,6 +68,43 @@ public class InformacionEmbarazo extends AppCompatActivity {
 
         Calendario = findViewById(R.id.btnactivitycalendar);
         History = findViewById(R.id.btnactivityHistory);
+        ejercicios = findViewById(R.id.btnactivityEjercicio);
+        comidas = findViewById(R.id.btnactivityComidas);
+
+        ejercicios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transition = new Fade(Fade.OUT);
+                transition.setDuration(MainActivity.DURATION_TRANSITION);
+                transition.setInterpolator(new DecelerateInterpolator());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getWindow().setExitTransition(transition);
+                }
+                Context context = InformacionEmbarazo.this;
+
+                Intent detail = new Intent(InformacionEmbarazo.this, ExercisesActivity.class);
+                context.startActivity(detail,
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(InformacionEmbarazo.this).toBundle());
+            }
+        });
+
+        comidas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transition = new Fade(Fade.OUT);
+                transition.setDuration(MainActivity.DURATION_TRANSITION);
+                transition.setInterpolator(new DecelerateInterpolator());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getWindow().setExitTransition(transition);
+                }
+                Context context = InformacionEmbarazo.this;
+
+                Intent detail = new Intent(InformacionEmbarazo.this, ComidasActivity.class);
+                context.startActivity(detail,
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(InformacionEmbarazo.this).toBundle());
+            }
+        });
+
         Calendario.setOnClickListener(new View.OnClickListener()
         {
             @SuppressWarnings("unchecked")

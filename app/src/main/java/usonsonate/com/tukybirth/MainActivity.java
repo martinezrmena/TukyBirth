@@ -106,7 +106,9 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(), InformacionEmbarazo.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-            fragmentManager.beginTransaction().replace(R.id.contenedor, new Fragmento02()).commit();
+            //fragmentManager.beginTransaction().replace(R.id.contenedor, new Fragmento02()).commit();
+            Intent intent = new Intent(getApplicationContext(), HerramientasActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_slideshow) {
             fragmentManager.beginTransaction().replace(R.id.contenedor, new Fragmento03()).commit();
