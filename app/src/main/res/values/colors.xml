@@ -34,6 +34,9 @@
     <color name="materialdarkred">#A00E21</color>
     <color name="materialOrange">#E8985E</color>
     <color name="materialDarkOrange">#C96A26</color>
+    <color name="darktrasnparent">#C5000000</color>
+    <color name="whitetransparent">#C5D7D7D7</color>
+    <color name="colorTransparentwhite">#cccccc</color>
 
     /////////////////////////////////////////////////
     <color name="letra">#ffffff</color>
