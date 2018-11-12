@@ -71,8 +71,10 @@
         <activity
             android:name=".InformacionEmbarazo"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".SlideLogin"
-            android:theme="@style/CustomActionBar"/>
+        <activity
+            android:name=".SlideLogin"
+            android:theme="@style/CustomActionBar" />
+        <activity android:name=".CalendarLogin"></activity>
     </application>
 
 </manifest>

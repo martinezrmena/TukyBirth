@@ -30,8 +30,8 @@ public class SlideLogin extends AppCompatActivity {
     private Button btnAnterior, btnSiguiente;
     private int mCurrentPage;
     private RelativeLayout maincontainer;
-    private String Name = "Rafael";
-    private String Password = "contraseña";
+    private String Name;
+    private String Password;
     private DB db;
     private ArrayList<Personas> lstPersonas;
 
@@ -51,19 +51,9 @@ public class SlideLogin extends AppCompatActivity {
         //inicializando lista y db
         db = new DB(SlideLogin.this);
 
-        if(ConsultarPersona()){
-
-            Toast.makeText(this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "El usuario aun no esta ingresado", Toast.LENGTH_SHORT).show();
-        }
-
-        if(lstPersonas.size() > 0){
-            Toast.makeText(SlideLogin.this, "Duracion periodo: " + lstPersonas.get(0).getPeriodo() +
-                    " Duracion PMS: " + lstPersonas.get(0).getPMS() + " Duracion Ciclo: " + lstPersonas.get(0).getCiclo()+
-                    " Ultimo periodo: "+ lstPersonas.get(0).getUltimo_periodo() + " Cumpleaños: " + lstPersonas.get(0).getCumpleaños() +
-                    " Usuario: " + lstPersonas.get(0).getNombre(), Toast.LENGTH_SHORT).show();
-        }
+        //Recibiendo parametros de actividad Login
+        Name = getIntent().getExtras().getString("USERNAME");
+        Password = getIntent().getExtras().getString("PASSWORD");
 
 
         //region Adapter
@@ -91,12 +81,6 @@ public class SlideLogin extends AppCompatActivity {
 
                     if(!periodo_duracion.isEmpty() && !duracion_pms.isEmpty() && !duracion_ciclo.isEmpty()
                             && !ultimo_periodo.isEmpty() && !cumpleaños.isEmpty()){
-
-
-                        Toast.makeText(SlideLogin.this, "Duracion periodo: " + slideAdapter.getPERIODO_DURACION() +
-                                " Duracion PMS: " + slideAdapter.getDURACION_PMS() + " Duracion Ciclo: " + slideAdapter.getDURACION_CICLO()+
-                                " Ultimo periodo: "+ slideAdapter.getULTIMO_PERIODO() + " Cumpleaños: " + slideAdapter.getCUMPLEAÑOS() +
-                                " Fecha actual: " + actualdate, Toast.LENGTH_SHORT).show();
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(SlideLogin.this);
                         builder.setIcon(R.drawable.pregnant).
@@ -136,7 +120,6 @@ public class SlideLogin extends AppCompatActivity {
         });
 
         //endregion
-
 
     }
 
@@ -233,28 +216,6 @@ public class SlideLogin extends AppCompatActivity {
 
     }
     //endregion
-
-    private boolean ConsultarPersona() {
-
-        boolean insertado = false;
-
-        lstPersonas = null;
-
-
-        lstPersonas = db.getArrayPersonas(
-                db.getCursorPersona()
-        );
-
-        if (lstPersonas == null) {
-            lstPersonas = new ArrayList<>();//si no hay datos
-        }else{
-            insertado = true;
-        }
-
-
-        return insertado;
-
-    }
 
     private String convertirDateToString(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
