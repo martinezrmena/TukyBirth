@@ -10,8 +10,10 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -69,12 +71,10 @@
         <activity
             android:name=".InformacionEmbarazo"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ExercisesActivity" />
-        <activity android:name=".InformationExercises" />
-        <activity android:name=".HerramientasActivity" />
-        <activity android:name=".ContraccionesActivity" />
-        <activity android:name=".ComidasActivity" />
-        <activity android:name=".InformacionComidas"></activity>
+        <activity
+            android:name=".SlideLogin"
+            android:theme="@style/CustomActionBar" />
+        <activity android:name=".CalendarLogin"></activity>
     </application>
 
 </manifest>

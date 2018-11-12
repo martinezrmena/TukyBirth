@@ -1,6 +1,9 @@
 package usonsonate.com.tukybirth;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -11,6 +14,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import usonsonate.com.tukybirth.SQLite.DB;
+import usonsonate.com.tukybirth.SQLite.Personas;
 import usonsonate.com.tukybirth.Slides.SlideLoginAdapter;
 
 public class SlideLogin extends AppCompatActivity {
@@ -22,6 +31,10 @@ public class SlideLogin extends AppCompatActivity {
     private Button btnAnterior, btnSiguiente;
     private int mCurrentPage;
     private RelativeLayout maincontainer;
+    private String Name;
+    private String Password;
+    private DB db;
+    private ArrayList<Personas> lstPersonas;
 
 
     @Override
@@ -36,6 +49,15 @@ public class SlideLogin extends AppCompatActivity {
         slideAdapter = new SlideLoginAdapter(this);
         maincontainer = findViewById(R.id.MainContainer);
 
+        //inicializando lista y db
+        db = new DB(SlideLogin.this);
+
+        //Recibiendo parametros de actividad Login
+        Name = getIntent().getExtras().getString("USERNAME");
+        Password = getIntent().getExtras().getString("PASSWORD");
+
+
+        //region Adapter
         mSlideViewPager.setAdapter(slideAdapter);
 
         addDotsIndicator(0);
@@ -45,13 +67,53 @@ public class SlideLogin extends AppCompatActivity {
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mSlideViewPager.setCurrentItem(mCurrentPage + 1);
-
                 if(btnSiguiente.getText().equals("Terminar")){
-                    Toast.makeText(SlideLogin.this, "Duracion periodo: " + slideAdapter.getPERIODO_DURACION() +
-                            " Duracion PMS: " + slideAdapter.getDURACION_PMS() + " Duracion Ciclo: " + slideAdapter.getDURACION_CICLO()+
-                            " Ultimo periodo: "+ slideAdapter.getULTIMO_PERIODO() + " Cumpleaños: " + slideAdapter.getCUMPLEAÑOS(), Toast.LENGTH_SHORT).show();
+                    String periodo_duracion = String.valueOf(slideAdapter.getPERIODO_DURACION());
+                    String duracion_pms = String.valueOf(slideAdapter.getDURACION_PMS());
+                    String duracion_ciclo = String.valueOf(slideAdapter.getDURACION_CICLO());
+                    String ultimo_periodo = String.valueOf(slideAdapter.getULTIMO_PERIODO());
+                    String cumpleaños = String.valueOf(slideAdapter.getCUMPLEAÑOS());
+                    Date fechaactual = new Date();
+                    String actualdate = convertirDateToString(fechaactual);
+                    final Personas persona = new Personas("", Name, Password, periodo_duracion, duracion_pms,
+                            duracion_ciclo, ultimo_periodo, cumpleaños, actualdate);
+
+                    if(!periodo_duracion.isEmpty() && !duracion_pms.isEmpty() && !duracion_ciclo.isEmpty()
+                            && !ultimo_periodo.isEmpty() && !cumpleaños.isEmpty()){
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(SlideLogin.this);
+                        builder.setIcon(R.drawable.pregnant).
+                                setTitle("Atención").setMessage("¿Está segura de proceder con los datos ingresados?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                db.guardar_O_ActualizarPersonas(persona);
+                                Toast.makeText(SlideLogin.this, "El usuario fue insertado exitosamente", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SlideLogin.this, CalendarLogin.class);
+                                intent.putExtra("PERSONA", persona);
+                                startActivity(intent);
+                                finish();
+
+
+                            }
+                        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                dialogInterface.dismiss();
+                                Toast.makeText(SlideLogin.this, "La acción fue cancelada.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }else{
+                        Toast.makeText(SlideLogin.this, "Revise los parametros ingresados.", Toast.LENGTH_SHORT).show();
+                    }
+
+
                 }
+
+                mSlideViewPager.setCurrentItem(mCurrentPage + 1);
             }
         });
 
@@ -62,8 +124,11 @@ public class SlideLogin extends AppCompatActivity {
             }
         });
 
+        //endregion
+
     }
 
+    //region AdapterEvents
     public void addDotsIndicator(int position){
         mDtos = new TextView[5];
         mDotLayout.removeAllViews();
@@ -154,6 +219,14 @@ public class SlideLogin extends AppCompatActivity {
         slideAdapter.setULTIMO_PERIODO(savedInstanceState.getString("ULTIMO_PERIODO"));
         slideAdapter.setCUMPLEAÑOS(savedInstanceState.getString("CUMPLEAÑOS"));
 
+    }
+    //endregion
+
+    private String convertirDateToString(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaComoCadena = sdf.format(date);
+
+        return fechaComoCadena;
     }
 
 }

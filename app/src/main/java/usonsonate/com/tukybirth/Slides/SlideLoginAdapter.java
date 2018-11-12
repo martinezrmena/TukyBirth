@@ -155,7 +155,7 @@ public class SlideLoginAdapter extends PagerAdapter {
                 @Override
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                     month = month + 1;
-                    String date = day  + "-" + month + "-" + year;
+                    String date = year  + "-" + month + "-" + day;
 
                     if (position == 3){
                         setULTIMO_PERIODO(date);

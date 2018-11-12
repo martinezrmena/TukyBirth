@@ -1,18 +1,22 @@
 package usonsonate.com.tukybirth.SQLite;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Personas {private String Nombre;
+public class Personas implements Serializable {
 
+    private String id;
+    private String Nombre;
     private String Password;
-    private int Periodo;
-    private int PMS;
-    private int Ciclo;
-    private Date Ultimo_periodo;
-    private Date Cumpleaños;
-    private Date FechaIngreso;
+    private String Periodo;
+    private String PMS;
+    private String Ciclo;
+    private String Ultimo_periodo;
+    private String Cumpleaños;
+    private String FechaIngreso;
 
-    public Personas(String nombre, String password, int periodo, int PMS, int ciclo, Date ultimo_periodo, Date cumpleaños, Date fechaIngreso) {
+    public Personas(String id, String nombre, String password, String periodo, String PMS, String ciclo, String ultimo_periodo, String cumpleaños, String fechaIngreso) {
+        this.id = id;
         Nombre = nombre;
         Password = password;
         Periodo = periodo;
@@ -21,6 +25,14 @@ public class Personas {private String Nombre;
         Ultimo_periodo = ultimo_periodo;
         Cumpleaños = cumpleaños;
         FechaIngreso = fechaIngreso;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -39,51 +51,51 @@ public class Personas {private String Nombre;
         Password = password;
     }
 
-    public int getPeriodo() {
+    public String getPeriodo() {
         return Periodo;
     }
 
-    public void setPeriodo(int periodo) {
+    public void setPeriodo(String periodo) {
         Periodo = periodo;
     }
 
-    public int getPMS() {
+    public String getPMS() {
         return PMS;
     }
 
-    public void setPMS(int PMS) {
+    public void setPMS(String PMS) {
         this.PMS = PMS;
     }
 
-    public int getCiclo() {
+    public String getCiclo() {
         return Ciclo;
     }
 
-    public void setCiclo(int ciclo) {
+    public void setCiclo(String ciclo) {
         Ciclo = ciclo;
     }
 
-    public Date getUltimo_periodo() {
+    public String getUltimo_periodo() {
         return Ultimo_periodo;
     }
 
-    public void setUltimo_periodo(Date ultimo_periodo) {
+    public void setUltimo_periodo(String ultimo_periodo) {
         Ultimo_periodo = ultimo_periodo;
     }
 
-    public Date getCumpleaños() {
+    public String getCumpleaños() {
         return Cumpleaños;
     }
 
-    public void setCumpleaños(Date cumpleaños) {
+    public void setCumpleaños(String cumpleaños) {
         Cumpleaños = cumpleaños;
     }
 
-    public Date getFechaIngreso() {
+    public String getFechaIngreso() {
         return FechaIngreso;
     }
 
-    public void setFechaIngreso(Date fechaIngreso) {
+    public void setFechaIngreso(String fechaIngreso) {
         FechaIngreso = fechaIngreso;
     }
 }
