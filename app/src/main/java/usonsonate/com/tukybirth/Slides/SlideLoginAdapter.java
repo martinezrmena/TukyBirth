@@ -1,9 +1,11 @@
 package usonsonate.com.tukybirth.Slides;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ public class SlideLoginAdapter extends PagerAdapter {
     private int DURACION_CICLO = 28;
     private String ULTIMO_PERIODO = "";
     private String CUMPLEAÑOS = "";
+    Dialog myDialog;
 
     public SlideLoginAdapter(Context context) {
         this.context = context;
@@ -58,6 +61,14 @@ public class SlideLoginAdapter extends PagerAdapter {
             "¿Cuál es tu fecha de cumpleaños?"
     };
 
+    public String[] desc_slide = {
+            "La duración normal del periodo dura entre 2 y 7 días, por lo tanto si tu periodo no esta comprendido entre ese rango es un buen momento para visitar al médico.",
+            "La experiencia del sindrome premenstrual es diferente entre personas, sin embargo muchas experimentan algún tipo de PMS en algún grado. Los síntomas del síndrome premenstrual pueden ocurrir en cualquier momento después de la ovulación y terminar con el inicio del ciclo.",
+            "Un ciclo menstrual regular puede durar alrededor de 25 a 35 días, y comienza el primer día de la menstruación. Ciclos mayores que 33 días o menores que 25 pueden indicar problemas hormonales. Sin embargo, es normal tener ciclos irregulares en los 2 primeros años después de la menarquía, que es la primera menstruación de la mujer.",
+            "El Período Menstrual es la fase en que ocurre sangrado y desprendimiento de la pared externa del útero, marcando el inicio de un nuevo ciclo menstrual. En general, la menstruación ocurre 1 vez al mes y dura de 3 a 8 días.",
+            "Conocer la fecha de nacimiento ayuda a obtener calculos más precisos del ciclo menstrual."
+    };
+
     //endregion
 
     @Override
@@ -83,6 +94,7 @@ public class SlideLoginAdapter extends PagerAdapter {
         NumberPicker numberPicker = (NumberPicker) view.findViewById(R.id.NumberPicker);
         final TextView mDisplayDate = (TextView) view.findViewById(R.id.txbPickDate);
         final DatePickerDialog.OnDateSetListener mDateSetListener;
+        myDialog = new Dialog(context);
 
         slideimageview.setImageResource(slide_images[position]);
         sliderHeading.setText(slide_headings[position]);
@@ -185,6 +197,43 @@ public class SlideLoginAdapter extends PagerAdapter {
                 }
             });
         }
+
+        //endregion
+
+        //region Image_evet
+        slideimageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TextView txtclose, txbnumero, txbInformacion, txbSemana;
+                ImageView imagenPopUp;
+                //inicializamos las variables
+                myDialog.setContentView(R.layout.custompopup);
+                txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+                txbnumero = myDialog.findViewById(R.id.txtNumeroSelected);
+                txbInformacion = myDialog.findViewById(R.id.txtinformacion);
+                txbSemana = myDialog.findViewById(R.id.txbPopSemana);
+                imagenPopUp = myDialog.findViewById(R.id.ImagePopup);
+                imagenPopUp.setScaleType(ImageView.ScaleType.FIT_XY);
+
+                //establecemos los valores del pop up
+                txbnumero.setText(slide_headings[position]);
+                imagenPopUp.setImageResource(slide_images[position]);
+                imagenPopUp.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                txbInformacion.setText(desc_slide[position]);
+                txbSemana.setText("");
+                txtclose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                myDialog.show();
+
+                //addItem(currentPosition, infoData);
+            }
+        });
 
         //endregion
 

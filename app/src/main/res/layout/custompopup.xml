@@ -60,15 +60,18 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
                     android:gravity="center">
+
                     <TextView
+                        android:id="@+id/txbPopSemana"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SEMANA "
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
                         android:layout_gravity="center_horizontal"
-                        />
+                        android:text="SEMANA "
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
                     <TextView
                         android:id="@+id/txtNumeroSelected"
                         android:layout_width="wrap_content"
@@ -87,16 +90,17 @@
                     android:background="@color/lightgray" />
 
                 <TextView
-                    android:layout_margin="3dp"
                     android:id="@+id/txtinformacion"
-                    android:text="hola"
-                    android:textColor="@color/white"
-                    android:elevation="@dimen/fab_margin"
-                    android:padding="2dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="2dp"/>
+                    android:layout_margin="3dp"
+                    android:layout_marginBottom="2dp"
+                    android:elevation="@dimen/fab_margin"
+                    android:padding="2dp"
+                    android:text="hola"
+                    android:textAlignment="center"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
