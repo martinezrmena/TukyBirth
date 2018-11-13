@@ -129,4 +129,118 @@ public class DB {
     }
     //endregion
 
+    //region Ciclos
+    public Cursor getCursorCiclo(String date){
+
+        Log.d("CONSULTA", "select * from ciclos where strftime('%m', fecha) = '"+date+"'");
+        return dbHelper.getReadableDatabase().rawQuery(
+                "select * from ciclos where strftime('%m-%Y', fecha_inicio) = '"+date+"'",null);
+    }
+
+    public ArrayList<Ciclo> getArrayCiclos(Cursor cursor){
+        cursor.moveToFirst();//moverse al principio
+        ArrayList<Ciclo> lstCiclo = new ArrayList<>();
+        if(cursor != null && cursor.getCount() > 0){//si hay datos
+            do{
+                lstCiclo.add(new Ciclo(
+                        cursor.getString(0),//id_ciclo
+                        cursor.getString(1),//duracion_ciclo
+                        cursor.getString(2),//duracion_periodo
+                        cursor.getString(3),//fecha_inicio
+                        cursor.getString(4),//fecha_fin
+                        cursor.getString(5)//estado
+                ));//se agregan a la lista
+            }while (cursor.moveToNext());
+            return lstCiclo;
+        }
+        return null;//si no entro en el if
+    }
+
+    public boolean guardar_O_ActualizarCiclos(Ciclo ciclo) {
+        ContentValues initialValues = new ContentValues();
+        Log.d("Ciclos","id_ciclo "+ciclo.getId_ciclo());
+        Log.d("Ciclos","duracion_ciclo "+ciclo.getDuracion_ciclo());
+        Log.d("Ciclos","duracion_periodo "+ciclo.getDuracion_periodo());
+        Log.d("Ciclos","fecha_inicio "+ciclo.getFecha_inicio());
+        Log.d("Ciclos","fecha_fin "+ciclo.getFecha_fin());
+        Log.d("Ciclos","estado "+ciclo.getEstado());
+
+        if(!ciclo.getId_ciclo().isEmpty())
+            initialValues.put("id_ciclo", Integer.parseInt(ciclo.getId_ciclo()));
+            initialValues.put("duracion_ciclo", Integer.parseInt(ciclo.getDuracion_ciclo()));
+            initialValues.put("duracion_periodo",Integer.parseInt(ciclo.getDuracion_periodo()));
+            initialValues.put("fecha_inicio",ciclo.getFecha_inicio());
+            initialValues.put("fecha_fin",ciclo.getFecha_fin());
+            initialValues.put("estado",ciclo.getEstado());
+
+
+        int id = (int) dbHelper.getWritableDatabase().insertWithOnConflict(
+                "ciclos",
+                null,
+                initialValues,
+                SQLiteDatabase.CONFLICT_REPLACE);
+        return id>0;
+    }
+
+    public void  borrarCiclo(String id){
+        dbHelper.getWritableDatabase().execSQL(String.format("delete from ciclos where id_ciclo='%s'",id));
+    }
+    //endregion
+
+    //region Detalle ciclos
+    public Cursor getCursorDetalleCiclo(String date){
+
+        Log.d("CONSULTA", "select * from ciclos where strftime('%m-%Y', fecha_introduccion) = '"+date+"'");
+        return dbHelper.getReadableDatabase().rawQuery(
+                "select * from detalleciclos where strftime('%m-%Y', fecha_introduccion) = '"+date+"'",null);
+    }
+
+    public ArrayList<DetalleCiclo> getArrayDetalleCiclos(Cursor cursor){
+        cursor.moveToFirst();//moverse al principio
+        ArrayList<DetalleCiclo> lstDetalleCiclo = new ArrayList<>();
+        if(cursor != null && cursor.getCount() > 0){//si hay datos
+            do{
+                lstDetalleCiclo.add(new DetalleCiclo(
+                        cursor.getString(0),//id_detalle
+                        cursor.getString(1),//id_ciclo
+                        cursor.getString(2),//fecha_introduccion
+                        cursor.getString(3),//severidad
+                        cursor.getString(4)//detalle
+                ));//se agregan a la lista
+            }while (cursor.moveToNext());
+            return lstDetalleCiclo;
+        }
+        return null;//si no entro en el if
+    }
+
+    public boolean guardar_O_ActualizarDetalleCiclos(Ciclo ciclo) {
+        ContentValues initialValues = new ContentValues();
+        Log.d("Ciclos","id_detalle "+ciclo.getId_ciclo());
+        Log.d("Ciclos","id_ciclo "+ciclo.getId_ciclo());
+        Log.d("Ciclos","fecha_introduccion "+ciclo.getDuracion_ciclo());
+        Log.d("Ciclos","severidad "+ciclo.getDuracion_periodo());
+        Log.d("Ciclos","detalle "+ciclo.getFecha_inicio());
+
+        if(!ciclo.getId_ciclo().isEmpty())
+            initialValues.put("id_detalle", Integer.parseInt(ciclo.getId_ciclo()));
+            initialValues.put("id_ciclo", Integer.parseInt(ciclo.getId_ciclo()));
+            initialValues.put("fecha_introduccion",ciclo.getFecha_inicio());
+            initialValues.put("severidad",ciclo.getFecha_fin());
+            initialValues.put("detalle",ciclo.getEstado());
+
+
+        int id = (int) dbHelper.getWritableDatabase().insertWithOnConflict(
+                "detalleciclos",
+                null,
+                initialValues,
+                SQLiteDatabase.CONFLICT_REPLACE);
+        return id>0;
+    }
+
+    public void  borrarDetalleCiclo(String id){
+        dbHelper.getWritableDatabase().execSQL(String.format("delete from detalleciclos where id_ciclo='%s'",id));
+    }
+    //endregion
+
+
 }
