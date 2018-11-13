@@ -9,7 +9,7 @@
             android:icon="@drawable/pregnant_color"
             android:title="Información de embarazo" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_utilidades"
             android:icon="@drawable/utilities"
             android:title="Utilidades" />
         <item

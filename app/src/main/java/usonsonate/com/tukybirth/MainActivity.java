@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Toast;
 
 import usonsonate.com.tukybirth.Fragmentos.Fragmento02;
 import usonsonate.com.tukybirth.Fragmentos.Fragmento03;
@@ -105,8 +106,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             Intent intent = new Intent(getApplicationContext(), InformacionEmbarazo.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
-            //fragmentManager.beginTransaction().replace(R.id.contenedor, new Fragmento02()).commit();
+        } else if (id == R.id.nav_utilidades) {
             Intent intent = new Intent(getApplicationContext(), HerramientasActivity.class);
             startActivity(intent);
 

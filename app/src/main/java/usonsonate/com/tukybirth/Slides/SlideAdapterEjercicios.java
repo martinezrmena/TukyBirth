@@ -58,10 +58,7 @@ public class SlideAdapterEjercicios extends PagerAdapter {
             Color.parseColor("#2D3142"),
             Color.parseColor("#335C67"),
             Color.parseColor("#540B0E"),
-            /*   Color.parseColor("#1D8A99"),
-               Color.parseColor("#9EA57C"),
-               Color.parseColor("#B21025"),
-               Color.parseColor("#274690")*/
+
     };
 
 
@@ -100,27 +97,6 @@ public class SlideAdapterEjercicios extends PagerAdapter {
         imgslide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-          /*      TextView txtclose, txbnumero;
-                PhotoView imagenPopUp;
-                //inicializamos las variables
-                myDialog.setContentView(R.layout.custom_image_popup);
-                txtclose = myDialog.findViewById(R.id.txtclose);
-                imagenPopUp = myDialog.findViewById(R.id.ImagePopup);
-
-                //establecemos los valores
-                imagenPopUp.setImageResource(lst_images[position]);
-                txtclose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        myDialog.dismiss();
-                    }
-                });
-                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                myDialog.show();*/
-
-                //Toast.makeText(context,"hola que hace" +position ,Toast.LENGTH_SHORT).show();
-
 
                 Intent detail = new Intent(context.getApplicationContext(), InformationExercises.class);
                 //detail.putExtra("posicion",position);
