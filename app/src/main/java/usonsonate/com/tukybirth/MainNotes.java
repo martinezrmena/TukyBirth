@@ -183,6 +183,7 @@ public class MainNotes extends AppCompatActivity {
         }
     }
 
+    //region DataParse
     private String convertirDateToString(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String fechaComoCadena = sdf.format(date);
@@ -234,6 +235,7 @@ public class MainNotes extends AppCompatActivity {
 
         return c1;
     }
+    //endregion
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
