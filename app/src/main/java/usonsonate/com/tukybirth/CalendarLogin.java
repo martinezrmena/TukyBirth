@@ -58,37 +58,26 @@ public class CalendarLogin extends AppCompatActivity {
         }
         //endregion
 
-        FinCiclo =  calculateFinCiclo("2018-11-01", persona.getCiclo());
+        FinCiclo =  calculateFinCiclo(persona.getUltimo_periodo(), persona.getCiclo());
         InicioPeriodo = calculateInicioPeriodo();
 
-        Calendar fechatemporal = Calendar.getInstance();
-        final CalendarView datePicker = CalendarPeriodo;
-
-        fechatemporal.setTime(customDateParse.convertirStringToDate(InicioPeriodo));
-
-        try {
-            datePicker.setDate(fechatemporal);
-        } catch (OutOfDateRangeException e) {
-            e.printStackTrace();
-        }
+        String fecha_temporal = InicioPeriodo;
 
         for (int i = 0; i < Integer.parseInt(persona.getPeriodo()); i++){
 
+            MyEventDay myEventDay = new MyEventDay(customDateParse.convertirACalendar(fecha_temporal),
+                    R.drawable.period_blood,"nota dia");
+
             try {
-                addNoteinCalendar( new MyEventDay(datePicker.getSelectedDate(),
-                        R.drawable.note, "nota del dia"));
+                addNoteinCalendar(myEventDay);
             } catch (OutOfDateRangeException e) {
                 e.printStackTrace();
             }
 
-            fechatemporal.setTime(customDateParse.cambiar_dia(
-                    customDateParse.convertirStringToDate(InicioPeriodo), (i + 1)));
+            String d = fecha_temporal;
 
-            try {
-                datePicker.setDate(fechatemporal);
-            } catch (OutOfDateRangeException e) {
-                e.printStackTrace();
-            }
+            fecha_temporal = customDateParse.convertirDateToString(customDateParse.cambiar_dia(customDateParse.convertirStringToDate(d), 1));
+
         }
 
 
@@ -112,7 +101,7 @@ public class CalendarLogin extends AppCompatActivity {
         //Formato que debe poseer la nota al enviarse para agregar al calendario
         //MyEventDay(Calendar day, int imageResource, String note)
 
-        //mCalendarView.setDate(myEventDay.getCalendar());
+        //CalendarPeriodo.setDate(myEventDay.getCalendar());
         mEventDays.add(myEventDay);
         CalendarPeriodo.setEvents(mEventDays);
     }
