@@ -137,6 +137,13 @@ public class DB {
                 "select * from ciclos where strftime('%m-%Y', fecha_inicio) = '"+date+"'",null);
     }
 
+    public Cursor getPromediosCiclo(String date){
+
+        return dbHelper.getReadableDatabase().rawQuery(
+                "select avg(duracion_periodo) as duracion_periodo, avg(duracion_ciclo) as duracion_ciclo from ciclos",null);
+    }
+
+
     public ArrayList<Ciclo> getArrayCiclos(Cursor cursor){
         cursor.moveToFirst();//moverse al principio
         ArrayList<Ciclo> lstCiclo = new ArrayList<>();

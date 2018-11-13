@@ -126,7 +126,6 @@ public class Login extends AppCompatActivity {
 
         lstPersonas = null;
 
-
         lstPersonas = db.getArrayPersonas(
                 db.getCursorPersona()
         );
@@ -136,7 +135,6 @@ public class Login extends AppCompatActivity {
         }else{
             insertado = true;
         }
-
 
         return insertado;
 

@@ -19,7 +19,9 @@ import java.util.Date;
 import java.util.List;
 
 import usonsonate.com.tukybirth.Calendar.MyEventDay;
+import usonsonate.com.tukybirth.SQLite.Ciclo;
 import usonsonate.com.tukybirth.SQLite.DB;
+import usonsonate.com.tukybirth.SQLite.DetalleCiclo;
 import usonsonate.com.tukybirth.SQLite.Notas;
 import usonsonate.com.tukybirth.SQLite.Personas;
 
@@ -35,6 +37,8 @@ public class CalendarLogin extends AppCompatActivity {
     private String InicioPeriodo = "";
     private CustomDateParse customDateParse;
     private List<EventDay> mPredictDaysCiclo = new ArrayList<>();
+    private List<Ciclo> lstCiclos;
+    private List<DetalleCiclo> lstDetalleCiclo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +67,24 @@ public class CalendarLogin extends AppCompatActivity {
         //endregion
 
         //region Calcular Ciclo con Datos Iniciales
-        FinCiclo =  calculateFinCiclo(persona.getUltimo_periodo(), persona.getCiclo());
-        InicioPeriodo = calculateInicioPeriodo();
-        PredecirProximoCiclo(InicioPeriodo);
+
+
+        if (ConsultarCiclos()){
+            //Si tiene detalle ciclos calculamos desde esos datos
+            ConsultarDetalleCiclos();
+
+            FinCiclo = calculateFinCiclo(
+                    String.valueOf(CalculatePromedioDuracionPeriodo()), String.valueOf(CalculatePromedioDuracionCiclo()));
+
+
+        }else{
+            //Si no poseemos registros calculamos desde los parametros ingresados
+            // desde el login
+            FinCiclo =  calculateFinCiclo(persona.getUltimo_periodo(), persona.getCiclo());
+            InicioPeriodo = calculateInicioPeriodo(Integer.parseInt(persona.getPeriodo()));
+            PredecirProximoCiclo(InicioPeriodo);
+        }
+
 
         //endregion
 
@@ -94,6 +113,34 @@ public class CalendarLogin extends AppCompatActivity {
         //endregion
 
 
+    }
+
+    private int CalculatePromedioDuracionPeriodo(){
+
+        int promedio = 0;
+
+        for (int i = 0; i < lstCiclos.size(); i++){
+
+            promedio += Integer.parseInt(lstCiclos.get(i).getDuracion_periodo());
+        }
+
+        promedio /= lstCiclos.size();
+
+        return promedio;
+    }
+
+    private int CalculatePromedioDuracionCiclo(){
+
+        int promedio = 0;
+
+        for (int i = 0; i < lstCiclos.size(); i++){
+
+            promedio += Integer.parseInt(lstCiclos.get(i).getDuracion_ciclo());
+        }
+
+        promedio /= lstCiclos.size();
+
+        return promedio;
     }
 
     private void PredecirProximoCiclo(String InicioPeriodo){
@@ -129,10 +176,9 @@ public class CalendarLogin extends AppCompatActivity {
         }
     }
 
+    private String calculateInicioPeriodo(int periodo){
 
-    private String calculateInicioPeriodo(){
-
-        int periododuracion = Integer.parseInt(persona.getPeriodo()) * - 1;
+        int periododuracion = periodo * - 1;
 
         return customDateParse.convertirDateToString(customDateParse.cambiar_dia(customDateParse.convertirStringToDate(
                 FinCiclo), periododuracion));
@@ -151,6 +197,53 @@ public class CalendarLogin extends AppCompatActivity {
         //CalendarPeriodo.setDate(myEventDay.getCalendar());
         mPredictDaysCiclo.add(myEventDay);
         CalendarPeriodo.setEvents(mPredictDaysCiclo);
+    }
+
+    private boolean ConsultarCiclos() {
+
+        boolean insertado = false;
+
+        lstCiclos = null;
+
+        lstCiclos = db.getArrayCiclos(
+                db.getCursorCiclo(customDateParse.convertirDateToStringMonth_Year(
+                        CalendarPeriodo.getCurrentPageDate().getTime()
+                ))
+        );
+
+        if (lstCiclos == null) {
+
+            lstCiclos = new ArrayList<>();//si no hay datos
+
+        }else{
+            insertado = true;
+        }
+
+        return insertado;
+    }
+
+    private boolean ConsultarDetalleCiclos() {
+
+        boolean insertado = false;
+
+        lstDetalleCiclo = null;
+
+        lstDetalleCiclo = db.getArrayDetalleCiclos(
+                db.getCursorDetalleCiclo(customDateParse.convertirDateToStringMonth_Year(
+                        CalendarPeriodo.getCurrentPageDate().getTime()
+                ))
+        );
+
+        if (lstDetalleCiclo == null) {
+
+            lstDetalleCiclo = new ArrayList<>();//si no hay datos
+
+        }else{
+
+            insertado = true;
+        }
+
+        return insertado;
     }
 
 }

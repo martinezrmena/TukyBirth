@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.Date;
 
+import usonsonate.com.tukybirth.SQLite.DB;
+
 public class DetalleDiaPeriodo extends AppCompatActivity {
 
 
@@ -21,6 +23,7 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
     private CustomDateParse customDateParse;
     private RadioButton rdbtnSi;
     private RadioButton rdbtnNo;
+    private DB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

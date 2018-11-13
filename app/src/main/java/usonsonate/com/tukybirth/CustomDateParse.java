@@ -51,6 +51,14 @@ public class CustomDateParse {
         return fechaComoCadena;
     }
 
+
+    public String convertirDateToStringMonth_Year(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-yyyy");
+        String fechaComoCadena = sdf.format(date);
+
+        return fechaComoCadena;
+    }
+
     public Date cambiar_mes(Date fecha, int cambio){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fecha); // Configuramos la fecha que se recibe
