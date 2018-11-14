@@ -126,13 +126,57 @@ public class CalendarLogin extends AppCompatActivity {
                 Date date = customDateParse.convertirStringToDate(customDateParse.convertirDateToString(new Date()));
                 Date pressDate = customDateParse.convertirStringToDate(customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
 
-                if (date.after(eventDay.getCalendar().getTime()) || date.equals(pressDate)){
-                    Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
-                    intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
-                    startActivity(intent);
-                }else{
+                if (customDateParse.convertirStringToDate(persona.getUltimo_periodo()).after(eventDay.getCalendar().getTime())){
 
-                    Toast.makeText(CalendarLogin.this, "No se pueden agregar detalles a dias posteriores de la fecha actual.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalendarLogin.this, "No puede introducir registros antes de la fecha en que registro su último periodo.", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    if (date.after(eventDay.getCalendar().getTime()) || date.equals(pressDate)){
+                        if (lstDetalleCiclo != null){
+
+                            if(lstDetalleCiclo.size() == 0){
+                                //Si NO hay detalle ciclo
+                                Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
+                                intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
+                                intent.putExtra("INICIALIZAR", "SI");
+                                intent.putExtra("PERSONA", persona);
+                                startActivity(intent);
+                            }else{
+                                //Si hay detalle ciclo debemos buscar el del día seleccionado
+                                DetalleCiclo dia_seleccionado = new DetalleCiclo();
+                                Ciclo ciclo_seleccionado = new Ciclo();
+
+                                for (DetalleCiclo d: lstDetalleCiclo){
+
+                                    if(d.getFecha_introduccion().equals(customDateParse.convertirDateToString(eventDay.getCalendar().getTime()))){
+                                        dia_seleccionado = d;
+                                    }
+                                }
+
+                                for(Ciclo c: lstCiclos){
+                                    if(dia_seleccionado.getId_ciclo().equals(c.getId_ciclo())){
+                                        ciclo_seleccionado = c;
+                                    }
+                                }
+
+                                Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
+                                intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
+                                intent.putExtra("INICIALIZAR", "NO");
+                                //Enviar el detalle ciclo del día seleccionado
+                                intent.putExtra("DETALLE_CICLO", dia_seleccionado);
+                                //Enviar el ciclo del día seleccionado
+                                intent.putExtra("CICLO", ciclo_seleccionado);
+                                startActivity(intent);
+
+                            }
+                        }
+
+
+
+                    }else{
+
+                        Toast.makeText(CalendarLogin.this, "No se pueden agregar detalles a dias posteriores de la fecha actual.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -211,7 +255,6 @@ public class CalendarLogin extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
     private String calculateInicioPeriodo(int periodo){
 
