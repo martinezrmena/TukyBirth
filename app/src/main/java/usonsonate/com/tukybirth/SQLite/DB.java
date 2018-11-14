@@ -133,9 +133,9 @@ public class DB {
     //region Ciclos
     public Cursor getCursorCiclo(String date){
 
-        Log.d("CONSULTA", "select * from ciclos where strftime('%m', fecha) = '"+date+"'");
+        Log.d("CONSULTA", "select * from ciclos where strftime('%m', fecha_inicio) = '"+date+"'");
         return dbHelper.getReadableDatabase().rawQuery(
-                "select * from ciclos where strftime('%m-%Y', fecha_inicio) = '"+date+"'",null);
+                "select * from ciclos where strftime('%m-%Y', fecha_inicio)",null);
     }
 
     public ArrayList<Ciclo> getArrayCiclos(Cursor cursor){
@@ -209,7 +209,7 @@ public class DB {
         Log.d("Ciclos","id_ciclo "+ciclo.getId_ciclo());
         Log.d("Ciclos","duracion_ciclo "+ciclo.getDuracion_ciclo());
         Log.d("Ciclos","duracion_periodo "+ciclo.getDuracion_periodo());
-        Log.d("Ciclos","fecha_inicio "+ciclo.getFecha_inicio());
+        Log.d("Ciclos","fecha_inicio "+String.format(ciclo.getFecha_inicio(),"{0:yyyy'-'MM'-'dd}"));
         Log.d("Ciclos","fecha_fin "+ciclo.getFecha_fin());
         Log.d("Ciclos","estado "+ciclo.getEstado());
 
@@ -217,7 +217,7 @@ public class DB {
             initialValues.put("id_ciclo", Integer.parseInt(ciclo.getId_ciclo()));
             initialValues.put("duracion_ciclo", Integer.parseInt(ciclo.getDuracion_ciclo()));
             initialValues.put("duracion_periodo",Integer.parseInt(ciclo.getDuracion_periodo()));
-            initialValues.put("fecha_inicio",ciclo.getFecha_inicio());
+            initialValues.put("fecha_inicio", String.format(ciclo.getFecha_inicio(),"{0:yyyy'-'MM'-'dd}"));
             initialValues.put("fecha_fin",ciclo.getFecha_fin());
             initialValues.put("estado",ciclo.getEstado());
 
@@ -261,20 +261,20 @@ public class DB {
         return null;//si no entro en el if
     }
 
-    public boolean guardar_O_ActualizarDetalleCiclos(Ciclo ciclo) {
+    public boolean guardar_O_ActualizarDetalleCiclos(DetalleCiclo detalleciclo) {
         ContentValues initialValues = new ContentValues();
-        Log.d("Ciclos","id_detalle "+ciclo.getId_ciclo());
-        Log.d("Ciclos","id_ciclo "+ciclo.getId_ciclo());
-        Log.d("Ciclos","fecha_introduccion "+ciclo.getDuracion_ciclo());
-        Log.d("Ciclos","severidad "+ciclo.getDuracion_periodo());
-        Log.d("Ciclos","detalle "+ciclo.getFecha_inicio());
+        Log.d("Ciclos","id_detalle "+detalleciclo.getId_detalle());
+        Log.d("Ciclos","id_ciclo "+detalleciclo.getId_ciclo());
+        Log.d("Ciclos","fecha_introduccion "+detalleciclo.getFecha_introduccion());
+        Log.d("Ciclos","severidad "+detalleciclo.getSeveridad());
+        Log.d("Ciclos","detalle "+detalleciclo.getDetalle());
 
-        if(!ciclo.getId_ciclo().isEmpty())
-            initialValues.put("id_detalle", Integer.parseInt(ciclo.getId_ciclo()));
-            initialValues.put("id_ciclo", Integer.parseInt(ciclo.getId_ciclo()));
-            initialValues.put("fecha_introduccion",ciclo.getFecha_inicio());
-            initialValues.put("severidad",ciclo.getFecha_fin());
-            initialValues.put("detalle",ciclo.getEstado());
+        if(!detalleciclo.getId_ciclo().isEmpty())
+            initialValues.put("id_detalle", Integer.parseInt(detalleciclo.getId_detalle()));
+            initialValues.put("id_ciclo", Integer.parseInt(detalleciclo.getId_ciclo()));
+            initialValues.put("fecha_introduccion",detalleciclo.getFecha_introduccion());
+            initialValues.put("severidad",detalleciclo.getSeveridad());
+            initialValues.put("detalle",detalleciclo.getDetalle());
 
 
         int id = (int) dbHelper.getWritableDatabase().insertWithOnConflict(

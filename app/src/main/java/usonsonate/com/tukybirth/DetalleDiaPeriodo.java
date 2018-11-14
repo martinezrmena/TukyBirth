@@ -8,6 +8,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import usonsonate.com.tukybirth.SQLite.Ciclo;
@@ -56,6 +57,8 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
             persona = (Personas) getIntent().getExtras().getSerializable("PERSONA");
             detalleCiclo_seleccionado = null;
             ciclo_seleccionado = null;
+            IniciarCiclos();
+
 
         }else{
             persona = null;
@@ -75,9 +78,20 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
     }
 
     private void IniciarCiclos(){
-        Ciclo cicloinicio = new Ciclo();
 
+        String DuracionCiclo = persona.getCiclo();
+        String DuracionPeriodo = persona.getPeriodo();
+        Calendar cInicio = customDateParse.convertirACalendar(persona.getUltimo_periodo());
+        String FechaInicio = customDateParse.convertirDateToString(cInicio.getTime());
+        Calendar cFin = customDateParse.convertirACalendar(customDateParse.convertirDateToString(customDateParse.cambiar_dia(customDateParse.convertirStringToDate(persona.getUltimo_periodo())
+                , Integer.parseInt(persona.getCiclo()))));
+        String FechaFin = customDateParse.convertirDateToString(cFin.getTime());
 
+        String Estado = "EN PROCESO";
+
+        Ciclo cicloinicio = new Ciclo("", DuracionCiclo, DuracionPeriodo, FechaInicio, FechaFin, Estado );
+
+        db.guardar_O_ActualizarCiclos(cicloinicio);
 
     }
 

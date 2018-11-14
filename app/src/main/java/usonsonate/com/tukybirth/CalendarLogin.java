@@ -169,6 +169,15 @@ public class CalendarLogin extends AppCompatActivity {
                                 startActivity(intent);
 
                             }
+                        }else{
+                            //Es necesario inicializar
+                            //Si NO hay detalle ciclo
+                            Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
+                            intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
+                            intent.putExtra("INICIALIZAR", "SI");
+                            intent.putExtra("PERSONA", persona);
+                            startActivity(intent);
+
                         }
 
 
