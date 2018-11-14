@@ -24,6 +24,7 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
     private RadioButton rdbtnSi;
     private RadioButton rdbtnNo;
     private DB db;
+    String DateCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,9 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
         customDateParse = new CustomDateParse();
         spSeverdidad.setAdapter(adaptador);
 
-        txbFechaPeriodo.setText(customDateParse.convertirDateToString(new Date()));
+        DateCalendar = getIntent().getExtras().getString("DATE_CALENDAR");
+
+        txbFechaPeriodo.setText(DateCalendar);
 
 
 

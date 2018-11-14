@@ -1,6 +1,8 @@
 package usonsonate.com.tukybirth.SQLite;
 
-public class DetalleCiclo {
+import java.io.Serializable;
+
+public class DetalleCiclo implements Serializable {
 
     private String id_detalle;
     private String id_ciclo;

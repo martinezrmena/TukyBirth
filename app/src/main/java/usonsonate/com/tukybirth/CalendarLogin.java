@@ -128,7 +128,7 @@ public class CalendarLogin extends AppCompatActivity {
 
                 if (date.after(eventDay.getCalendar().getTime()) || date.equals(pressDate)){
                     Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
-
+                    intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
                     startActivity(intent);
                 }else{
 
