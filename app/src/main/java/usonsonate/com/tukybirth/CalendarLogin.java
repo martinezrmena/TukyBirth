@@ -24,6 +24,7 @@ import usonsonate.com.tukybirth.SQLite.DB;
 import usonsonate.com.tukybirth.SQLite.DetalleCiclo;
 import usonsonate.com.tukybirth.SQLite.Notas;
 import usonsonate.com.tukybirth.SQLite.Personas;
+import usonsonate.com.tukybirth.SQLite.PromedioCiclos;
 
 public class CalendarLogin extends AppCompatActivity {
 
@@ -37,8 +38,11 @@ public class CalendarLogin extends AppCompatActivity {
     private String InicioPeriodo = "";
     private CustomDateParse customDateParse;
     private List<EventDay> mPredictDaysCiclo = new ArrayList<>();
+    private List<EventDay> mRegisteredDaysCiclo = new ArrayList<>();
     private List<Ciclo> lstCiclos;
     private List<DetalleCiclo> lstDetalleCiclo;
+    private PromedioCiclos promedioCiclos;
+    private Ciclo UltimoCiclo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,14 +72,40 @@ public class CalendarLogin extends AppCompatActivity {
 
         //region Calcular Ciclo con Datos Iniciales
 
+        //Obtenemos los promedios para conocer si calculamos desde ellos o desde parametros iniciales
+        CalculatePromedios();
+        if (Integer.parseInt(promedioCiclos.getCOUNT()) >0){
 
-        if (ConsultarCiclos()){
-            //Si tiene detalle ciclos calculamos desde esos datos
-            ConsultarDetalleCiclos();
+            //Consultamos el ultimo periodo almacenado
+            ConsultarUltimoPeriodo();
 
-            FinCiclo = calculateFinCiclo(
-                    String.valueOf(CalculatePromedioDuracionPeriodo()), String.valueOf(CalculatePromedioDuracionCiclo()));
+            //Si poseemos registros almacenados consultamos los de este mes
+            if(ConsultarCiclos()){
 
+                //Si tiene ciclos calculamos los detalles de esos ciclos en este mes
+                ConsultarDetalleCiclos();
+
+                //Mostramos todos los detalles de los ciclos almacenados
+                for (DetalleCiclo d:lstDetalleCiclo) {
+                    DetallesCicloAlmacenados(d);
+                }
+
+            }
+
+            //region PrediccionProximoCiclo
+            if (customDateParse.convertirDateToStringMonth_Year(customDateParse.convertirStringToDate(UltimoCiclo.getFecha_fin()))
+                    .equals(customDateParse.convertirDateToStringMonth_Year(CalendarPeriodo.getCurrentPageDate().getTime()))){
+
+                //si la fecha del ultimo ciclo que finalizo es igual a la de la pagina actual del calendario
+                // haremos prediccion del próximo ciclo, de lo contrario no vale la pena calcular la prediccion
+                // si no se vera en la actual página del calendario
+                FinCiclo = calculateFinCiclo(
+                        UltimoCiclo.getFecha_fin(), String.valueOf(promedioCiclos.getDURACION_CICLO()));
+
+                InicioPeriodo = calculateInicioPeriodo(Integer.parseInt(promedioCiclos.getDURACION_PERIODO()));
+                PredecirProximoCiclo(InicioPeriodo);
+            }
+            //endregion
 
         }else{
             //Si no poseemos registros calculamos desde los parametros ingresados
@@ -96,51 +126,19 @@ public class CalendarLogin extends AppCompatActivity {
                 Date date = customDateParse.convertirStringToDate(customDateParse.convertirDateToString(new Date()));
                 Date pressDate = customDateParse.convertirStringToDate(customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
 
-                if (date.after(eventDay.getCalendar().getTime())){
+                if (date.after(eventDay.getCalendar().getTime()) || date.equals(pressDate)){
                     Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
+
                     startActivity(intent);
                 }else{
-                    if(date.equals(pressDate) ){
-                        Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText(CalendarLogin.this, "No se pueden agregar detalles a dias posteriores de la fecha actual.", Toast.LENGTH_SHORT).show();
-                    }
+
+                    Toast.makeText(CalendarLogin.this, "No se pueden agregar detalles a dias posteriores de la fecha actual.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         //endregion
 
-
-    }
-
-    private int CalculatePromedioDuracionPeriodo(){
-
-        int promedio = 0;
-
-        for (int i = 0; i < lstCiclos.size(); i++){
-
-            promedio += Integer.parseInt(lstCiclos.get(i).getDuracion_periodo());
-        }
-
-        promedio /= lstCiclos.size();
-
-        return promedio;
-    }
-
-    private int CalculatePromedioDuracionCiclo(){
-
-        int promedio = 0;
-
-        for (int i = 0; i < lstCiclos.size(); i++){
-
-            promedio += Integer.parseInt(lstCiclos.get(i).getDuracion_ciclo());
-        }
-
-        promedio /= lstCiclos.size();
-
-        return promedio;
     }
 
     private void PredecirProximoCiclo(String InicioPeriodo){
@@ -176,6 +174,45 @@ public class CalendarLogin extends AppCompatActivity {
         }
     }
 
+    private void DetallesCicloAlmacenados(DetalleCiclo d){
+
+        String fecha_temporal = d.getFecha_introduccion();
+        int icon = 0;
+
+        switch (d.getSeveridad()){
+            case "Perdidas":
+                icon = R.drawable.perdidas;
+                break;
+
+            case "Ligero":
+                icon = R.drawable.ligero;
+                break;
+
+            case "Medio":
+                icon = R.drawable.medio;
+                break;
+
+            case "Fuerte":
+                icon = R.drawable.desangramiento;
+                break;
+
+                default:
+                    icon = R.drawable.period_blood;
+                    break;
+
+        }
+
+        MyEventDay myEventDay = new MyEventDay(customDateParse.convertirACalendar(fecha_temporal),
+                icon,d.getDetalle());
+
+        try {
+            addDaysInCalendar(myEventDay);
+        } catch (OutOfDateRangeException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private String calculateInicioPeriodo(int periodo){
 
         int periododuracion = periodo * - 1;
@@ -197,6 +234,15 @@ public class CalendarLogin extends AppCompatActivity {
         //CalendarPeriodo.setDate(myEventDay.getCalendar());
         mPredictDaysCiclo.add(myEventDay);
         CalendarPeriodo.setEvents(mPredictDaysCiclo);
+    }
+
+    private void addDaysInCalendar(MyEventDay myEventDay ) throws OutOfDateRangeException {
+        //Formato que debe poseer la nota al enviarse para agregar al calendario
+        //MyEventDay(Calendar day, int imageResource, String note)
+
+        //CalendarPeriodo.setDate(myEventDay.getCalendar());
+        mRegisteredDaysCiclo.add(myEventDay);
+        CalendarPeriodo.setEvents(mRegisteredDaysCiclo);
     }
 
     private boolean ConsultarCiclos() {
@@ -244,6 +290,38 @@ public class CalendarLogin extends AppCompatActivity {
         }
 
         return insertado;
+    }
+
+    private void CalculatePromedios(){
+
+        promedioCiclos = null;
+
+        promedioCiclos = db.getArrayPromediosCiclos(
+                db.getPromediosCiclo()
+        ).get(0);
+
+        if (promedioCiclos == null) {
+
+            promedioCiclos = new PromedioCiclos();//si no hay datos
+
+        }
+
+    }
+
+    private void ConsultarUltimoPeriodo(){
+
+        UltimoCiclo = null;
+
+        UltimoCiclo = db.getArrayLastCiclo(
+                db.getLastCiclo()
+        );
+
+        if (UltimoCiclo == null) {
+
+            UltimoCiclo = new Ciclo();//si no hay datos
+
+        }
+
     }
 
 }

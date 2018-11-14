@@ -8,6 +8,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class DB {
     private DBHelper dbHelper;
@@ -137,13 +138,6 @@ public class DB {
                 "select * from ciclos where strftime('%m-%Y', fecha_inicio) = '"+date+"'",null);
     }
 
-    public Cursor getPromediosCiclo(String date){
-
-        return dbHelper.getReadableDatabase().rawQuery(
-                "select avg(duracion_periodo) as duracion_periodo, avg(duracion_ciclo) as duracion_ciclo from ciclos",null);
-    }
-
-
     public ArrayList<Ciclo> getArrayCiclos(Cursor cursor){
         cursor.moveToFirst();//moverse al principio
         ArrayList<Ciclo> lstCiclo = new ArrayList<>();
@@ -159,6 +153,53 @@ public class DB {
                 ));//se agregan a la lista
             }while (cursor.moveToNext());
             return lstCiclo;
+        }
+        return null;//si no entro en el if
+    }
+
+    public Cursor getLastCiclo(){
+
+        return dbHelper.getReadableDatabase().rawQuery(
+                "select * from ciclos where id_ciclo = (select max(id_ciclo) from ciclos); ",null);
+    }
+
+    public Ciclo getArrayLastCiclo(Cursor cursor){
+        cursor.moveToFirst();//moverse al principio
+        Ciclo ciclo = new Ciclo();
+        if(cursor != null && cursor.getCount() > 0){//si hay datos
+            do{
+                ciclo = new Ciclo(
+                        cursor.getString(0),//id_ciclo
+                        cursor.getString(1),//duracion_ciclo
+                        cursor.getString(2),//duracion_periodo
+                        cursor.getString(3),//fecha_inicio
+                        cursor.getString(4),//fecha_fin
+                        cursor.getString(5)//estado
+                );//se agregan a la lista
+            }while (cursor.moveToNext());
+            return ciclo;
+        }
+        return null;//si no entro en el if
+    }
+
+    public Cursor getPromediosCiclo(){
+
+        return dbHelper.getReadableDatabase().rawQuery(
+                "select round(avg(duracion_periodo), 0) as duracion_periodo, round(avg(duracion_ciclo),0) as duracion_ciclo, count(*) from ciclos",null);
+    }
+
+    public List <PromedioCiclos> getArrayPromediosCiclos(Cursor cursor){
+        cursor.moveToFirst();//moverse al principio
+        List <PromedioCiclos> promedioCiclos = new ArrayList<>();
+        if(cursor != null && cursor.getCount() > 0){//si hay datos
+            do{
+                promedioCiclos.add(new PromedioCiclos(
+                        cursor.getString(0),//DURACION_PERIODO
+                        cursor.getString(1),//DURACION_CICLO
+                        cursor.getString(2))//CANTIDAD_CICLOS
+                );//se agregan a la lista
+            }while (cursor.moveToNext());
+            return promedioCiclos;
         }
         return null;//si no entro en el if
     }
