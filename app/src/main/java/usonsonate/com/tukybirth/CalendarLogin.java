@@ -100,7 +100,7 @@ public class CalendarLogin extends AppCompatActivity {
                 // haremos prediccion del próximo ciclo, de lo contrario no vale la pena calcular la prediccion
                 // si no se vera en la actual página del calendario
                 FinCiclo = calculateFinCiclo(
-                        UltimoCiclo.getFecha_fin(), String.valueOf(promedioCiclos.getDURACION_CICLO()));
+                        UltimoCiclo.getFecha_inicio(), String.valueOf(promedioCiclos.getDURACION_CICLO()));
 
                 InicioPeriodo = calculateInicioPeriodo(Integer.parseInt(promedioCiclos.getDURACION_PERIODO()));
                 PredecirProximoCiclo(InicioPeriodo);
@@ -233,6 +233,9 @@ public class CalendarLogin extends AppCompatActivity {
         int icon = 0;
 
         switch (d.getSeveridad()){
+            case"Dolores":
+                icon = R.drawable.sick_girl;
+                break;
             case "Perdidas":
                 icon = R.drawable.perdidas;
                 break;

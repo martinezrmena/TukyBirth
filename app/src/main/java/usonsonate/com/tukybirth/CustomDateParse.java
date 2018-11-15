@@ -89,5 +89,20 @@ public class CustomDateParse {
         return c1;
     }
 
+    public String FormatSQLite(String date){
+        Calendar cInicio = convertirACalendar(date);
+        String FechaInicio = convertirDateToString(cInicio.getTime());
+
+        return FechaInicio;
+    }
+
+    public String FormatSQLiteCambiarDia(String date, int cambio){
+
+        String newDate =  FormatSQLite(convertirDateToString(cambiar_dia(convertirStringToDate(date), cambio)));
+
+        return newDate;
+
+    }
+
 
 }

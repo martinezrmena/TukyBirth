@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import usonsonate.com.tukybirth.SQLite.DB;
@@ -35,6 +36,7 @@ public class SlideLogin extends AppCompatActivity {
     private String Password;
     private DB db;
     private ArrayList<Personas> lstPersonas;
+    private CustomDateParse customDateParse;
 
 
     @Override
@@ -48,6 +50,7 @@ public class SlideLogin extends AppCompatActivity {
         btnSiguiente = findViewById(R.id.btnSiguiente);
         slideAdapter = new SlideLoginAdapter(this);
         maincontainer = findViewById(R.id.MainContainer);
+        customDateParse = new CustomDateParse();
 
         //inicializando lista y db
         db = new DB(SlideLogin.this);
@@ -71,8 +74,8 @@ public class SlideLogin extends AppCompatActivity {
                     String periodo_duracion = String.valueOf(slideAdapter.getPERIODO_DURACION());
                     String duracion_pms = String.valueOf(slideAdapter.getDURACION_PMS());
                     String duracion_ciclo = String.valueOf(slideAdapter.getDURACION_CICLO());
-                    String ultimo_periodo = String.valueOf(slideAdapter.getULTIMO_PERIODO());
-                    String cumpleaños = String.valueOf(slideAdapter.getCUMPLEAÑOS());
+                    String ultimo_periodo = customDateParse.FormatSQLite(slideAdapter.getULTIMO_PERIODO());
+                    String cumpleaños = customDateParse.FormatSQLite(slideAdapter.getCUMPLEAÑOS());
                     Date fechaactual = new Date();
                     String actualdate = convertirDateToString(fechaactual);
                     final Personas persona = new Personas("", Name, Password, periodo_duracion, duracion_pms,

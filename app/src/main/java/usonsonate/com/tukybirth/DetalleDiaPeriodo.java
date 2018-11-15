@@ -23,7 +23,7 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
     private EditText txbAgregarNota;
     private TextView txbFechaPeriodo;
     private Spinner spSeverdidad;
-    private String[] SEVERIDAD = {"Perdidas","Ligero", "Medio", "Fuerte"};
+    private String[] SEVERIDAD = {"Dolores","Perdidas","Ligero", "Medio", "Fuerte"};
     private ArrayAdapter<String> adaptador;
     private CustomDateParse customDateParse;
     private RadioButton rdbtnSi;
@@ -81,11 +81,8 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
 
         String DuracionCiclo = persona.getCiclo();
         String DuracionPeriodo = persona.getPeriodo();
-        Calendar cInicio = customDateParse.convertirACalendar(persona.getUltimo_periodo());
-        String FechaInicio = customDateParse.convertirDateToString(cInicio.getTime());
-        Calendar cFin = customDateParse.convertirACalendar(customDateParse.convertirDateToString(customDateParse.cambiar_dia(customDateParse.convertirStringToDate(persona.getUltimo_periodo())
-                , Integer.parseInt(persona.getCiclo()))));
-        String FechaFin = customDateParse.convertirDateToString(cFin.getTime());
+        String FechaInicio = customDateParse.FormatSQLite(persona.getUltimo_periodo());
+        String FechaFin = customDateParse.FormatSQLiteCambiarDia(persona.getUltimo_periodo(), Integer.parseInt(persona.getCiclo()));
 
         String Estado = "EN PROCESO";
 
