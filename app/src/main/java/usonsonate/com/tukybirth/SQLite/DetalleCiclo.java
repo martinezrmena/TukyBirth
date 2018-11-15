@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class DetalleCiclo implements Serializable {
 
-    private String id_detalle;
-    private String id_ciclo;
-    private String fecha_introduccion;
-    private String severidad;
-    private String detalle;
+    private String id_detalle = "";
+    private String id_ciclo = "";
+    private String fecha_introduccion = "";
+    private String severidad = "";
+    private String detalle = "";
 
     public DetalleCiclo() {
     }

@@ -122,20 +122,41 @@ public class CalendarLogin extends AppCompatActivity {
                                     }
                                 }
 
-                                for(Ciclo c: lstCiclos){
-                                    if(dia_seleccionado.getId_ciclo().equals(c.getId_ciclo())){
-                                        ciclo_seleccionado = c;
-                                    }
-                                }
+                                if(dia_seleccionado.getId_detalle().isEmpty()){
+                                    //NO HAY DÍA REGISTRADO
+                                    //Si NO hay detalle ciclo enviamos parametros basicos ya que será una inserción
+                                    ciclo_seleccionado = new Ciclo();
 
-                                Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
-                                intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
-                                intent.putExtra("INICIALIZAR", "NO");
-                                //Enviar el detalle ciclo del día seleccionado
-                                intent.putExtra("DETALLE_CICLO", dia_seleccionado);
-                                //Enviar el ciclo del día seleccionado
-                                intent.putExtra("CICLO", ciclo_seleccionado);
-                                startActivityForResult(intent, MODIFICAR);
+                                    for(Ciclo c: lstCiclos){
+                                        if(c.getEstado().equals("EN PROCESO")){
+                                            ciclo_seleccionado = c;
+                                        }
+                                    }
+
+                                    Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
+                                    intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
+                                    intent.putExtra("INICIALIZAR", "MEDIO");
+                                    intent.putExtra("CICLO", ciclo_seleccionado);
+                                    intent.putExtra("PERSONA", persona);
+                                    startActivityForResult(intent, INSERTAR);
+
+                                }else{
+
+                                    for(Ciclo c: lstCiclos){
+                                        if(dia_seleccionado.getId_ciclo().equals(c.getId_ciclo())){
+                                            ciclo_seleccionado = c;
+                                        }
+                                    }
+
+                                    Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
+                                    intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
+                                    intent.putExtra("INICIALIZAR", "NO");
+                                    //Enviar el detalle ciclo del día seleccionado
+                                    intent.putExtra("DETALLE_CICLO", dia_seleccionado);
+                                    //Enviar el ciclo del día seleccionado
+                                    intent.putExtra("CICLO", ciclo_seleccionado);
+                                    startActivityForResult(intent, MODIFICAR);
+                                }
 
                             }
                         }else{
