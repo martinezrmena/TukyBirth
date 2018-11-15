@@ -132,17 +132,29 @@ public class CalendarLogin extends AppCompatActivity {
 
                 }else{
                     if (date.after(eventDay.getCalendar().getTime()) || date.equals(pressDate)){
-                        if (lstDetalleCiclo != null){
+
+                        //Validamos si hay ciclos introducidos
+                        if (Integer.parseInt(promedioCiclos.getCOUNT()) >0){
 
                             if(lstDetalleCiclo.size() == 0){
-                                //Si NO hay detalle ciclo
+                                //Si NO hay detalle ciclo enviamos parametros basicos ya que será una inserción
+                                Ciclo ciclo_seleccionado = new Ciclo();
+
+                                for(Ciclo c: lstCiclos){
+                                    if(c.getEstado().equals("EN PROCESO")){
+                                        ciclo_seleccionado = c;
+                                    }
+                                }
+
                                 Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
                                 intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
-                                intent.putExtra("INICIALIZAR", "SI");
+                                intent.putExtra("INICIALIZAR", "MEDIO");
+                                intent.putExtra("CICLO", ciclo_seleccionado);
                                 intent.putExtra("PERSONA", persona);
                                 startActivity(intent);
+
                             }else{
-                                //Si hay detalle ciclo debemos buscar el del día seleccionado
+                                //Si hay detalle ciclo debemos buscar el del día seleccionado ya que sera una actualización
                                 DetalleCiclo dia_seleccionado = new DetalleCiclo();
                                 Ciclo ciclo_seleccionado = new Ciclo();
 
@@ -171,7 +183,7 @@ public class CalendarLogin extends AppCompatActivity {
                             }
                         }else{
                             //Es necesario inicializar
-                            //Si NO hay detalle ciclo
+                            //Si NO hay ciclo
                             Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
                             intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
                             intent.putExtra("INICIALIZAR", "SI");

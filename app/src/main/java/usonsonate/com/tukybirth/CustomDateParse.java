@@ -104,5 +104,18 @@ public class CustomDateParse {
 
     }
 
+    public String Diferencia_Dias_Fechas(String fecha_inicio, String fecha_fin) throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date fechaInicial= dateFormat.parse(fecha_inicio);
+        Date fechaFinal= dateFormat.parse(fecha_fin);
+
+        int dias=(int) ((fechaFinal.getTime()-fechaInicial.getTime())/86400000);
+
+        return String.valueOf(dias);
+
+    }
+
 
 }

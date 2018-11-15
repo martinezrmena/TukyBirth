@@ -261,6 +261,26 @@ public class DB {
         return null;//si no entro en el if
     }
 
+
+    public Cursor getCursorDetalleCicloPromedio(String idciclo){
+
+        Log.d("CONSULTA", "select count(*) from detalleciclos where id_ciclo = '"+idciclo+"' and severidad in ('Perdidas','Ligero','Medio','Fuerte')");
+        return dbHelper.getReadableDatabase().rawQuery(
+                "select count(*) from detalleciclos where id_ciclo = '"+idciclo+"' and severidad in ('Perdidas','Ligero','Medio','Fuerte')",null);
+    }
+
+    public String getArrayDetalleCiclosPromedio(Cursor cursor){
+        cursor.moveToFirst();//moverse al principio
+        String valor = "";
+        if(cursor != null && cursor.getCount() > 0){//si hay datos
+            do{
+                valor = cursor.getString(0);
+            }while (cursor.moveToNext());
+            return valor;
+        }
+        return null;//si no entro en el if
+    }
+
     public boolean guardar_O_ActualizarDetalleCiclos(DetalleCiclo detalleciclo) {
         ContentValues initialValues = new ContentValues();
         Log.d("Ciclos","id_detalle "+detalleciclo.getId_detalle());
