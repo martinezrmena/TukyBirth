@@ -38,7 +38,6 @@ public class CalendarLogin extends AppCompatActivity {
     private String FinCiclo;
     private String InicioPeriodo = "";
     private CustomDateParse customDateParse;
-    private List<EventDay> mPredictDaysCiclo = new ArrayList<>();
     private List<EventDay> mRegisteredDaysCiclo = new ArrayList<>();
     private List<Ciclo> lstCiclos;
     private List<DetalleCiclo> lstDetalleCiclo;
@@ -305,8 +304,8 @@ public class CalendarLogin extends AppCompatActivity {
         //MyEventDay(Calendar day, int imageResource, String note)
 
         //CalendarPeriodo.setDate(myEventDay.getCalendar());
-        mPredictDaysCiclo.add(myEventDay);
-        CalendarPeriodo.setEvents(mPredictDaysCiclo);
+        mRegisteredDaysCiclo.add(myEventDay);
+        CalendarPeriodo.setEvents(mRegisteredDaysCiclo);
     }
 
     private void addDaysInCalendar(MyEventDay myEventDay ) throws OutOfDateRangeException {
@@ -400,7 +399,6 @@ public class CalendarLogin extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == INICIALIZAR ||requestCode == MODIFICAR || requestCode == INSERTAR  ) {
-            mPredictDaysCiclo.clear();
             mRegisteredDaysCiclo.clear();
 
             try {

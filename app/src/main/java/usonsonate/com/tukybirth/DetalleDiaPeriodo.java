@@ -190,7 +190,7 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
                 }
 
                 //VALIDAMOS SI HAREMOS UNA INSERCIÓN O ACTUALIZACIÓN DEL DETALLE DEL CICLOS
-                if(Inicializar.equals("MEDIO")){
+                if(Inicializar.equals("MEDIO") || Inicializar.equals("SI")){
                     // TODO SERÁ UNA INSERCIÓN
                     String iddetalleciclo = "";
                     String idciclo = ciclo_seleccionado.getId_ciclo();
@@ -252,6 +252,8 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
         String Estado = "EN PROCESO";
 
         Ciclo cicloinicio = new Ciclo("", DuracionCiclo, DuracionPeriodo, FechaInicio, FechaFin, Estado );
+        ciclo_seleccionado = cicloinicio;
+        ciclo_seleccionado.setId_ciclo("1");
 
         db.guardar_O_ActualizarCiclos(cicloinicio);
 

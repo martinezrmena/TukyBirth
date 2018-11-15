@@ -289,7 +289,7 @@ public class DB {
         Log.d("Ciclos","severidad "+detalleciclo.getSeveridad());
         Log.d("Ciclos","detalle "+detalleciclo.getDetalle());
 
-        if(!detalleciclo.getId_ciclo().isEmpty())
+        if(!detalleciclo.getId_detalle().isEmpty())
             initialValues.put("id_detalle", Integer.parseInt(detalleciclo.getId_detalle()));
             initialValues.put("id_ciclo", Integer.parseInt(detalleciclo.getId_ciclo()));
             initialValues.put("fecha_introduccion",detalleciclo.getFecha_introduccion());
