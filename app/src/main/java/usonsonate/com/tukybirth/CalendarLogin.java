@@ -1,6 +1,7 @@
 package usonsonate.com.tukybirth;
 
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -43,6 +44,9 @@ public class CalendarLogin extends AppCompatActivity {
     private List<DetalleCiclo> lstDetalleCiclo;
     private PromedioCiclos promedioCiclos;
     private Ciclo UltimoCiclo;
+    public static final int INICIALIZAR = 44;
+    public static final int INSERTAR = 45;
+    public static final int MODIFICAR = 44;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +74,98 @@ public class CalendarLogin extends AppCompatActivity {
         }
         //endregion
 
-        //region Calcular Ciclo con Datos Iniciales
+        Calcular_Ciclo_con_Datos_Iniciales();
+
+        //region Evento Dia Actual
+
+        CalendarPeriodo.setOnDayClickListener(new OnDayClickListener() {
+            @Override
+            public void onDayClick(EventDay eventDay) {
+                Date date = customDateParse.convertirStringToDate(customDateParse.convertirDateToString(new Date()));
+                Date pressDate = customDateParse.convertirStringToDate(customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
+
+                if (customDateParse.convertirStringToDate(persona.getUltimo_periodo()).after(eventDay.getCalendar().getTime())){
+
+                    Toast.makeText(CalendarLogin.this, "No puede introducir registros antes de la fecha en que registro su último periodo.", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    if (date.after(eventDay.getCalendar().getTime()) || date.equals(pressDate)){
+
+                        //Validamos si hay ciclos introducidos
+                        if (Integer.parseInt(promedioCiclos.getCOUNT()) >0){
+
+                            if(lstDetalleCiclo.size() == 0){
+                                //Si NO hay detalle ciclo enviamos parametros basicos ya que será una inserción
+                                Ciclo ciclo_seleccionado = new Ciclo();
+
+                                for(Ciclo c: lstCiclos){
+                                    if(c.getEstado().equals("EN PROCESO")){
+                                        ciclo_seleccionado = c;
+                                    }
+                                }
+
+                                Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
+                                intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
+                                intent.putExtra("INICIALIZAR", "MEDIO");
+                                intent.putExtra("CICLO", ciclo_seleccionado);
+                                intent.putExtra("PERSONA", persona);
+                                startActivityForResult(intent, INSERTAR);
+
+                            }else{
+                                //Si hay detalle ciclo debemos buscar el del día seleccionado ya que sera una actualización
+                                DetalleCiclo dia_seleccionado = new DetalleCiclo();
+                                Ciclo ciclo_seleccionado = new Ciclo();
+
+                                for (DetalleCiclo d: lstDetalleCiclo){
+
+                                    if(d.getFecha_introduccion().equals(customDateParse.convertirDateToString(eventDay.getCalendar().getTime()))){
+                                        dia_seleccionado = d;
+                                    }
+                                }
+
+                                for(Ciclo c: lstCiclos){
+                                    if(dia_seleccionado.getId_ciclo().equals(c.getId_ciclo())){
+                                        ciclo_seleccionado = c;
+                                    }
+                                }
+
+                                Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
+                                intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
+                                intent.putExtra("INICIALIZAR", "NO");
+                                //Enviar el detalle ciclo del día seleccionado
+                                intent.putExtra("DETALLE_CICLO", dia_seleccionado);
+                                //Enviar el ciclo del día seleccionado
+                                intent.putExtra("CICLO", ciclo_seleccionado);
+                                startActivityForResult(intent, MODIFICAR);
+
+                            }
+                        }else{
+                            //Es necesario inicializar
+                            //Si NO hay ciclo
+                            Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
+                            intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
+                            intent.putExtra("INICIALIZAR", "SI");
+                            intent.putExtra("PERSONA", persona);
+                            startActivityForResult(intent, INICIALIZAR);
+
+                        }
+
+
+
+                    }else{
+
+                        Toast.makeText(CalendarLogin.this, "No se pueden agregar detalles a dias posteriores de la fecha actual.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        //endregion
+
+    }
+
+
+    private void Calcular_Ciclo_con_Datos_Iniciales(){
 
         //Obtenemos los promedios para conocer si calculamos desde ellos o desde parametros iniciales
         CalculatePromedios();
@@ -114,95 +209,6 @@ public class CalendarLogin extends AppCompatActivity {
             InicioPeriodo = calculateInicioPeriodo(Integer.parseInt(persona.getPeriodo()));
             PredecirProximoCiclo(InicioPeriodo);
         }
-
-
-        //endregion
-
-        //region Evento Dia Actual
-
-        CalendarPeriodo.setOnDayClickListener(new OnDayClickListener() {
-            @Override
-            public void onDayClick(EventDay eventDay) {
-                Date date = customDateParse.convertirStringToDate(customDateParse.convertirDateToString(new Date()));
-                Date pressDate = customDateParse.convertirStringToDate(customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
-
-                if (customDateParse.convertirStringToDate(persona.getUltimo_periodo()).after(eventDay.getCalendar().getTime())){
-
-                    Toast.makeText(CalendarLogin.this, "No puede introducir registros antes de la fecha en que registro su último periodo.", Toast.LENGTH_SHORT).show();
-
-                }else{
-                    if (date.after(eventDay.getCalendar().getTime()) || date.equals(pressDate)){
-
-                        //Validamos si hay ciclos introducidos
-                        if (Integer.parseInt(promedioCiclos.getCOUNT()) >0){
-
-                            if(lstDetalleCiclo.size() == 0){
-                                //Si NO hay detalle ciclo enviamos parametros basicos ya que será una inserción
-                                Ciclo ciclo_seleccionado = new Ciclo();
-
-                                for(Ciclo c: lstCiclos){
-                                    if(c.getEstado().equals("EN PROCESO")){
-                                        ciclo_seleccionado = c;
-                                    }
-                                }
-
-                                Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
-                                intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
-                                intent.putExtra("INICIALIZAR", "MEDIO");
-                                intent.putExtra("CICLO", ciclo_seleccionado);
-                                intent.putExtra("PERSONA", persona);
-                                startActivity(intent);
-
-                            }else{
-                                //Si hay detalle ciclo debemos buscar el del día seleccionado ya que sera una actualización
-                                DetalleCiclo dia_seleccionado = new DetalleCiclo();
-                                Ciclo ciclo_seleccionado = new Ciclo();
-
-                                for (DetalleCiclo d: lstDetalleCiclo){
-
-                                    if(d.getFecha_introduccion().equals(customDateParse.convertirDateToString(eventDay.getCalendar().getTime()))){
-                                        dia_seleccionado = d;
-                                    }
-                                }
-
-                                for(Ciclo c: lstCiclos){
-                                    if(dia_seleccionado.getId_ciclo().equals(c.getId_ciclo())){
-                                        ciclo_seleccionado = c;
-                                    }
-                                }
-
-                                Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
-                                intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
-                                intent.putExtra("INICIALIZAR", "NO");
-                                //Enviar el detalle ciclo del día seleccionado
-                                intent.putExtra("DETALLE_CICLO", dia_seleccionado);
-                                //Enviar el ciclo del día seleccionado
-                                intent.putExtra("CICLO", ciclo_seleccionado);
-                                startActivity(intent);
-
-                            }
-                        }else{
-                            //Es necesario inicializar
-                            //Si NO hay ciclo
-                            Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
-                            intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
-                            intent.putExtra("INICIALIZAR", "SI");
-                            intent.putExtra("PERSONA", persona);
-                            startActivity(intent);
-
-                        }
-
-
-
-                    }else{
-
-                        Toast.makeText(CalendarLogin.this, "No se pueden agregar detalles a dias posteriores de la fecha actual.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-
-        //endregion
 
     }
 
@@ -391,4 +397,19 @@ public class CalendarLogin extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == INICIALIZAR ||requestCode == MODIFICAR || requestCode == INSERTAR  ) {
+            mPredictDaysCiclo.clear();
+            mRegisteredDaysCiclo.clear();
+
+            try {
+                CalendarPeriodo.setDate(CalendarPeriodo.getCurrentPageDate().getTime());
+            } catch (OutOfDateRangeException e) {
+                e.printStackTrace();
+            }
+
+            Calcular_Ciclo_con_Datos_Iniciales();
+        }
+    }
 }
