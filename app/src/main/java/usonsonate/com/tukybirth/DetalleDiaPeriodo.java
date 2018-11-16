@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import usonsonate.com.tukybirth.SQLite.Ciclo;
 import usonsonate.com.tukybirth.SQLite.DB;
@@ -42,6 +44,7 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
     private String Inicializar;
     private Personas persona;
     private Button btnGuardar;
+    boolean finalizo = false;
 
 
     @Override
@@ -51,6 +54,7 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
 
         //Inicializamos variables
         setTitle("Detalle del día");
+
         spSeverdidad = findViewById(R.id.spSeveridad);
         txbFechaPeriodo = findViewById(R.id.txbFechaPeriodo);
         rdbtnSi = findViewById(R.id.rdbtnSi);
@@ -86,11 +90,54 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
             ciclo_seleccionado = (Ciclo) getIntent().getExtras().getSerializable("CICLO");
             persona = (Personas) getIntent().getExtras().getSerializable("PERSONA");
 
+            if (ciclo_seleccionado.getEstado().equals("TERMINO")){
+                rdbtnSi.setEnabled(false);
+                rdbtnNo.setEnabled(false);
+            }
+
         }
 
         //Establecemos parametros de inicio
         txbFechaPeriodo.setText(DateCalendar);
         //endregion
+
+
+        //region btnSi
+        rdbtnSi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DetalleDiaPeriodo.this);
+                    builder.setIcon(R.drawable.predict).
+                            setTitle("Atención").setMessage("El proceso de finalizar un ciclo es irreversible. ¿Desea proceder?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            rdbtnSi.setChecked(true);
+                            spSeverdidad.setEnabled(false);
+                        }
+                    }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            rdbtnSi.setChecked(false);
+                            rdbtnNo.setChecked(true);
+                            Toast.makeText(DetalleDiaPeriodo.this, "Cancelaste la acción.", Toast.LENGTH_SHORT ).show();
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+            }
+        });
+        //endregion
+
+        rdbtnNo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                spSeverdidad.setEnabled(true);
+            }
+        });
+
     }
 
 
@@ -99,7 +146,8 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
         if (ciclo_seleccionado.getEstado().equals("TERMINO")){
             rdbtnSi.setEnabled(false);
             rdbtnNo.setEnabled(false);
-            rdbtnSi.setEnabled(true);
+            rdbtnSi.setChecked(true);
+            spSeverdidad.setEnabled(false);
         }
 
         int seleccion = 0;
@@ -144,7 +192,7 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(DetalleDiaPeriodo.this);
-        builder.setIcon(R.drawable.period_blood).
+        builder.setIcon(R.drawable.predict).
                 setTitle("Atención").setMessage(Message).setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -158,8 +206,8 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
                     //actualizamos los estados del último ciclo antes de insertar el nuevo
 
                     estado = "TERMINO";
-                    Date current_Date = new Date();
-                    ciclo_seleccionado.setFecha_fin(customDateParse.FormatSQLite(customDateParse.convertirDateToString(current_Date)));
+                    finalizo = true;
+                    ciclo_seleccionado.setFecha_fin(customDateParse.FormatSQLite(txbFechaPeriodo.getText().toString()));
                     ciclo_seleccionado.setDuracion_periodo(ConsultarPeriodoCicloActual());
                     try {
                         ciclo_seleccionado.setDuracion_ciclo(customDateParse.Diferencia_Dias_Fechas(
@@ -168,6 +216,7 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+                    ciclo_seleccionado.setEstado(estado);
 
                     //Actualizamos el último ciclo
                     db.guardar_O_ActualizarCiclos(ciclo_seleccionado);
@@ -195,12 +244,27 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
                     String iddetalleciclo = "";
                     String idciclo = ciclo_seleccionado.getId_ciclo();
                     String fecha_introducción = customDateParse.FormatSQLite(txbFechaPeriodo.getText().toString());
-                    String severidad = spSeverdidad.getSelectedItem().toString();
+                    String severidad = "";
                     String detalle = txbAgregarNota.getText().toString();
+
+                    if (finalizo){
+                        severidad = "TERMINO";
+
+                    }else{
+                        severidad = spSeverdidad.getSelectedItem().toString();
+                    }
+
+
                     DetalleCiclo detalleCiclo = new DetalleCiclo(iddetalleciclo,idciclo,fecha_introducción,severidad,detalle);
 
                     //insertamos
                     db.guardar_O_ActualizarDetalleCiclos(detalleCiclo);
+
+                    if (ciclo_seleccionado.getEstado().equals("TERMINO")){
+
+                        ciclo_seleccionado.setDuracion_periodo(ConsultarPeriodoCicloActual());
+                        db.guardar_O_ActualizarCiclos(ciclo_seleccionado);
+                    }
 
 
                     Intent resultIntent = new Intent();
@@ -212,8 +276,21 @@ public class DetalleDiaPeriodo extends AppCompatActivity {
                     String iddetalleciclo = detalleCiclo_seleccionado.getId_detalle();
                     String idciclo = ciclo_seleccionado.getId_ciclo();
                     String fecha_introducción = customDateParse.FormatSQLite(txbFechaPeriodo.getText().toString());
-                    String severidad = spSeverdidad.getSelectedItem().toString();
+                    String severidad = "";
                     String detalle = txbAgregarNota.getText().toString();
+
+                    if (finalizo){
+                        severidad = "TERMINO";
+
+                    }else{
+
+                        if (!detalleCiclo_seleccionado.getSeveridad().equals("TERMINO")){
+                            severidad = spSeverdidad.getSelectedItem().toString();
+                        }else{
+                            severidad = "TERMINO";
+                        }
+                    }
+
                     DetalleCiclo detalleCiclo = new DetalleCiclo(iddetalleciclo,idciclo,fecha_introducción,severidad,detalle);
 
                     //actualizamos

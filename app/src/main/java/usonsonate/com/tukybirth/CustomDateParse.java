@@ -117,5 +117,24 @@ public class CustomDateParse {
 
     }
 
+    public boolean ValidarUnaFechaEntreDos(String FechaInicio, String FechaFin, String FechaValidar){
+        Date FechaStart = convertirStringToDate(FechaInicio);
+        Date FechaEnd = convertirStringToDate(FechaFin);
+        Date FechaValidate = convertirStringToDate(FechaValidar);
+        boolean EntreFechas;
+
+        if (FechaValidate.after(FechaStart) && FechaValidate.before(FechaEnd)){
+
+            EntreFechas = true;
+
+        }else {
+
+            EntreFechas = false;
+
+        }
+
+        return EntreFechas;
+    }
+
 
 }

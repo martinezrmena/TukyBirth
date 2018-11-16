@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
 
 import java.sql.Date;
+import java.util.Objects;
 
 import usonsonate.com.tukybirth.Semanas.*;
 
@@ -55,7 +56,7 @@ public class InformacionSemanas extends AppCompatActivity {
 
         setTitle("INFORMACIÓN POR SEMANA");
         //Para activar y asignar que necesitaremos un botón para regresar a la activity anterior
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         //Inicializar variables
         datos = getResources().getStringArray(R.array.semanas_array);

@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
+import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import usonsonate.com.tukybirth.Calendar.MyEventDay;
 import usonsonate.com.tukybirth.SQLite.Ciclo;
@@ -58,6 +61,9 @@ public class CalendarLogin extends AppCompatActivity {
         customDateParse = new CustomDateParse();
         db = new DB(CalendarLogin.this);
         setTitle("Datos del ciclo");
+        //Para activar y asignar que necesitaremos un botón para regresar a la activity anterior
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
 
         //region Inicializar_Calendario
         //Inicializamos el calendario del sistema para poder asignar una fecha
@@ -98,8 +104,15 @@ public class CalendarLogin extends AppCompatActivity {
                                 Ciclo ciclo_seleccionado = new Ciclo();
 
                                 for(Ciclo c: lstCiclos){
-                                    if(c.getEstado().equals("EN PROCESO")){
+                                    if (customDateParse.ValidarUnaFechaEntreDos(c.getFecha_inicio(),c.getFecha_fin(), customDateParse.convertirDateToString(eventDay.getCalendar().getTime())) &&
+                                            c.getEstado().equals("TERMINO")){
                                         ciclo_seleccionado = c;
+                                        break;
+                                    }else{
+                                        if(c.getEstado().equals("EN PROCESO")){
+                                            ciclo_seleccionado = c;
+                                            break;
+                                        }
                                     }
                                 }
 
@@ -128,10 +141,22 @@ public class CalendarLogin extends AppCompatActivity {
                                     ciclo_seleccionado = new Ciclo();
 
                                     for(Ciclo c: lstCiclos){
-                                        if(c.getEstado().equals("EN PROCESO")){
+
+                                        if (customDateParse.ValidarUnaFechaEntreDos(c.getFecha_inicio(),c.getFecha_fin(), customDateParse.convertirDateToString(eventDay.getCalendar().getTime())) &&
+                                                c.getEstado().equals("TERMINO")){
                                             ciclo_seleccionado = c;
+                                            break;
+                                        }else{
+                                            if(c.getEstado().equals("EN PROCESO")){
+                                                ciclo_seleccionado = c;
+                                                break;
+                                            }
                                         }
                                     }
+
+                                    //Enviar validacion para que no pueda agregar detalles en un ciclo que ya termino
+
+
 
                                     Intent intent = new Intent(getApplicationContext(), DetalleDiaPeriodo.class);
                                     intent.putExtra("DATE_CALENDAR", customDateParse.convertirDateToString(eventDay.getCalendar().getTime()));
@@ -182,8 +207,21 @@ public class CalendarLogin extends AppCompatActivity {
 
         //endregion
 
-    }
+        CalendarPeriodo.setOnForwardPageChangeListener(new OnCalendarPageChangeListener() {
+            @Override
+            public void onChange() {
+                Calcular_Ciclo_con_Datos_Iniciales();
+            }
+        });
 
+        CalendarPeriodo.setOnPreviousPageChangeListener(new OnCalendarPageChangeListener() {
+            @Override
+            public void onChange() {
+                Calcular_Ciclo_con_Datos_Iniciales();
+            }
+        });
+
+    }
 
     private void Calcular_Ciclo_con_Datos_Iniciales(){
 
@@ -239,7 +277,7 @@ public class CalendarLogin extends AppCompatActivity {
         for (int i = 0; i < Integer.parseInt(persona.getPeriodo()); i++){
 
             MyEventDay myEventDay = new MyEventDay(customDateParse.convertirACalendar(fecha_temporal),
-                    R.drawable.period_blood,"nota dia");
+                    R.drawable.predict,"predicción");
 
 
             //Si la fecha_temporal corresponde al mes en el que se encuentra actualmente
@@ -288,6 +326,10 @@ public class CalendarLogin extends AppCompatActivity {
 
             case "Fuerte":
                 icon = R.drawable.desangramiento;
+                break;
+
+            case "TERMINO":
+                icon = R.drawable.finish_period;
                 break;
 
                 default:
