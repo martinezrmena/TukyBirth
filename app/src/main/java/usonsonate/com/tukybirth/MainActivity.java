@@ -1,10 +1,13 @@
 package usonsonate.com.tukybirth;
 
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.transition.Fade;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final long DURATION_TRANSITION = 1000;
     public static int HOSPITALS_NERBY = 1997;
+    AlertDialog alert = null;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -121,13 +125,72 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_send) {
-            Intent intent = new Intent(getApplicationContext(), MainMapsActivity.class);
-            startActivity(intent);
+            LocationUtils locationUtils = new LocationUtils();
+
+            /***************************AGREAGAR EL CODIGO DE VALIDAR INTERNET AQUI****************************************/
+
+            /*******************************************************************************************************/
+            if(locationUtils.isNetowrkProvider(this)){
+
+                if( locationUtils.isGPSProvider(this)){
+                    /***************************AGREAGAR EL CODIGO DE VALIDAR GPS AQUI****************************************/
+
+                    /*******************************************************************************************************/
+
+                    Intent intent = new Intent(getApplicationContext(), MainMapsActivity.class);
+                    startActivity(intent);
+                }else{
+
+                    AlertNoGps();
+                }
+
+            }else{
+                AlertNoWifi();
+
+                Toast.makeText(this, "No posee conexión a internet.", Toast.LENGTH_SHORT).show();
+            }
+
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void AlertNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("El sistema GPS esta desactivado, ¿Desea activarlo?")
+                .setCancelable(false)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
+        alert = builder.create();
+        alert.show();
+    }
+
+    private void AlertNoWifi() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("No posee conexión a Internet, ¿Desea activarlo?")
+                .setCancelable(false)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
+        alert = builder.create();
+        alert.show();
     }
 }

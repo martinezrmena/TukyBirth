@@ -253,7 +253,7 @@ public class CalendarLogin extends AppCompatActivity {
                             .equals(customDateParse.convertirDateToStringMonth_Year(CalendarPeriodo.getCurrentPageDate().getTime()))
                     ){
 
-                //si la fecha del ultimo ciclo que finalizo es igual a la de la pagina actual del calendario
+                //si la fecha del ultimo ciclo que finalizo o su fecha de inicio es igual a la de la pagina actual del calendario
                 // haremos prediccion del próximo ciclo, de lo contrario no vale la pena calcular la prediccion
                 // si no se vera en la actual página del calendario
                 FinCiclo = calculateFinCiclo(
