@@ -84,7 +84,9 @@
         <activity
             android:name=".Login"
             android:theme="@style/CustomActionBar" />
-        <activity android:name=".Principal_Ayuda" />
+        <activity android:name=".Principal_Ayuda"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            />
         <activity
             android:name=".InformacionEmbarazo"
             android:parentActivityName=".MainActivity" />

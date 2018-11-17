@@ -3,8 +3,10 @@ package usonsonate.com.tukybirth.Fragmentos;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -18,7 +20,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -41,9 +45,6 @@ public class FragmentoPrincipal extends Fragment {
 
     private Animation anim_rotar;
 
-    private int mYearIni, mMonthIni, mDayIni, sYearIni, sMonthIni, sDayIni;
-    static final int DATE_ID = 0;
-    Calendar C = Calendar.getInstance();
 
     private View view;
 
@@ -58,12 +59,14 @@ public class FragmentoPrincipal extends Fragment {
         this.imgLogo = view.findViewById(R.id.imgLogo);
         this.btnAyuda = view.findViewById(R.id.btnYuda);
 
+        SharedPreferences pref = getContext().getSharedPreferences("info",Context.MODE_PRIVATE);
+
+        txtFecha.setText(pref.getString("fecha1",""));
+        lblFecha.setText(pref.getString("fecha2","fecha que el bebe nacera"));
+
         anim_rotar = AnimationUtils.loadAnimation(getContext(), R.anim.rotar);
         imgLogo.startAnimation(anim_rotar);
 
-        sMonthIni = C.get(Calendar.MONTH);
-        sDayIni = C.get(Calendar.DAY_OF_MONTH);
-        sYearIni = C.get(Calendar.YEAR);
 
         txtFecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,10 +81,20 @@ public class FragmentoPrincipal extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         //getActivity().showDialog(DATE_ID);
+                        Calendar calendario = Calendar.getInstance();
 
+                        //mostramos un diañogo para mostrar la fecha
+                        DatePickerDialog dlgFecha = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                txtFecha.setText(Integer.toString(year)+"-"+Integer.toString(month+1)+"-"+Integer.toString(dayOfMonth));
+                                obtenerfecha();
+                                guardardatos();
+                            }
+                        },calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
+                        //mostramos el dialogo
+                        dlgFecha.show();
                         imgLogo.startAnimation(anim_rotar);
-
-
                     }
                 }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
@@ -106,34 +119,24 @@ public class FragmentoPrincipal extends Fragment {
 
         return view;
     }
-    private void colocar_fecha() {
-        txtFecha.setText(mYearIni + "-" + (mMonthIni + 1) + "-" + mDayIni);
+
+    public void obtenerfecha(){
         Calcular = convertirACalendar(txtFecha.getText().toString());
         date = sumarMeses(Calcular.getTime(),-3,7,1);
         lblFecha.setText("El bebe nacera aproximadamente el :"+date.toString());
     }
 
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    mYearIni = year;
-                    mMonthIni = monthOfYear;
-                    mDayIni = dayOfMonth;
-                    colocar_fecha();
-
-                }
-
-            };
-
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DATE_ID:
-                return new DatePickerDialog(getContext(), mDateSetListener, sYearIni, sMonthIni, sDayIni);
-        }
-
-        return null;
+    public void guardardatos(){
+        if(txtFecha.getText().toString().isEmpty())
+            Toast.makeText(getContext(), "Ingrese fecha", Toast.LENGTH_SHORT).show();
+        String fecha1 = txtFecha.getText().toString();
+        String fecha2 = lblFecha.getText().toString();
+        SharedPreferences preferences = getContext().getSharedPreferences("info", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("fecha1",fecha1);
+        editor.putString("fecha2",fecha2);
+        editor.commit();
     }
-
     private Calendar convertirACalendar(String fecha){
 
         String[] fechArray = fecha.split("-");
@@ -158,5 +161,4 @@ public class FragmentoPrincipal extends Fragment {
         calendar.add(calendar.YEAR,year);
         return calendar.getTime();
     }
-
 }
