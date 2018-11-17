@@ -246,8 +246,12 @@ public class CalendarLogin extends AppCompatActivity {
             }
 
             //region PrediccionProximoCiclo
+
             if (customDateParse.convertirDateToStringMonth_Year(customDateParse.convertirStringToDate(UltimoCiclo.getFecha_fin()))
-                    .equals(customDateParse.convertirDateToStringMonth_Year(CalendarPeriodo.getCurrentPageDate().getTime()))){
+                    .equals(customDateParse.convertirDateToStringMonth_Year(CalendarPeriodo.getCurrentPageDate().getTime())) ||
+                    customDateParse.convertirDateToStringMonth_Year(customDateParse.convertirStringToDate(UltimoCiclo.getFecha_inicio()))
+                            .equals(customDateParse.convertirDateToStringMonth_Year(CalendarPeriodo.getCurrentPageDate().getTime()))
+                    ){
 
                 //si la fecha del ultimo ciclo que finalizo es igual a la de la pagina actual del calendario
                 // haremos prediccion del próximo ciclo, de lo contrario no vale la pena calcular la prediccion
