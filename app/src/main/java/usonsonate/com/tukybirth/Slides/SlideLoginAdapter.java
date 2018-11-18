@@ -57,7 +57,7 @@ public class SlideLoginAdapter extends PagerAdapter {
             "¿Conoces cuánto dura tu periodo?",
             "¿Sufres el síndrome premenstrual?",
             "¿Cuánto dura tu ciclo normalmente?",
-            "¿Recuerdas la fecha en que termino tu último ciclo?",
+            "¿Recuerdas cuando inicio tu último periodo?",
             "¿Cuál es tu fecha de cumpleaños?"
     };
 

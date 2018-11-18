@@ -77,7 +77,8 @@ public class SlideLogin extends AppCompatActivity {
                         String periodo_duracion = String.valueOf(slideAdapter.getPERIODO_DURACION());
                         String duracion_pms = String.valueOf(slideAdapter.getDURACION_PMS());
                         String duracion_ciclo = String.valueOf(slideAdapter.getDURACION_CICLO());
-                        String ultimo_periodo = customDateParse.FormatSQLite(slideAdapter.getULTIMO_PERIODO());
+                        String ultimo_periodo = customDateParse.FormatSQLite(customDateParse.convertirDateToString(customDateParse.cambiar_dia(customDateParse.convertirStringToDate(slideAdapter.getULTIMO_PERIODO()),
+                                slideAdapter.getDURACION_CICLO() + 1 )));
                         String cumpleaños = customDateParse.FormatSQLite(slideAdapter.getCUMPLEAÑOS());
                         Date fechaactual = new Date();
                         String actualdate = convertirDateToString(fechaactual);
