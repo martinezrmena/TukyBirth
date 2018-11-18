@@ -1,8 +1,11 @@
 package usonsonate.com.tukybirth;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -125,18 +128,16 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_send) {
+            /*---------------------------------------------------------------------------------------------------------------------------------*/
             LocationUtils locationUtils = new LocationUtils();
 
             /***************************AGREAGAR EL CODIGO DE VALIDAR INTERNET AQUI****************************************/
-
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             /*******************************************************************************************************/
-            if(locationUtils.isNetowrkProvider(this)){
+            if(networkInfo != null && networkInfo.isConnected()){
 
-                if( locationUtils.isGPSProvider(this)){
-                    /***************************AGREAGAR EL CODIGO DE VALIDAR GPS AQUI****************************************/
-
-                    /*******************************************************************************************************/
-
+                if(locationUtils.isGPSProvider(this)){
                     Intent intent = new Intent(getApplicationContext(), MainMapsActivity.class);
                     startActivity(intent);
                 }else{
@@ -146,11 +147,10 @@ public class MainActivity extends AppCompatActivity
 
             }else{
                 AlertNoWifi();
-
                 Toast.makeText(this, "No posee conexión a internet.", Toast.LENGTH_SHORT).show();
             }
 
-
+            /*---------------------------------------------------------------------------------------------------------------------------------*/
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
