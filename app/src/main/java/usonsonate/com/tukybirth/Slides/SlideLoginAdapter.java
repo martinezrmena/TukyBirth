@@ -57,7 +57,7 @@ public class SlideLoginAdapter extends PagerAdapter {
             "¿Conoces cuánto dura tu periodo?",
             "¿Sufres el síndrome premenstrual?",
             "¿Cuánto dura tu ciclo normalmente?",
-            "¿Recuerdas la fecha de tu último periodo?",
+            "¿Recuerdas la fecha en que termino tu último ciclo?",
             "¿Cuál es tu fecha de cumpleaños?"
     };
 
@@ -65,7 +65,7 @@ public class SlideLoginAdapter extends PagerAdapter {
             "La duración normal del periodo dura entre 2 y 7 días, por lo tanto si tu periodo no esta comprendido entre ese rango es un buen momento para visitar al médico.",
             "La experiencia del sindrome premenstrual es diferente entre personas, sin embargo muchas experimentan algún tipo de PMS en algún grado. Los síntomas del síndrome premenstrual pueden ocurrir en cualquier momento después de la ovulación y terminar con el inicio del ciclo.",
             "Un ciclo menstrual regular puede durar alrededor de 25 a 35 días, y comienza el primer día de la menstruación. Ciclos mayores que 33 días o menores que 25 pueden indicar problemas hormonales. Sin embargo, es normal tener ciclos irregulares en los 2 primeros años después de la menarquía, que es la primera menstruación de la mujer.",
-            "El Período Menstrual es la fase en que ocurre sangrado y desprendimiento de la pared externa del útero, marcando el inicio de un nuevo ciclo menstrual. En general, la menstruación ocurre 1 vez al mes y dura de 3 a 8 días.",
+            "El Período Menstrual es la fase en que ocurre sangrado y desprendimiento de la pared externa del útero, marcando el inicio de un nuevo ciclo menstrual y el fin del ciclo anterior. En general, la menstruación ocurre 1 vez al mes y dura de 3 a 8 días.",
             "Conocer la fecha de nacimiento ayuda a obtener calculos más precisos del ciclo menstrual."
     };
 

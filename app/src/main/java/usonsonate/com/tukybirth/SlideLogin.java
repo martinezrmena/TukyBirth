@@ -71,47 +71,60 @@ public class SlideLogin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(btnSiguiente.getText().equals("Terminar")){
-                    String periodo_duracion = String.valueOf(slideAdapter.getPERIODO_DURACION());
-                    String duracion_pms = String.valueOf(slideAdapter.getDURACION_PMS());
-                    String duracion_ciclo = String.valueOf(slideAdapter.getDURACION_CICLO());
-                    String ultimo_periodo = customDateParse.FormatSQLite(slideAdapter.getULTIMO_PERIODO());
-                    String cumpleaños = customDateParse.FormatSQLite(slideAdapter.getCUMPLEAÑOS());
-                    Date fechaactual = new Date();
-                    String actualdate = convertirDateToString(fechaactual);
-                    final Personas persona = new Personas("", Name, Password, periodo_duracion, duracion_pms,
-                            duracion_ciclo, ultimo_periodo, cumpleaños, actualdate);
 
-                    if(!periodo_duracion.isEmpty() && !duracion_pms.isEmpty() && !duracion_ciclo.isEmpty()
-                            && !ultimo_periodo.isEmpty() && !cumpleaños.isEmpty()){
+                    if (!slideAdapter.getULTIMO_PERIODO().isEmpty() && !slideAdapter.getCUMPLEAÑOS().isEmpty()){
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(SlideLogin.this);
-                        builder.setIcon(R.drawable.pregnant).
-                                setTitle("Atención").setMessage("¿Está segura de proceder con los datos ingresados?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                        String periodo_duracion = String.valueOf(slideAdapter.getPERIODO_DURACION());
+                        String duracion_pms = String.valueOf(slideAdapter.getDURACION_PMS());
+                        String duracion_ciclo = String.valueOf(slideAdapter.getDURACION_CICLO());
+                        String ultimo_periodo = customDateParse.FormatSQLite(slideAdapter.getULTIMO_PERIODO());
+                        String cumpleaños = customDateParse.FormatSQLite(slideAdapter.getCUMPLEAÑOS());
+                        Date fechaactual = new Date();
+                        String actualdate = convertirDateToString(fechaactual);
+                        final Personas persona = new Personas("", Name, Password, periodo_duracion, duracion_pms,
+                                duracion_ciclo, ultimo_periodo, cumpleaños, actualdate);
 
-                                db.guardar_O_ActualizarPersonas(persona);
-                                Toast.makeText(SlideLogin.this, "El usuario fue insertado exitosamente", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SlideLogin.this, CalendarLogin.class);
-                                intent.putExtra("PERSONA", persona);
-                                startActivity(intent);
-                                finish();
+                        if(!periodo_duracion.isEmpty() && !duracion_pms.isEmpty() && !duracion_ciclo.isEmpty()
+                                && !ultimo_periodo.isEmpty() && !cumpleaños.isEmpty()){
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(SlideLogin.this);
+                            builder.setIcon(R.drawable.pregnant).
+                                    setTitle("Atención").setMessage("¿Está segura de proceder con los datos ingresados?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    db.guardar_O_ActualizarPersonas(persona);
+                                    Toast.makeText(SlideLogin.this, "El usuario fue insertado exitosamente", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(SlideLogin.this, CalendarLogin.class);
+                                    intent.putExtra("PERSONA", persona);
+                                    startActivity(intent);
+                                    finish();
 
 
-                            }
-                        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
 
-                                dialogInterface.dismiss();
-                                Toast.makeText(SlideLogin.this, "La acción fue cancelada.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
+                                    dialogInterface.dismiss();
+                                    Toast.makeText(SlideLogin.this, "La acción fue cancelada.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }else{
+                            Toast.makeText(SlideLogin.this, "Revise los parametros ingresados.", Toast.LENGTH_SHORT).show();
+                        }
+
                     }else{
-                        Toast.makeText(SlideLogin.this, "Revise los parametros ingresados.", Toast.LENGTH_SHORT).show();
+
+                        if (slideAdapter.getULTIMO_PERIODO().isEmpty()){
+                            Toast.makeText(SlideLogin.this, "Debe seleccionar una fecha para el fin del último ciclo.", Toast.LENGTH_SHORT).show();
+                        }else if(slideAdapter.getCUMPLEAÑOS().isEmpty()){
+                            Toast.makeText(SlideLogin.this, "Debe seleccionar la fecha de su cumpleaños.", Toast.LENGTH_SHORT).show();
+                        }
                     }
+
 
 
                 }

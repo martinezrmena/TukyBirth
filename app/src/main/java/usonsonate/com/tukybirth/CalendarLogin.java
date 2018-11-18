@@ -223,6 +223,11 @@ public class CalendarLogin extends AppCompatActivity {
 
     }
 
+    public void DetallesIconos(View v){
+        Intent intent = new Intent(getApplicationContext(), ListDetalleActivity.class);
+        startActivity(intent);
+    }
+
     private void Calcular_Ciclo_con_Datos_Iniciales(){
 
         //Obtenemos los promedios para conocer si calculamos desde ellos o desde parametros iniciales
@@ -247,56 +252,43 @@ public class CalendarLogin extends AppCompatActivity {
 
             //region PrediccionProximoCiclo
 
-            if (customDateParse.convertirDateToStringMonth_Year(customDateParse.convertirStringToDate(UltimoCiclo.getFecha_fin()))
-                    .equals(customDateParse.convertirDateToStringMonth_Year(CalendarPeriodo.getCurrentPageDate().getTime())) ||
-                    customDateParse.convertirDateToStringMonth_Year(customDateParse.convertirStringToDate(UltimoCiclo.getFecha_inicio()))
-                            .equals(customDateParse.convertirDateToStringMonth_Year(CalendarPeriodo.getCurrentPageDate().getTime()))
-                    ){
+            String valuefinal = customDateParse.convertirDateToStringMonth_Year(customDateParse.convertirStringToDate(UltimoCiclo.getFecha_fin()));
+            String valuecalendario = customDateParse.convertirDateToStringMonth_Year(CalendarPeriodo.getCurrentPageDate().getTime());
+            String valueinicial = customDateParse.convertirDateToStringMonth_Year(customDateParse.convertirStringToDate(UltimoCiclo.getFecha_inicio()));
+            String valueCambioMesFin = customDateParse.convertirDateToStringMonth_Year(customDateParse.cambiar_mes(customDateParse.convertirStringToDate(UltimoCiclo.getFecha_fin()),1));
 
-                //si la fecha del ultimo ciclo que finalizo o su fecha de inicio es igual a la de la pagina actual del calendario
-                // haremos prediccion del próximo ciclo, de lo contrario no vale la pena calcular la prediccion
-                // si no se vera en la actual página del calendario
-                FinCiclo = calculateFinCiclo(
-                        UltimoCiclo.getFecha_inicio(), String.valueOf(promedioCiclos.getDURACION_CICLO()));
+            InicioPeriodo = customDateParse.convertirDateToString(customDateParse.cambiar_dia(
+                    customDateParse.convertirStringToDate(UltimoCiclo.getFecha_inicio()),
+                    Integer.parseInt(promedioCiclos.getDURACION_CICLO()) + 1));
 
-                InicioPeriodo = calculateInicioPeriodo(Integer.parseInt(promedioCiclos.getDURACION_PERIODO()));
-                PredecirProximoCiclo(InicioPeriodo);
-            }
+            PredecirProximoCiclo(InicioPeriodo, Integer.parseInt(promedioCiclos.getDURACION_PERIODO()));
             //endregion
 
         }else{
             //Si no poseemos registros calculamos desde los parametros ingresados
             // desde el login
-            FinCiclo =  calculateFinCiclo(persona.getUltimo_periodo(), persona.getCiclo());
-            InicioPeriodo = calculateInicioPeriodo(Integer.parseInt(persona.getPeriodo()));
-            PredecirProximoCiclo(InicioPeriodo);
+            //FinCiclo =  calculateFinCiclo(persona.getUltimo_periodo(), persona.getCiclo());
+            InicioPeriodo = customDateParse.convertirDateToString(customDateParse.cambiar_dia(
+                    customDateParse.convertirStringToDate(persona.getUltimo_periodo()), (Integer.parseInt(persona.getCiclo() ) + 1)));
+
+            PredecirProximoCiclo(InicioPeriodo, Integer.parseInt(persona.getPeriodo()));
         }
 
     }
 
-    private void PredecirProximoCiclo(String InicioPeriodo){
+    private void PredecirProximoCiclo(String InicioPeriodo, int duracion){
 
         String fecha_temporal = InicioPeriodo;
 
-        for (int i = 0; i < Integer.parseInt(persona.getPeriodo()); i++){
+        for (int i = 0; i < duracion; i++){
 
             MyEventDay myEventDay = new MyEventDay(customDateParse.convertirACalendar(fecha_temporal),
                     R.drawable.predict,"predicción");
 
-
-            //Si la fecha_temporal corresponde al mes en el que se encuentra actualmente
-            //el calendario que agrege las notas
-            String fechatemp = customDateParse.convertirDateToStringMonth(customDateParse.convertirStringToDate(fecha_temporal));
-            String fechacalendar = customDateParse.convertirDateToStringMonth(customDateParse.convertirStringToDate(
-                    customDateParse.convertirDateToString(CalendarPeriodo.getCurrentPageDate().getTime())));
-            if( fechatemp.equals(fechacalendar)){
-
-                try {
-                    addPredictDaysInCalendar(myEventDay);
-                } catch (OutOfDateRangeException e) {
-                    e.printStackTrace();
-                }
-
+            try {
+                addPredictDaysInCalendar(myEventDay);
+            } catch (OutOfDateRangeException e) {
+                e.printStackTrace();
             }
 
 

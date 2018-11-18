@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -29,15 +31,19 @@ public class AdaptadorDetalleCiclo  extends ArrayAdapter<DetalleDia> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_detalle_dia, parent, false);
         }
 
-        TextView lblId = (TextView) convertView.findViewById(R.id.lblId);
-        TextView lblNota = (TextView) convertView.findViewById(R.id.lblNota);
-        String p = String.valueOf(position+1);
+        TextView txbTitle = (TextView) convertView.findViewById(R.id.TitleDetalle);
+        TextView txbDetalle = (TextView) convertView.findViewById(R.id.TextoDetalle);
+        ImageView imgIcon = (ImageView) convertView.findViewById(R.id.iconDetalle);
+        ImageView imgBackground = (ImageView) convertView.findViewById(R.id.BackgroundMainDetalle);
 
 
         // mostrar los datos
-
-        lblId.setText(p);
-        //lblNota.setText(nota.getNota());
+        txbTitle.setText(detalleDia.getTitle());
+        txbDetalle.setText(detalleDia.getDescription());
+        imgIcon.setImageResource(detalleDia.getIconImage());
+        imgBackground.setBackgroundResource(detalleDia.getBackGroundImagen());
+        imgBackground.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        imgIcon.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         // Return la convertView ya con los datos
         return convertView;
