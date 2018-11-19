@@ -26,7 +26,7 @@ public class Login extends AppCompatActivity {
     private ArrayList<Personas> lstPersonas;
     private Button btnLogin;
     private boolean Inicializar;
-    private EditText txbNombre, txbPassword;
+    private EditText txbNombre, txbPassword, txbPasswordConfirm;
 
 
     @Override
@@ -36,6 +36,7 @@ public class Login extends AppCompatActivity {
 
         txbNombre = findViewById(R.id.txbNombre);
         txbPassword = findViewById(R.id.txbPassword);
+        txbPasswordConfirm = findViewById(R.id.txbPasswordConfirm);
         collapsingToolbarLayout = findViewById(R.id.collapsedToolBar);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
@@ -57,51 +58,60 @@ public class Login extends AppCompatActivity {
 
     public void btnLoginOnClick(View v){
 
+
         if (!txbNombre.getText().toString().isEmpty()
+                && !txbPassword.getText().toString().isEmpty()
                 && !txbPassword.getText().toString().isEmpty()){
 
-            if(!Inicializar){
-                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                builder.setIcon(R.drawable.pregnant).
-                        setTitle("Atención").setMessage("¿Está segura de proceder con los datos ingresados?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+            if (txbPassword.getText().toString().equals(txbPasswordConfirm.getText().toString())){
+                if(!Inicializar){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+                    builder.setIcon(R.drawable.pregnant).
+                            setTitle("Atención").setMessage("¿Está segura de proceder con los datos ingresados?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                        Intent intent = new Intent(Login.this, SlideLogin.class);
-                        intent.putExtra("USERNAME", txbNombre.getText().toString());
-                        intent.putExtra("PASSWORD", txbPassword.getText().toString());
-                        startActivity(intent);
-                        finish();
-                    }
-                }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(Login.this, SlideLogin.class);
+                            intent.putExtra("USERNAME", txbNombre.getText().toString());
+                            intent.putExtra("PASSWORD", txbPassword.getText().toString());
+                            startActivity(intent);
+                            finish();
+                        }
+                    }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                        dialogInterface.dismiss();
-                        Toast.makeText(Login.this, "La acción fue cancelada.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-
-            }else{
-
-
-                if (txbNombre.getText().toString().equals(lstPersonas.get(0).getNombre()) &&
-                        txbPassword.getText().toString().equals(lstPersonas.get(0).getPassword()) ){
-
-                    Intent intent = new Intent(Login.this, CalendarLogin.class);
-                    intent.putExtra("PERSONA", lstPersonas.get(0));
-                    startActivity(intent);
-                    finish();
+                            dialogInterface.dismiss();
+                            Toast.makeText(Login.this, "La acción fue cancelada.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
 
                 }else{
 
-                    txbNombre.setText("");
-                    txbPassword.setText("");
-                    txbNombre.requestFocus();
-                    Toast.makeText(this, "Las credenciales que proporciono no son correctas.", Toast.LENGTH_SHORT).show();
+
+                    if (txbNombre.getText().toString().equals(lstPersonas.get(0).getNombre()) &&
+                            txbPassword.getText().toString().equals(lstPersonas.get(0).getPassword()) ){
+
+                        Intent intent = new Intent(Login.this, CalendarLogin.class);
+                        intent.putExtra("PERSONA", lstPersonas.get(0));
+                        startActivity(intent);
+                        finish();
+
+                    }else{
+
+                        txbNombre.setText("");
+                        txbPassword.setText("");
+                        txbNombre.requestFocus();
+                        Toast.makeText(this, "Las credenciales que proporciono no son correctas.", Toast.LENGTH_SHORT).show();
+                    }
                 }
+            }else{
+                txbPassword.setText("");
+                txbPasswordConfirm.setText("");
+                txbPassword.requestFocus();
+                Toast.makeText(this, "Las contraseñas no coinciden.", Toast.LENGTH_SHORT).show();
             }
 
         }else{
@@ -113,6 +123,9 @@ public class Login extends AppCompatActivity {
             }else if(txbPassword.getText().toString().isEmpty()){
                 txbPassword.requestFocus();
                 Toast.makeText(this, "No ha ingresado ninguna contraseña.", Toast.LENGTH_SHORT).show();
+            }else if(txbPasswordConfirm.getText().toString().isEmpty()){
+                txbPasswordConfirm.requestFocus();
+                Toast.makeText(this, "No ha ingresado ninguna contraseña de confirmación.", Toast.LENGTH_SHORT).show();
             }
 
         }
