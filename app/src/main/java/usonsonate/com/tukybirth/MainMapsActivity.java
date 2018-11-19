@@ -220,7 +220,7 @@ public class MainMapsActivity extends AppCompatActivity implements
         }
     }
 
-    //URL CON API KEY PLACES
+    // region URL CON API KEY PLACES
     private String getUrl(double latitide, double longitude, String nearbyPlace)
     {
         StringBuilder googleURL = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
@@ -234,12 +234,15 @@ public class MainMapsActivity extends AppCompatActivity implements
 
         return googleURL.toString();
     }
+    //endregion
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
+
+        //region Evento_GoogleDrive_DosPuntos
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
@@ -271,6 +274,7 @@ public class MainMapsActivity extends AppCompatActivity implements
                 }
             }
         });
+        //endregion
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
         {
