@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -187,13 +188,36 @@ public class SlideLoginAdapter extends PagerAdapter {
                     int month = cal.get(Calendar.MONTH);
                     int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                    DatePickerDialog dialog = new DatePickerDialog(
-                            context,
-                            android.R.style.Theme_Material_Dialog,
-                            mDateSetListener,
-                            year,month,day);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
-                    dialog.show();
+                    DatePickerDialog dialog = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        dialog = new DatePickerDialog(
+                                context,
+                                android.R.style.Theme_Material_Dialog,
+                                mDateSetListener,
+                                year,month,day);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                        dialog.getWindow().setGravity(Gravity.CENTER);
+                        dialog.show();
+                    }else{
+
+                        DatePickerDialog dlgFecha = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                month = month + 1;
+                                String date = year  + "-" + month + "-" + day;
+
+                                if (position == 3){
+                                    setULTIMO_PERIODO(date);
+                                }else if(position == 4){
+                                    setCUMPLEAÑOS(date);
+                                }
+
+                                mDisplayDate.setText(date);
+                            }
+                        },cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH));
+                        //mostramos el dialogo
+                        dlgFecha.show();
+                    }
                 }
             });
         }

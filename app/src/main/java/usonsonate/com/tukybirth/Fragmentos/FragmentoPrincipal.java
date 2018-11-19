@@ -7,10 +7,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import usonsonate.com.tukybirth.CustomDateParse;
 import usonsonate.com.tukybirth.Principal_Ayuda;
 import usonsonate.com.tukybirth.R;
 
@@ -41,6 +45,8 @@ public class FragmentoPrincipal extends Fragment {
     private FloatingActionButton btnAyuda;
     private  Calendar cal = Calendar.getInstance();
     private Date date = cal.getTime();
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private CustomDateParse customDateParse;
 
 
     private Animation anim_rotar;
@@ -58,6 +64,7 @@ public class FragmentoPrincipal extends Fragment {
         this.lblFecha = view.findViewById(R.id.lblFechaNa);
         this.imgLogo = view.findViewById(R.id.imgLogo);
         this.btnAyuda = view.findViewById(R.id.btnYuda);
+        customDateParse = new CustomDateParse();
 
         SharedPreferences pref = getContext().getSharedPreferences("info",Context.MODE_PRIVATE);
 
@@ -66,6 +73,16 @@ public class FragmentoPrincipal extends Fragment {
 
         anim_rotar = AnimationUtils.loadAnimation(getContext(), R.anim.rotar);
         imgLogo.startAnimation(anim_rotar);
+
+        //mostramos un diañogo para mostrar la fecha
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                txtFecha.setText(Integer.toString(year)+"-"+Integer.toString(month+1)+"-"+Integer.toString(month + 1));
+                obtenerfecha();
+                guardardatos();
+            }
+        };
 
 
         txtFecha.setOnClickListener(new View.OnClickListener() {
@@ -83,17 +100,36 @@ public class FragmentoPrincipal extends Fragment {
                         //getActivity().showDialog(DATE_ID);
                         Calendar calendario = Calendar.getInstance();
 
-                        //mostramos un diañogo para mostrar la fecha
-                        DatePickerDialog dlgFecha = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                txtFecha.setText(Integer.toString(year)+"-"+Integer.toString(month+1)+"-"+Integer.toString(dayOfMonth));
-                                obtenerfecha();
-                                guardardatos();
-                            }
-                        },calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
-                        //mostramos el dialogo
-                        dlgFecha.show();
+                        Calendar cal = Calendar.getInstance();
+                        int year = cal.get(Calendar.YEAR);
+                        int month = cal.get(Calendar.MONTH);
+                        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                        DatePickerDialog dialog = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                            dialog = new DatePickerDialog(
+                                    getContext(),
+                                    android.R.style.Theme_Material_Dialog,
+                                    mDateSetListener,
+                                    year,month,day);
+                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                            dialog.getWindow().setGravity(Gravity.CENTER);
+                            dialog.show();
+                        }else{
+
+                            //mostramos un dialogo para mostrar la fecha
+                            DatePickerDialog dlgFecha = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                    txtFecha.setText(Integer.toString(year)+"-"+Integer.toString(month+1)+"-"+Integer.toString(dayOfMonth));
+                                    obtenerfecha();
+                                    guardardatos();
+                                }
+                            },calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
+                            //mostramos el dialogo
+                            dlgFecha.show();
+                        }
+
                         imgLogo.startAnimation(anim_rotar);
                     }
                 }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

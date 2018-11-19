@@ -240,25 +240,6 @@ public class MainMapsActivity extends AppCompatActivity implements
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        {
-            buildGoogleApiClient();
-
-            mMap.setMyLocationEnabled(true);
-        }
-
-
-        //Evento para arrastrar las señalizaciones
-        googleMap.setOnMarkerDragListener(this);
-
-        //Evento para pulsar las señalizaciones
-        googleMap.setOnMarkerClickListener(this);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
@@ -290,6 +271,27 @@ public class MainMapsActivity extends AppCompatActivity implements
                 }
             }
         });
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        {
+            buildGoogleApiClient();
+
+            mMap.setMyLocationEnabled(true);
+        }
+
+
+        //Evento para arrastrar las señalizaciones
+        googleMap.setOnMarkerDragListener(this);
+
+        //Evento para pulsar las señalizaciones
+        googleMap.setOnMarkerClickListener(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+
 
 
     }
