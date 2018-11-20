@@ -30,9 +30,15 @@ public class ExercisesActivity extends AppCompatActivity {
         fadeIn.setDuration(MainActivity.DURATION_TRANSITION);
         fadeIn.setInterpolator(new DecelerateInterpolator());
         //OBTENEMOS LA VENTANA ANTERIOR Y ESTABLECEMOS LA TRASICION EN SU LLEGADA
-        getWindow().setExitTransition(fadeOut);
-        getWindow().setEnterTransition(fadeIn);
-        getWindow().setAllowEnterTransitionOverlap(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(fadeOut);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(fadeIn);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setAllowEnterTransitionOverlap(false);
+        }
 
         viewPager = findViewById(R.id.viewpagerExercise);
         myadapter = new SlideAdapterEjercicios(this);
