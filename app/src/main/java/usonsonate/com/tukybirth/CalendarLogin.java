@@ -269,7 +269,7 @@ public class CalendarLogin extends AppCompatActivity {
             // desde el login
             //FinCiclo =  calculateFinCiclo(persona.getUltimo_periodo(), persona.getCiclo());
             InicioPeriodo = customDateParse.convertirDateToString(customDateParse.cambiar_dia(
-                    customDateParse.convertirStringToDate(persona.getUltimo_periodo()), (Integer.parseInt(persona.getCiclo() ) + 1)));
+                    customDateParse.convertirStringToDate(persona.getUltimo_periodo()), Integer.parseInt(persona.getCiclo())));
 
             PredecirProximoCiclo(InicioPeriodo, Integer.parseInt(persona.getPeriodo()));
         }

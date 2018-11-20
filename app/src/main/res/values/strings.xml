@@ -114,17 +114,17 @@
     <string name="title_activity_main_maps">Map</string>
 
     <string-array name="Trimestres">
-        <item>Trimestre 1: Que hacer ?</item>
+        <item>Trimestre 1: ¿Que hacer ?</item>
         <item>Trimestre 1: Ejercicios</item>
-        <item>Trimestre 1: Que no hacer?</item>
+        <item>Trimestre 1: ¿Que no hacer?</item>
 
-        <item>Trimestre 2: Que hacer ?</item>
+        <item>Trimestre 2: ¿Que hacer ?</item>
         <item>Trimestre 2: Ejercicios</item>
-        <item>Trimestre 2: Que no hacer?</item>
+        <item>Trimestre 2: ¿Que no hacer?</item>
 
-        <item>Trimestre 3: Que hacer ?</item>
+        <item>Trimestre 3: ¿Que hacer ?</item>
         <item>Trimestre 3: Ejercicios</item>
-        <item>Trimestre 3: Que no hacer?</item>
+        <item>Trimestre 3: ¿Que no hacer?</item>
 
     </string-array>
 
@@ -141,6 +141,29 @@
         a la fecha proporcionada se le restan 3 meses y se le suman 7 dias,\
         asi obtenemos la fecha aproximada de nacimiento del nuevo bebe.\
     </string>
+
+    <string name="material_calendar_monday">L</string>
+    <string name="material_calendar_tuesday">M</string>
+    <string name="material_calendar_wednesday">M</string>
+    <string name="material_calendar_thursday">J</string>
+    <string name="material_calendar_friday">V</string>
+    <string name="material_calendar_saturday">S</string>
+    <string name="material_calendar_sunday">D</string>
+
+    <array name="material_calendar_months_array">
+        <item>Enero</item>
+        <item>Febrero</item>
+        <item>Marzo</item>
+        <item>Abril</item>
+        <item>Mayo</item>
+        <item>Junio</item>
+        <item>Julio</item>
+        <item>Agosto</item>
+        <item>Septiembre</item>
+        <item>Octubre</item>
+        <item>Noviembre</item>
+        <item>Diciembre</item>
+    </array>
 
 
 </resources>
