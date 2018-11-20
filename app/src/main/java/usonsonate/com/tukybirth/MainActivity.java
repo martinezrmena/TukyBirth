@@ -23,8 +23,6 @@ import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
-import usonsonate.com.tukybirth.Fragmentos.Fragmento02;
-import usonsonate.com.tukybirth.Fragmentos.Fragmento03;
 import usonsonate.com.tukybirth.Fragmentos.Fragmento04;
 import usonsonate.com.tukybirth.Fragmentos.FragmentoPrincipal;
 
@@ -116,9 +114,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_utilidades) {
             Intent intent = new Intent(getApplicationContext(), HerramientasActivity.class);
             startActivity(intent);
-
-        } else if (id == R.id.nav_slideshow) {
-            fragmentManager.beginTransaction().replace(R.id.contenedor, new Fragmento03()).commit();
 
         } else if (id == R.id.nav_manage) {
             fragmentManager.beginTransaction().replace(R.id.contenedor, new Fragmento04()).commit();

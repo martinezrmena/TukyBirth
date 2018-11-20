@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.transition.Fade;
 import android.view.animation.DecelerateInterpolator;
 
+import java.util.Objects;
+
 import usonsonate.com.tukybirth.Comidas.AdapterComida;
 import usonsonate.com.tukybirth.Ejercicios.AdapterListExercise;
 import usonsonate.com.tukybirth.Ejercicios.DataExercise;
@@ -23,7 +25,6 @@ public class InformacionComidas extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_informacion_comidas);
 
         //CREAMOS LA TRANSICION DE ENTRADA
         Fade fadeIn = new Fade(Fade.IN);
@@ -34,17 +35,19 @@ public class InformacionComidas extends AppCompatActivity {
         fadeIn.setDuration(MainActivity.DURATION_TRANSITION);
         fadeIn.setInterpolator(new DecelerateInterpolator());
         //OBTENEMOS LA VENTANA ANTERIOR Y ESTABLECEMOS LA TRASICION EN SU LLEGADA
-        getWindow().setExitTransition(fadeOut);
-        getWindow().setEnterTransition(fadeIn);
-        getWindow().setAllowEnterTransitionOverlap(false);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(fadeOut);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(fadeIn);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setAllowEnterTransitionOverlap(false);
+        }
         //para cerrar utilizamos finishAfterTransition();
 
         setContentView(R.layout.activity_informacion_comidas);
-
-        setTitle("Dieta ambarazo");
-        //Para activar y asignar que necesitaremos un botón para regresar a la activity anterior
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getActionBar()).hide();
 
         //Inicializar variables
         datos = getResources().getStringArray(R.array.Trimestres);

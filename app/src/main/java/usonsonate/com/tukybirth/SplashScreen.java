@@ -4,31 +4,34 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import gr.net.maroulis.library.EasySplashScreen;
 
 public class SplashScreen extends AppCompatActivity {
 
+    private Animation anim_abajo, anim_arriba;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        anim_abajo = AnimationUtils.loadAnimation(this, R.anim.a_abajo);
+        anim_arriba = AnimationUtils.loadAnimation(this, R.anim.a_arriba);
+
         EasySplashScreen config = new EasySplashScreen(SplashScreen.this)
                 .withFullScreen()
                 .withTargetActivity(MainActivity.class)
-                .withSplashTimeOut(5000)
+                .withSplashTimeOut(3000)
                 .withBackgroundColor(Color.parseColor("#1a1b29"))
-                .withHeaderText("Header")
-                .withFooterText("Footer")
-                .withBeforeLogoText("Before Logo Text")
-                .withAfterLogoText("After Logo Text")
-                .withLogo(R.mipmap.ic_launcher_round);
+                .withAfterLogoText("Tuky Birth")
+                .withLogo(R.drawable.stork);
 
-
-        config.getHeaderTextView().setTextColor(Color.WHITE);
-        config.getFooterTextView().setTextColor(Color.WHITE);
-        config.getBeforeLogoTextView().setTextColor(Color.WHITE);
         config.getAfterLogoTextView().setTextColor(Color.WHITE);
+        config.getAfterLogoTextView().setAnimation(anim_arriba);
+        config.getLogo().setAnimation(anim_abajo);
+
 
         View easySplashScreen = config.create();
         setContentView(easySplashScreen);

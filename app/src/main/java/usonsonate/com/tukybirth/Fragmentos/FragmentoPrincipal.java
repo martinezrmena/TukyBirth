@@ -91,7 +91,7 @@ public class FragmentoPrincipal extends Fragment {
                 imgLogo.startAnimation(anim_rotar);
                 if (!txtFecha.getText().toString().isEmpty()) return;
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.mipmap.ic_launcher).
+                builder.setIcon(R.drawable.pregnant).
                         setTitle("Atencion").setMessage("La fecha de nacimiento del bebe es aproximado, no es exacta.\n" +
                         "Desea Calcularla?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
