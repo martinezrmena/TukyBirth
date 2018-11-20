@@ -23,8 +23,6 @@ public class ComidasActivity extends AppCompatActivity {
 
 
         setTitle("Comidas");
-        //Para activar y asignar que necesitaremos un botón para regresar a la activity anterior
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //CREAMOS LA TRANSICION DE ENTRADA
         Fade fadeIn = new Fade(Fade.IN);

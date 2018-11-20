@@ -47,7 +47,6 @@ public class InformacionComidas extends AppCompatActivity {
         //para cerrar utilizamos finishAfterTransition();
 
         setContentView(R.layout.activity_informacion_comidas);
-        Objects.requireNonNull(getActionBar()).hide();
 
         //Inicializar variables
         datos = getResources().getStringArray(R.array.Trimestres);

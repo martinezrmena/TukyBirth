@@ -44,7 +44,6 @@ public class InformationExercises extends AppCompatActivity {
         }
         //para cerrar utilizamos finishAfterTransition();
         setContentView(R.layout.activity_information_exercises);
-        Objects.requireNonNull(getActionBar()).hide();
 
 
         //Inicializar variables
