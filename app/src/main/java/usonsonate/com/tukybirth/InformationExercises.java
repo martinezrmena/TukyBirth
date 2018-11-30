@@ -48,7 +48,7 @@ public class InformationExercises extends AppCompatActivity {
 
         //Inicializar variables
         datos = getResources().getStringArray(R.array.Trimestres);
-        details = getResources().getStringArray(R.array.details_semana);
+        details = getResources().getStringArray(R.array.detalle_ejercicios);
 
         recyclerView = findViewById(R.id.recycleViewExercises);
         adapter = new AdapterListExercise(InformationExercises.this, DataExercise.getData(datos, details));

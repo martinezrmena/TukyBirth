@@ -13,6 +13,13 @@ public class DBHelperContarcciones extends SQLiteOpenHelper {
             "iniciofin varchar(25)"+
             ")";
 
+    private String NombresImg="create table nombresimg"+
+            "("+
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+            "nombreImg VARCHAR(100)"+
+            ")"
+            ;
+
     public DBHelperContarcciones(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -20,10 +27,12 @@ public class DBHelperContarcciones extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
       db.execSQL(crearContracciones);
+      db.execSQL(NombresImg);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS contracciones");
+        db.execSQL("DROP TABLE IF EXISTS nombresimg");
     }
 }

@@ -2,6 +2,7 @@ package usonsonate.com.tukybirth.Comidas;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
@@ -13,29 +14,36 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.barteksc.pdfviewer.PDFView;
+
 import java.util.ArrayList;
 
 import usonsonate.com.tukybirth.Ejercicios.AdapterListExercise;
 import usonsonate.com.tukybirth.Ejercicios.InformationExercise;
+import usonsonate.com.tukybirth.InformacionEmbarazo;
 import usonsonate.com.tukybirth.R;
 import usonsonate.com.tukybirth.Semanas.AnimationUtil;
+import usonsonate.com.tukybirth.VisorPdfActivity;
 
 public class AdapterComida extends  RecyclerView.Adapter<AdapterComida.MyViewHolder> {
     private Context context;
 
-    private ArrayList<InformationExercise> data;
+    private ArrayList<InformacionComidas> data;
 
     private LayoutInflater inflater;
 
     private int previousPosition = 0;
+    private static int valor;
 
     Dialog myDialog;
 
-    public AdapterComida(Context context, ArrayList<InformationExercise> data) {
-
+    public AdapterComida(Context context, ArrayList<InformacionComidas> data) {
         this.context = context;
         this.data = data;
         inflater = LayoutInflater.from(context);
+    }
+    public AdapterComida(int valor){
+        this.valor = valor;
     }
 
     /*aqui ahy que hacer un layout personalizado*/
@@ -73,39 +81,19 @@ public class AdapterComida extends  RecyclerView.Adapter<AdapterComida.MyViewHol
 
         final int currentPosition = position;
         myDialog = new Dialog(context);
-        final InformationExercise infoData = data.get(position);
+        final InformacionComidas infoData = data.get(position);
 
 
         myViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //Toast.makeText(context, "OnClick Called at position " + position, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, VisorPdfActivity.class);
+                intent.putExtra("imgposicion",String.valueOf(position));
+                intent.putExtra("trimestrePosicion",String.valueOf(valor));
+                context.startActivity(intent);
 
-                TextView txtclose, txbnumero, txbInformacion;
-                ImageView imagenPopUp;
-                //inicializamos las variables
-                myDialog.setContentView(R.layout.custompopup);
-                txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-                txbnumero = myDialog.findViewById(R.id.txtNumeroSelected);
-                txbInformacion = myDialog.findViewById(R.id.txtinformacion);
-                imagenPopUp = myDialog.findViewById(R.id.ImagePopup);
-                imagenPopUp.setScaleType(ImageView.ScaleType.FIT_XY);
 
-                //establecemos los valores del pop up
-                txbnumero.setText(String.valueOf(position +1));
-                imagenPopUp.setImageResource(infoData.imageId);
-                txbInformacion.setText(infoData.Details);
-                txtclose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        myDialog.dismiss();
-                    }
-                });
-                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                myDialog.show();
-
-                //addItem(currentPosition, infoData);
             }
         });
 
@@ -149,7 +137,7 @@ public class AdapterComida extends  RecyclerView.Adapter<AdapterComida.MyViewHol
     }
 
     // This removes the data from our Dataset and Updates the Recycler View.
-    private void removeItem(InformationExercise infoData) {
+    private void removeItem(InformacionComidas infoData) {
 
         int currPosition = data.indexOf(infoData);
         data.remove(currPosition);
@@ -157,7 +145,7 @@ public class AdapterComida extends  RecyclerView.Adapter<AdapterComida.MyViewHol
     }
 
     // This method adds(duplicates) a Object (item ) to our Data set as well as Recycler View.
-    private void addItem(int position, InformationExercise infoData) {
+    private void addItem(int position, InformacionComidas infoData) {
 
         data.add(position, infoData);
         notifyItemInserted(position);

@@ -47,4 +47,12 @@ dependencies {
     implementation 'com.github.Hitomis:CircleMenu:v1.1.0'
     //Implementacion para un calendar que permita agregar iconos sobre sus dias
     implementation 'com.applandeo:material-calendar-view:1.4.0'
+    //Implementacion para animaciones desde Lottie
+    implementation "com.airbnb.android:lottie:2.6.0"
+    //implementacion para visualizar PDF
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
+    implementation 'com.google.firebase:firebase-auth:16.0.4'
+
 }
+apply plugin: 'com.google.gms.google-services'

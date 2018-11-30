@@ -1,7 +1,9 @@
 package usonsonate.com.tukybirth;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -54,6 +62,8 @@ public class Login extends AppCompatActivity {
         }else{
             Toast.makeText(this, "El sistema se inicializará por primera vez.", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
     public void btnLoginOnClick(View v){
@@ -70,12 +80,15 @@ public class Login extends AppCompatActivity {
                             setTitle("Atención").setMessage("¿Está segura de proceder con los datos ingresados?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
-                            Intent intent = new Intent(Login.this, SlideLogin.class);
+                            /************************************************************************************************************************************************/
+                            /**CODIGO PARA VALIDAR  EL USUARIO EN FIREBASE CON EMAIL**/
+                            Intent intent = new Intent(Login.this, VerificacionCorreoActivity.class);
                             intent.putExtra("USERNAME", txbNombre.getText().toString());
                             intent.putExtra("PASSWORD", txbPassword.getText().toString());
                             startActivity(intent);
                             finish();
+                            /**************************************************************************************************************************************************/
+
                         }
                     }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                         @Override

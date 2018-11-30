@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkBlue"
     tools:context=".ContraccionesActivity">
 
 
 
     <LinearLayout
-        android:background="@color/dark_gray"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -18,26 +18,54 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="340dp"
-            android:layout_height="490dp"
+            android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:foreground="?android:attr/selectableItemBackground">
 
 
             <LinearLayout
+                android:background="@drawable/main_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <Chronometer
-                    android:id="@+id/Cronometro"
+
+                <RelativeLayout
                     android:gravity="center"
-                    android:textSize="60dp"
-                    android:layout_width="220dp"
-                    android:layout_height="220dp"
-                    android:background="@drawable/kolo"
-                    android:layout_marginTop="5dp"
-                    />
+                    android:layout_width="wrap_content"
+                    android:layout_height="250dp">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/animation_view"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:lottie_fileName="muzli.json"
+                        app:lottie_imageAssetsFolder="assets"
+                        app:lottie_loop="false"
+                        app:lottie_colorFilter="@color/colorPrimaryDark"
+                        app:lottie_autoPlay="false" />
+
+                    <Chronometer
+                        android:id="@+id/Cronometro"
+                        android:gravity="center"
+                        android:textSize="40dp"
+                        android:paddingLeft="4dp"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginBottom="25dp"
+                        android:layout_marginLeft="68dp"
+                        android:layout_marginRight="68dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/kolo"
+
+                        />
+                </RelativeLayout>
+
+
+
 
                 <Chronometer
                     android:id="@+id/cronometro2"
@@ -45,7 +73,9 @@
                     android:layout_height="wrap_content" />
 
                 <Button
+                    android:background="@drawable/buttonstyle"
                     android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
                     android:id="@+id/btnContraccion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

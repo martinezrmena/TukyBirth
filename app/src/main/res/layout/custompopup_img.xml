@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_margin="5dp"
+    android:theme="@style/CustomActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txtclose"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textColor="@color/white"
+            android:text="X"
+            android:textStyle="bold"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/cerclebackground"/>
+
+
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/ImagePopup"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:elevation="@dimen/activity_horizontal_margin"
+            android:padding="3dp"
+            android:background="@drawable/myrect"
+            android:src="@drawable/add"
+            android:layout_marginBottom="5dp"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+
+    <!--
+            <ImageView
+                android:id="@+id/ImagePopup"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:elevation="@dimen/activity_horizontal_margin"
+                android:padding="3dp"
+                android:background="@drawable/myrect"
+                android:src="@drawable/add"
+                android:layout_marginBottom="5dp"/>   -->

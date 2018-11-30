@@ -1,9 +1,13 @@
 package usonsonate.com.tukybirth;
 
+import android.app.Dialog;
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.os.SystemClock;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,10 +15,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 
 import usonsonate.com.tukybirth.Cronometro.AdapterCronometro;
@@ -34,7 +42,8 @@ public class ContraccionesActivity extends AppCompatActivity {
     private int hora, minutos, segundos,contador=0;
     private String[] inte = new String[25];
     private DB_C db;
-
+    private int cont=2;
+    private LottieAnimationView animationViewlotiee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +55,8 @@ public class ContraccionesActivity extends AppCompatActivity {
         btnContraccion = findViewById(R.id.btnContraccion);
         crono = findViewById(R.id.Cronometro);
         crono2 = findViewById(R.id.cronometro2);
+
+        animationViewlotiee  = findViewById(R.id.animation_view);
 
         lstcontraciones = new ArrayList<>();
         adaptadorcronometro = new AdapterCronometro(ContraccionesActivity.this,lstcontraciones);
@@ -59,13 +70,33 @@ public class ContraccionesActivity extends AppCompatActivity {
        }
 
 
+
         btnContraccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 procesoCronometro();
+
             }
         });
 
+    }
+
+    public void cuadro_dialogio(){
+        AlertDialog.Builder builder = new   AlertDialog.Builder(this);
+        builder.setTitle("Alerta!");
+        builder.setMessage("Desea borrar el registro de contracciones?");
+        builder.setPositiveButton("aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                db.borrarContracciones();
+                Toast.makeText(ContraccionesActivity.this, "Registro de contracciones eliminado!!", Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(getIntent());
+            }
+        });
+        builder.setNegativeButton("cancelar",null);
+        Dialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
@@ -78,9 +109,10 @@ public class ContraccionesActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.btnBorrarCon:
-                db.borrarContracciones();
+            case R.id.btnBorrarCon:{
+                cuadro_dialogio();
                 return  true;
+            }
                 default:
                     return super.onOptionsItemSelected(item);
         }
@@ -88,6 +120,8 @@ public class ContraccionesActivity extends AppCompatActivity {
     }
 
     private void FillListContraccioones(){
+        //QuickSort qr=new QuickSort();
+        //qr.sort(db.getArrayContracciones(db.getCursorContacciones()),0,db.getArrayContracciones(db.getCursorContacciones()).size()-1);
         for (final Contracciones c:db.getArrayContracciones(db.getCursorContacciones())){
             lstcontraciones.add(c);
             adaptadorcronometro.notifyDataSetChanged();
@@ -109,12 +143,16 @@ public class ContraccionesActivity extends AppCompatActivity {
         }
         if(!running){
             /*inicio*/
+
             btnContraccion.setText("fin de la contraccion");
             crono2.setBase(SystemClock.elapsedRealtime() - intervalo);
             crono.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             crono.start();
             crono2.start();
             running = true;
+            //animacion
+            animationViewlotiee.loop(true);
+            animationViewlotiee.playAnimation();
         }else{
             /*pause*/
             btnContraccion.setText("inicio de la contraccion");
@@ -127,25 +165,77 @@ public class ContraccionesActivity extends AppCompatActivity {
             minutos = calendario.get(Calendar.MINUTE);
             segundos = calendario.get(Calendar.SECOND);
 
+            //animacion
+            animationViewlotiee.loop(false);
+
             if(!bandera){
-                Contracciones lista = new Contracciones("",String.valueOf(((int)pauseOffset)/1000)+"s","---",hora+":"+minutos+" - "+hora+":"+minutos);
+                Contracciones lista = new Contracciones("1",String.valueOf(((int)pauseOffset)/1000)+"s","---",hora+":"+minutos+" - "+hora+":"+minutos);
                 db.guardar_O_ActualizarNotas(lista);
                 lstcontraciones.add(lista);
                 adaptadorcronometro.notifyDataSetChanged();
                 bandera = true;
             }else{
-                Contracciones lista = new Contracciones("",String.valueOf(((int)pauseOffset)/1000)+"s",String.valueOf(inte[contador-1])+"s",hora+":"+minutos+" - "+hora+":"+minutos);
+
+                Contracciones lista = new Contracciones(String.valueOf(cont),String.valueOf(((int)pauseOffset)/1000)+"s",String.valueOf(inte[contador-1])+"s",hora+":"+minutos+" - "+hora+":"+minutos);
+                cont++;
                 db.guardar_O_ActualizarNotas(lista);
                 lstcontraciones.add(lista);
                 adaptadorcronometro.notifyDataSetChanged();
 
             }
 
-
-
         }
 
     }
+
+
+    /******************************************************************************************************************/
+    /*CLASE ALGORITMO QUITKSORT*/
+
+    class QuickSort
+    {
+        int partition(ArrayList<Contracciones> array, int menor, int mayor)
+        {
+            int pivot =Integer.parseInt(array.get(mayor).duracion.toString());
+            int i = (menor-1);
+            for (int j=menor; j<mayor; j++)
+            {
+                if (Integer.parseInt(array.get(j).duracion.toString()) >= pivot)  //<-- aqui podemos cambiar si queremos de mayor a menor(>=) o si queremos de menor a mayor(<=)
+                {
+                    i++;
+                    int temp = Integer.parseInt(array.get(i).duracion.toString());
+                    //array[i] = array[j];
+                    array.get(i).setDuracion(array.get(j).duracion.toString());
+                    //array[j] = temp;
+                    array.get(j).setDuracion(String.valueOf(temp));
+
+
+                }
+            }
+            //int temp = array[i+1];
+            int temp = Integer.parseInt(array.get(i+1).duracion.toString());
+            //array[i+1] = array[mayor];
+            array.get(i+1).setDuracion(array.get(mayor).duracion.toString());
+            //array[mayor] = temp;
+            array.get(mayor).setDuracion(String.valueOf(temp));
+
+            return i+1;
+        }
+
+
+        void sort(ArrayList<Contracciones> array, int menor, int mayor)
+        {
+            if (menor < mayor)
+            {
+                int pi = partition(array, menor, mayor);
+                sort(array, menor, pi-1);
+                sort(array, pi+1, mayor);
+            }
+        }
+    }
+
+
+/******************************************************************************************************************/
 
 
 }

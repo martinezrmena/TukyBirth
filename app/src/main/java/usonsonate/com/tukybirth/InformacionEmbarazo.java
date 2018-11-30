@@ -82,7 +82,7 @@ public class InformacionEmbarazo extends AppCompatActivity {
                 }
                 Context context = InformacionEmbarazo.this;
 
-                Intent detail = new Intent(InformacionEmbarazo.this, ExercisesActivity.class);
+                Intent detail = new Intent(context.getApplicationContext(), ExercisesActivity.class);
                 context.startActivity(detail,
                         ActivityOptionsCompat.makeSceneTransitionAnimation(InformacionEmbarazo.this).toBundle());
             }

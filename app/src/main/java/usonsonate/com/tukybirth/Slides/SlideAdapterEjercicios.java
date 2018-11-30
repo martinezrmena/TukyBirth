@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import usonsonate.com.tukybirth.Ejercicios.AdapterListExercise;
 import usonsonate.com.tukybirth.Ejercicios.DataExercise;
 import usonsonate.com.tukybirth.InformationExercises;
 import usonsonate.com.tukybirth.R;
@@ -34,9 +36,9 @@ public class SlideAdapterEjercicios extends PagerAdapter {
     /**************************************************************************/
     public int[] lst_imagesBack = {
 
-            R.drawable.embarazo1,
-            R.drawable.embarazo2,
-            R.drawable.embarazo3,
+            R.drawable.embarazo11,
+            R.drawable.embarazo22,
+            R.drawable.embarazo33,
 
     };
     /**************************************************************************/
@@ -55,10 +57,9 @@ public class SlideAdapterEjercicios extends PagerAdapter {
     };
     // list of background colors
     public int[]  lst_backgroundcolor = {
-            Color.parseColor("#2D3142"),
-            Color.parseColor("#335C67"),
-            Color.parseColor("#540B0E"),
-
+            Color.parseColor("#F28131"),
+            Color.parseColor("#3F39FC"),
+            Color.parseColor("#FB585D")
     };
 
 
@@ -97,13 +98,11 @@ public class SlideAdapterEjercicios extends PagerAdapter {
         imgslide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+              //  Toast.makeText(context, "valor de la posicion: " + position, Toast.LENGTH_SHORT).show();
                 Intent detail = new Intent(context.getApplicationContext(), InformationExercises.class);
-                //detail.putExtra("posicion",position);
-                DataExercise valor = new DataExercise(String.valueOf(position));
+                new DataExercise(String.valueOf(position));
+                new AdapterListExercise(position);
                 context.startActivity(detail);
-
-
             }
         });
 

@@ -1,13 +1,15 @@
 package usonsonate.com.tukybirth.SQLite;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Contracciones implements Serializable {
 
-    private String id;
-    private String duracion;
-    private String intervalo;
-    private String iniciofin;
+    public String id;
+    public String duracion;
+    public String intervalo;
+    public String iniciofin;
 
     public Contracciones(String id, String duracion, String intervalo, String iniciofin) {
         this.id = id;
@@ -48,7 +50,6 @@ public class Contracciones implements Serializable {
     public void setIniciofin(String iniciofin) {
         this.iniciofin = iniciofin;
     }
-
 
 
 }

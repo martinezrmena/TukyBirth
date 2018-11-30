@@ -47,8 +47,7 @@ public class DataExercise {
                 InformationExercise current = new InformationExercise();
                 current.title = Semanas[i];
                 current.imageId = images[i];
-                // current.color = new ColorDrawable(Color.parseColor("#022D51"));
-                current.color = new ColorDrawable(Color.parseColor("#E8F8F8"));
+                current.color = new ColorDrawable(Color.parseColor("#F28131"));
                 current.Details = detils[i];
                 data.add(current);
             }
@@ -64,7 +63,7 @@ public class DataExercise {
                 InformationExercise current = new InformationExercise();
                 current.title = Semanas[i];
                 current.imageId = images[i];
-                current.color = new ColorDrawable(Color.parseColor("#1b5e20"));
+                current.color = new ColorDrawable(Color.parseColor("#3F39FC"));
                 current.Details = detils[i];
                 data.add(current);
             }
@@ -80,7 +79,7 @@ public class DataExercise {
                 InformationExercise current = new InformationExercise();
                 current.title = Semanas[i];
                 current.imageId = images[i];
-                current.color = new ColorDrawable(Color.parseColor("#A00E21"));
+                current.color = new ColorDrawable(Color.parseColor("#FB585D"));
                 current.Details = detils[i];
                 data.add(current);
             }

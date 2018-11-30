@@ -98,7 +98,6 @@ public class SlideAdapter extends PagerAdapter {
         imgslide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 TextView txtclose, txbnumero;
                 PhotoView imagenPopUp;
                 //inicializamos las variables

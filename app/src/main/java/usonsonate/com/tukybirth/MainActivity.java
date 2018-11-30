@@ -116,11 +116,20 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
-            fragmentManager.beginTransaction().replace(R.id.contenedor, new Fragmento04()).commit();
-
-        } else if (id == R.id.nav_share) {
-            Intent intent = new Intent(getApplicationContext(), Login.class);
+            Intent intent = new Intent(getApplicationContext(), GaleriaActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_share) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+
+            if(networkInfo != null && networkInfo.isConnected()){
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+            }else{
+                AlertNoWifi();
+                Toast.makeText(this, "Para esta opcion nesesita conexion a internet.", Toast.LENGTH_SHORT).show();
+            }
 
         } else if (id == R.id.nav_send) {
             /*---------------------------------------------------------------------------------------------------------------------------------*/

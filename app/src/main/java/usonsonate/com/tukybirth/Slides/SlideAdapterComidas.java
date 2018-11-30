@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import usonsonate.com.tukybirth.Comidas.AdapterComida;
+import usonsonate.com.tukybirth.Comidas.DataComida;
 import usonsonate.com.tukybirth.Ejercicios.DataExercise;
 import usonsonate.com.tukybirth.InformacionComidas;
 import usonsonate.com.tukybirth.InformationExercises;
@@ -37,9 +39,9 @@ public class SlideAdapterComidas extends PagerAdapter {
     /**************************************************************************/
     public int[] lst_imagesBack = {
 
-            R.drawable.comida1,
-            R.drawable.comida2,
-            R.drawable.comida3,
+            R.drawable.comida11,
+            R.drawable.comida22,
+            R.drawable.comida33,
 
     };
     /**************************************************************************/
@@ -101,7 +103,8 @@ public class SlideAdapterComidas extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 Intent detail = new Intent(context.getApplicationContext(), InformacionComidas.class);
-                DataExercise valor = new DataExercise(String.valueOf(position));
+                new DataComida(String.valueOf(position));
+                new AdapterComida(position);
                 context.startActivity(detail);
 
             }
