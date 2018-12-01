@@ -181,15 +181,17 @@
     //////////////////////////////////////////////////////////////////////////
 
     <string name="ayuda">
-        Atencion\
+        Atención\
         \
-        El calculo de la fecha en que nacera el bebe es aproximada no exacta,\
-        su calculo esta basado en proporcionar el primer dia de la ultima\
-        menstruacion para que a partir de ahi se haga el calculo de nacimiento.\
+        El cálculo de la fecha en que nacerá él bebe es aproximada no exacta,\
+        su cálculo está basado en proporcionar el primer día de la última\
+        menstruación, para que a partir de ahí se realiza el cálculo de nacimiento.\
         \
-        Para calcular la fecha se hace de la sigueiente manera:\
-        a la fecha proporcionada se le restan 3 meses y se le suman 7 dias,\
-        asi obtenemos la fecha aproximada de nacimiento del nuevo bebe.\
+        \
+        Para calcular la fecha se hace de la siguiente manera:\
+        A la fecha proporcionada se le restan 3 meses y se le suman 7 días,\
+        así obtenemos la fecha aproximada de nacimiento del nuevo bebe.\
+
     </string>
 
     <string name="material_calendar_monday">L</string>
