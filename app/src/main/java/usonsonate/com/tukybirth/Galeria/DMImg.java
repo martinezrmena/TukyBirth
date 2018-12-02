@@ -56,7 +56,7 @@ public class DMImg {
 
 
 
-    public void  borrarContracciones(){
-        dbhelper.getWritableDatabase().execSQL(String.format("delete from nombresimg"));
+    public void  borrarImagenes(String nombre){
+        dbhelper.getWritableDatabase().execSQL(String.format("delete from nombresimg where nombreImg='"+nombre+"'"));
     }
 }

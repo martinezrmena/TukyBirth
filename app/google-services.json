@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "865091758141",
+    "firebase_url": "https://tukybirth2018.firebaseio.com",
+    "project_id": "tukybirth2018",
+    "storage_bucket": "tukybirth2018.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865091758141:android:c6a75f32b5daed89",
+        "android_client_info": {
+          "package_name": "usonsonate.com.tukybirth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "865091758141-0qsuicr162dthdo800cb0rmlsbqrhnc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8iDA_AhGOrmtHjOaSyGbXLQoxirolK5Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,6 +17,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -101,8 +103,6 @@ public class GaleriaActivity extends AppCompatActivity {
 
                Bitmap bmImg = BitmapFactory.decodeFile("/storage/emulated/0/ImgTukyBirth/"+lstIMG.get(position).getNombreImg().toString());
                imagenPopUp.setImageBitmap(bmImg);
-
-
                 txtclose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -126,6 +126,43 @@ public class GaleriaActivity extends AppCompatActivity {
 
             }
         });
+
+        viewlista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                AlertDialog.Builder builder = new   AlertDialog.Builder(GaleriaActivity.this);
+                builder.setTitle("Alerta!");
+                builder.setMessage("Desea borrar la imagen seleccionada?");
+                builder.setPositiveButton("aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dbImg.borrarImagenes(lstIMG.get(position).getNombreImg().toString());
+                        Toast.makeText(GaleriaActivity.this, "Imagen eliminada.", Toast.LENGTH_LONG).show();
+                        finish();
+                        startActivity(getIntent());
+                    }
+                });
+                builder.setNegativeButton("cancelar",null);
+                Dialog dialog = builder.create();
+                dialog.show();
+                return true;
+            }
+        });
+
+       /* File dir = new File(Environment.getExternalStorageDirectory()+"ImgTukyBirth");
+
+        if (dir.isDirectory())
+        {
+            //obtiene un listado de los archivos contenidos en el directorio.
+            String[] hijos = dir.list();
+            hijos.getClass().getName();
+            //Elimina los archivos contenidos.
+            for (int i = 0; i < hijos.length; i++)
+            {
+                new File(dir, hijos[i]).delete();
+            }
+        }*/
 
     }
 
