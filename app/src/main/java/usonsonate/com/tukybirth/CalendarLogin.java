@@ -91,7 +91,7 @@ public class CalendarLogin extends AppCompatActivity {
 
                 if (customDateParse.convertirStringToDate(persona.getUltimo_periodo()).after(eventDay.getCalendar().getTime())){
 
-                    Toast.makeText(CalendarLogin.this, "No puede introducir registros antes de la fecha en que registro su último periodo.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalendarLogin.this, "No puede introducir registros antes de la fecha en que iniciará su periodo actual según el registro: " + persona.getUltimo_periodo(), Toast.LENGTH_SHORT).show();
 
                 }else{
                     if (date.after(eventDay.getCalendar().getTime()) || date.equals(pressDate)){
