@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent ayuda = new Intent(MainActivity.this, Principal_Ayuda.class);
+            startActivity(ayuda);
             return true;
         }
 

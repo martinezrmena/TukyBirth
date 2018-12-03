@@ -3,15 +3,18 @@ package usonsonate.com.tukybirth;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ListView;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 import usonsonate.com.tukybirth.Cronometro.AdapterCronometro;
 import usonsonate.com.tukybirth.Cronometro.LstContracciones;
@@ -49,6 +53,23 @@ public class ContraccionesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contracciones);
+
+        setTitle("Control de contracciones");
+        //Para activar y asignar que necesitaremos un botón para regresar a la activity anterior
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        //transicion inversa a //
+        //CREAMOS LA TRANSICION
+        Fade fadeIn = new Fade(Fade.IN);
+        fadeIn.setDuration(MainActivity.DURATION_TRANSITION);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
+        //ESTABLECEMOS LA TRANSICION DE REGRESO
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setReenterTransition(fadeIn);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setAllowEnterTransitionOverlap(false);
+        }
 
         db = new DB_C(ContraccionesActivity.this);
 
@@ -78,6 +99,22 @@ public class ContraccionesActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    //region GuardarDatosRotar
+    @Override
+    protected void onSaveInstanceState(Bundle guardardatos) {
+        super.onSaveInstanceState(guardardatos);
+        //Guardamos la informacion
+        guardardatos.putInt("CONTADOR", this.contador);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        //Restauramos los valores en cada una de las varibles
+        contador = savedInstanceState.getInt("CONTADOR");
 
     }
 

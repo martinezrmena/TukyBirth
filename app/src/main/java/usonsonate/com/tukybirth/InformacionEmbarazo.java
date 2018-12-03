@@ -25,7 +25,7 @@ import usonsonate.com.tukybirth.Threads.ViewPagerCaurosel;
 
 public class InformacionEmbarazo extends AppCompatActivity {
 
-    private CardView Calendario, History,ejercicios,comidas;
+    private CardView Calendario, History,ejercicios,comidas, referencias;
     private Toolbar toolbar;
     private Transition transition;
     private CollapsingToolbarLayout collapsingToolbarLayout;
@@ -33,6 +33,48 @@ public class InformacionEmbarazo extends AppCompatActivity {
     private Timer timer;
     private ViewPagerCaurosel viewPagerCaurosel;
     private AppBarLayout appbar;
+    private int[] images = {
+            R.drawable.semana_1,
+            R.drawable.semana_2,
+            R.drawable.semana_3,
+            R.drawable.semana_4,
+            R.drawable.semana_5,
+            R.drawable.semana_6,
+            R.drawable.semana_7,
+            R.drawable.semana_8,
+            R.drawable.semana_9,
+            R.drawable.semana_10,
+            R.drawable.semana_11,
+            R.drawable.semana_12,
+            R.drawable.semana_13,
+            R.drawable.semana_14,
+            R.drawable.semana_15,
+            R.drawable.wekk_16,
+            R.drawable.week_17,
+            R.drawable.week_18,
+            R.drawable.week_19,
+            R.drawable.week_20,
+            R.drawable.week_21,
+            R.drawable.week_22,
+            R.drawable.week_23,
+            R.drawable.week_24,
+            R.drawable.week_25,
+            R.drawable.week_26,
+            R.drawable.week_27,
+            R.drawable.week_28,
+            R.drawable.week_29,
+            R.drawable.week_30,
+            R.drawable.week_31,
+            R.drawable.week_32,
+            R.drawable.week_33,
+            R.drawable.week_34,
+            R.drawable.week_35,
+            R.drawable.week_36,
+            R.drawable.week_37,
+            R.drawable.week_38,
+            R.drawable.week_39,
+            R.drawable.week_39
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +112,7 @@ public class InformacionEmbarazo extends AppCompatActivity {
         History = findViewById(R.id.btnactivityHistory);
         ejercicios = findViewById(R.id.btnactivityEjercicio);
         comidas = findViewById(R.id.btnactivityComidas);
+        referencias = findViewById(R.id.btnReferenciasButton);
 
         ejercicios.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,12 +188,20 @@ public class InformacionEmbarazo extends AppCompatActivity {
             }
         });
 
+        referencias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ReferencesActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 
         //ESTABLECEMOS EL CAROUSEL PARA SU MOVIMIENTO AUTOMATICO
         viewPager = findViewById(R.id.viewPager);
 
-        viewPagerCaurosel = new ViewPagerCaurosel(InformacionEmbarazo.this);
+        viewPagerCaurosel = new ViewPagerCaurosel(InformacionEmbarazo.this, images);
 
         viewPager.setAdapter(viewPagerCaurosel);
 

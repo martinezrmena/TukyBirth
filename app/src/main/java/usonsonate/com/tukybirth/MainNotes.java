@@ -1,9 +1,12 @@
 package usonsonate.com.tukybirth;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Fade;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import com.applandeo.materialcalendarview.CalendarView;
@@ -19,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Objects;
 
 import usonsonate.com.tukybirth.Calendar.MyEventDay;
 import usonsonate.com.tukybirth.SQLite.DB;
@@ -52,6 +56,23 @@ public class MainNotes extends AppCompatActivity {
         floatingActionButton = findViewById(R.id.floatingActionButton);
 
         setTitle("Agregar notas");
+
+        //Para activar y asignar que necesitaremos un botón para regresar a la activity anterior
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        //transicion inversa a //
+        //CREAMOS LA TRANSICION
+        Fade fadeIn = new Fade(Fade.IN);
+        fadeIn.setDuration(MainActivity.DURATION_TRANSITION);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
+        //ESTABLECEMOS LA TRANSICION DE REGRESO
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setReenterTransition(fadeIn);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setAllowEnterTransitionOverlap(false);
+        }
+
 
         //Notas por día
         lstNotasDia = new ArrayList<>();
