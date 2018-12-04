@@ -69,6 +69,7 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ContraccionesActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".HerramientasActivity" />
         <activity
             android:name=".ExercisesActivity"
