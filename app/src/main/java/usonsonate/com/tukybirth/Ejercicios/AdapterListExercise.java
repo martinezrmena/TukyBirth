@@ -80,7 +80,7 @@ public class AdapterListExercise extends  RecyclerView.Adapter<AdapterListExerci
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context, "El valor es: " + valor, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(context, "El valor es ww: " + position, Toast.LENGTH_SHORT).show();
 
                 TextView txtclose, txbnumero, txbInformacion;
                // ImageView imagenPopUp;

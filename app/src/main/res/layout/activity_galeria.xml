@@ -7,14 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".GaleriaActivity">
 
-    <TextView
-        android:id="@+id/txtgaleriavacia"
-        android:gravity="center"
-        android:textSize="35dp"
-        android:textColor="@color/white"
-        android:text="Galeria vacia"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_marginLeft="5dp"

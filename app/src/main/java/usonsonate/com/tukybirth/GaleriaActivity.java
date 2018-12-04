@@ -85,17 +85,15 @@ public class GaleriaActivity extends AppCompatActivity {
 
         if(!vacio.equals("null")){
             FillListContraccioones();
-        }else{
-            txtgaleriavacia.setVisibility(View.VISIBLE);
-
         }
+
 
 
         viewlista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                //Toast.makeText(GaleriaActivity.this, "item " +lstIMG.get(position).getNombreImg().toString(), Toast.LENGTH_SHORT).show();
+
                 myDialog.setContentView(R.layout.custompopup_img);
                 imagenPopUp = myDialog.findViewById(R.id.ImagePopup);
                 imagenPopUp.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -150,20 +148,6 @@ public class GaleriaActivity extends AppCompatActivity {
             }
         });
 
-       /* File dir = new File(Environment.getExternalStorageDirectory()+"ImgTukyBirth");
-
-        if (dir.isDirectory())
-        {
-            //obtiene un listado de los archivos contenidos en el directorio.
-            String[] hijos = dir.list();
-            hijos.getClass().getName();
-            //Elimina los archivos contenidos.
-            for (int i = 0; i < hijos.length; i++)
-            {
-                new File(dir, hijos[i]).delete();
-            }
-        }*/
-
     }
 
 
@@ -200,8 +184,6 @@ public class GaleriaActivity extends AppCompatActivity {
       try{
               Bitmap bitmap =(Bitmap)data.getExtras().get("data");
               SaveImage(GaleriaActivity.this, bitmap);
-             txtgaleriavacia.setVisibility(View.INVISIBLE);
-
       }catch (Exception e){
           Toast.makeText(GaleriaActivity.this, "Camara cancelada.", Toast.LENGTH_SHORT).show();
       }
