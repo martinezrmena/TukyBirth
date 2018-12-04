@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/pregnant"
-            app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="exitUntilCollapsed|scroll"
@@ -31,7 +30,7 @@
                 android:layout_width="match_parent"
                 app:titleTextColor="@color/white"
                 app:title="Inicio de sesión"
-                android:layout_height="?attr/actionBarSize"/>
+                android:layout_height="60dp"/>
 
             <RelativeLayout
                 android:id="@+id/activity_main"
@@ -70,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_perm_identity_black_24dp"
                 android:drawablePadding="10dp"
-                android:hint="@string/login_name"
+                android:hint="Escribe tu correo"
                 android:textStyle="bold" />
 
             <EditText
