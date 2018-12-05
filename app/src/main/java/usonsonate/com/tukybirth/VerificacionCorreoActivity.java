@@ -52,11 +52,11 @@ public class VerificacionCorreoActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(!task.isSuccessful()){
-                    Toast.makeText(VerificacionCorreoActivity.this,"La verificacion del correo fallo, Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VerificacionCorreoActivity.this,"La verificación del correo fallo, Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
                       progressDialog.dismiss();
                 }
                 else{
-                    Toast.makeText(VerificacionCorreoActivity.this,"Se envio un Link de verificacion a tu correo,para continuar valide su correo", Toast.LENGTH_LONG).show();
+                    Toast.makeText(VerificacionCorreoActivity.this,"Se envio un Link de verificación a tu correo,para continuar valide su correo", Toast.LENGTH_LONG).show();
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     user.sendEmailVerification();
                     progressDialog.dismiss();
@@ -76,7 +76,7 @@ public class VerificacionCorreoActivity extends AppCompatActivity {
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(VerificacionCorreoActivity.this);
                         builder.setIcon(R.drawable.pregnant).
-                                setTitle("Atención").setMessage("¡La verificacion de su correo se realizo con exito!").setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                                setTitle("Atención").setMessage("¡La verificación de su correo se realizo con exito!").setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Intent intent = new Intent(VerificacionCorreoActivity.this, SlideLogin.class);

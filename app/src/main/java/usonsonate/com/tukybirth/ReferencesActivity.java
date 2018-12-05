@@ -33,6 +33,11 @@ public class ReferencesActivity extends AppCompatActivity {
     private void LlenarReferencias(){
 
         Referencias.add(new References("Libro","Laurence Pernoud","Espero un hijo", R.color.red));
+        Referencias.add(new References("Web","conmishijos","https://www.conmishijos.com/embarazo/parto/como-calcular-la-fecha-probable-de-parto/", R.color.blue));
+        Referencias.add(new References("Web","babycenter","https://espanol.babycenter.com/c15600472/tu-embarazo-semana-a-semana", R.color.materialgold));
+        Referencias.add(new References("Web","belibe","https://www.belibe.es/", R.color.green));
+        Referencias.add(new References("Web","HuggiesR","https://www.hueggies.com/", R.color.orange));
+        Referencias.add(new References("Web","mi bb y yo","https://www.mibebeyyo.com/", R.color.materialdarkred));
 
     }
 }

@@ -31,7 +31,7 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Precione para verificar la validacion que se envio a su correo"
+        android:text="Presione para verificar la validación que se envio a su correo"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="24sp" />

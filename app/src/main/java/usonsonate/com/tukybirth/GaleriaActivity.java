@@ -80,7 +80,6 @@ public class GaleriaActivity extends AppCompatActivity {
         adaptadorIMG = new AdaptadorIMG(GaleriaActivity.this, lstIMG);
         viewlista = findViewById(R.id.lstIMG);
         viewlista.setAdapter(adaptadorIMG);
-        txtgaleriavacia = findViewById(R.id.txtgaleriavacia);
         vacio = String.valueOf(dbImg.getArrayNombreIMG(dbImg.getCursorNombreIMG()));
 
         if(!vacio.equals("null")){
