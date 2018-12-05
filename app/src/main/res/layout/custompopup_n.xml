@@ -9,8 +9,6 @@
     >
 
 
-
-
     <TextView
         android:id="@+id/txtclosen"
         android:layout_width="30dp"
@@ -38,7 +36,12 @@
             <VideoView
                 android:id="@+id/videoPopup"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imgid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 

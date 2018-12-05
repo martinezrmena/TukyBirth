@@ -83,56 +83,73 @@ public class AdapterListExercise extends  RecyclerView.Adapter<AdapterListExerci
                // Toast.makeText(context, "El valor es ww: " + position, Toast.LENGTH_SHORT).show();
 
                 TextView txtclose, txbnumero, txbInformacion;
-               // ImageView imagenPopUp;
-                VideoView videoPopUp;
+                ImageView imagenPopUp;
+                final VideoView videoPopUp;
                 //inicializamos las variables
                 myDialog.setContentView(R.layout.custompopup_n);
                 txtclose =(TextView) myDialog.findViewById(R.id.txtclosen);
                 txbnumero = myDialog.findViewById(R.id.txtNumeroSelectedn);
                 txbInformacion = myDialog.findViewById(R.id.txtinformacionn);
-                //imagenPopUp = myDialog.findViewById(R.id.ImagePopupn);
+                imagenPopUp = myDialog.findViewById(R.id.imgid);
                // imagenPopUp.setScaleType(ImageView.ScaleType.FIT_XY);
                 /***************************************************************/
                 videoPopUp = myDialog.findViewById(R.id.videoPopup);
                 if(valor==0){
-                    String videopath= "android.resource://usonsonate.com.tukybirth/"+R.raw.tri1;
-                    Uri uri = Uri.parse(videopath);
-                    videoPopUp.setVideoURI(uri);
-                    MediaController mediaController = new MediaController(context);
-                    videoPopUp.setMediaController(mediaController);
-                    mediaController.setAnchorView(videoPopUp);
-                    videoPopUp.start();
+                    if(position==1){
+                        imagenPopUp.setVisibility(View.INVISIBLE);
+                        String videopath= "android.resource://usonsonate.com.tukybirth/"+R.raw.tri1;
+                        Uri uri = Uri.parse(videopath);
+                        videoPopUp.setVideoURI(uri);
+                        MediaController mediaController = new MediaController(context);
+                        videoPopUp.setMediaController(mediaController);
+                        mediaController.setAnchorView(videoPopUp);
+                        videoPopUp.start();
+                    }else{
+                        videoPopUp.setVisibility(View.INVISIBLE);
+                        imagenPopUp.setImageResource(infoData.imageId);
+                    }
+
                     txbnumero.setText(String.valueOf(valor +1));
                 }
 
                 if(valor==1){
-                    String videopath= "android.resource://usonsonate.com.tukybirth/"+R.raw.tri2;
-                    Uri uri = Uri.parse(videopath);
-                    videoPopUp.setVideoURI(uri);
-                    MediaController mediaController = new MediaController(context);
-                    videoPopUp.setMediaController(mediaController);
-                    mediaController.setAnchorView(videoPopUp);
-                    videoPopUp.start();
+                    if(position==1){
+                        imagenPopUp.setVisibility(View.INVISIBLE);
+                        String videopath= "android.resource://usonsonate.com.tukybirth/"+R.raw.tri2;
+                        Uri uri = Uri.parse(videopath);
+                        videoPopUp.setVideoURI(uri);
+                        MediaController mediaController = new MediaController(context);
+                        videoPopUp.setMediaController(mediaController);
+                        mediaController.setAnchorView(videoPopUp);
+                        videoPopUp.start();
+                    }else{
+                        videoPopUp.setVisibility(View.INVISIBLE);
+                        imagenPopUp.setImageResource(infoData.imageId);
+                    }
+
                     txbnumero.setText(String.valueOf(valor +1));
                 }
 
                 if(valor==2){
-                    String videopath= "android.resource://usonsonate.com.tukybirth/"+R.raw.tri3;
-                    Uri uri = Uri.parse(videopath);
-                    videoPopUp.setVideoURI(uri);
-                    MediaController mediaController = new MediaController(context);
-                    videoPopUp.setMediaController(mediaController);
-                    mediaController.setAnchorView(videoPopUp);
-                    videoPopUp.start();
+
+                    if(position==1){
+                        imagenPopUp.setVisibility(View.INVISIBLE);
+                        String videopath= "android.resource://usonsonate.com.tukybirth/"+R.raw.tri3;
+                        Uri uri = Uri.parse(videopath);
+                        videoPopUp.setVideoURI(uri);
+                        MediaController mediaController = new MediaController(context);
+                        videoPopUp.setMediaController(mediaController);
+                        mediaController.setAnchorView(videoPopUp);
+                        videoPopUp.start();
+                    }else{
+                        videoPopUp.setVisibility(View.INVISIBLE);
+                        imagenPopUp.setImageResource(infoData.imageId);
+                    }
+
                     txbnumero.setText(String.valueOf(valor +1));
                 }
 
-
-
-                //imagenPopUp.setImageResource(infoData.imageId);
-              //  imagenPopUp.setImageDrawable(R.drawable.image_style);
                 /*******************************************************/
-                //txbnumero.setText(String.valueOf(position +2));
                 txbInformacion.setText(infoData.Details);
                 txtclose.setOnClickListener(new View.OnClickListener() {
                     @Override
