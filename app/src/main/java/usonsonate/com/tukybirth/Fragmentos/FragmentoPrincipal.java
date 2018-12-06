@@ -47,8 +47,6 @@ public class FragmentoPrincipal extends Fragment {
     private Date date = cal.getTime();
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private CustomDateParse customDateParse;
-
-
     private Animation anim_rotar;
 
 
@@ -89,11 +87,10 @@ public class FragmentoPrincipal extends Fragment {
             @Override
             public void onClick(final View view) {
                 imgLogo.startAnimation(anim_rotar);
-                if (!txtFecha.getText().toString().isEmpty()) return;
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.mipmap.ic_launcher).
-                        setTitle("Atencion").setMessage("La fecha de nacimiento del bebe es aproximado, no es exacta.\n" +
-                        "Desea Calcularla?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                builder.setIcon(R.drawable.ic_alerta).
+                        setTitle("Atención").setMessage("La fecha de nacimiento del bebe es aproximado, no es exacta.\n" +
+                        "¿Desea calcularla?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -107,6 +104,18 @@ public class FragmentoPrincipal extends Fragment {
 
                         DatePickerDialog dialog = null;
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+
+                            mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                    month = month + 1;
+                                    String date = year  + "-" + month + "-" + day;
+                                    txtFecha.setText(date);
+                                    obtenerfecha();
+                                    guardardatos();
+                                }
+                            };
+
                             dialog = new DatePickerDialog(
                                     getContext(),
                                     android.R.style.Theme_Material_Dialog,
@@ -159,7 +168,8 @@ public class FragmentoPrincipal extends Fragment {
     public void obtenerfecha(){
         Calcular = convertirACalendar(txtFecha.getText().toString());
         date = sumarMeses(Calcular.getTime(),-3,7,1);
-        lblFecha.setText("El bebe nacera aproximadamente el :"+date.toString());
+        String texto = "El bebe nacera aproximadamente el :"+ customDateParse.convertirDateToString(date);
+        lblFecha.setText(texto);
     }
 
     public void guardardatos(){

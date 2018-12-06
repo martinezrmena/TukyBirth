@@ -103,7 +103,6 @@
                     android:elevation="@dimen/fab_margin"
                     android:padding="2dp"
                     android:text="hola"
-                    android:textAlignment="viewStart"
                     android:textColor="@color/white" />
 
             </LinearLayout>
